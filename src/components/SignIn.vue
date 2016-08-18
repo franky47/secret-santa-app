@@ -23,14 +23,6 @@
             <a href='#'>Create an account</a></p>
         </div>
     </div>
-    <div>
-        <button @click='signInWithFacebook'>Sign in with Facebook</button>
-        <button @click='signOut'>Sign out</button>
-        <div v-if='isSignedIn'>
-            <p>{{ userName }} </p>
-            <img :src='userPhoto'></img>
-        </div>
-    </div>
 </template>
 
 <script>
