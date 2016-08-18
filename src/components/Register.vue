@@ -39,7 +39,7 @@ export default {
             return {
                 name: !!this.newUser.name.trim(),
                 email: emailRE.test(this.newUser.email),
-                password: !!this.newUser.password.trim()
+                password: this.newUser.password.trim().length >= 8
             }
         },
         isValid: function() {
