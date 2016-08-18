@@ -1,22 +1,21 @@
 <template>
   <div id="app" class='ui container'>
+    <user-session></user-session>
     <register></register>
     <sign-in></sign-in>
-    <img class="logo" src="./assets/logo.png">
-    <hello></hello>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
 import Register from './components/Register'
 import SignIn from './components/SignIn'
+import UserSession from './components/UserSession'
 
 export default {
     components: {
-        Hello,
         Register,
-        SignIn
+        SignIn,
+        UserSession
     }
 }
 </script>
