@@ -3,15 +3,10 @@ import 'firebase/auth'
 import 'firebase/database'
 import { AUTH_USER_CHANGED } from '../vuex/mutation-types'
 import store from '../vuex/store'
-
-const handleErrorWhile = (context) => (error) => {
-    console.log('Error caught while ${context}: ', error)
-    return Promise.reject(error) // Allow chaining of error handlers
-}
+import { errorWhile } from '../utility/utility'
 
 class FirebaseService {
     constructor(config = {}, authChangedCallback) {
-        console.log('Creating new Firebase Service')
         firebase.initializeApp(config)
         firebase.auth().onAuthStateChanged(authChangedCallback)
     }
@@ -19,21 +14,21 @@ class FirebaseService {
     // Auth --
     registerWithEmail(email, password) {
         return firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch(handleErrorWhile('registering new account'))
+            .catch(errorWhile('registering new account'))
     }
     signInWithEmail(email, password) {
         return firebase.auth().signInWithEmailAndPassword(email, password)
-            .catch(handleErrorWhile('signing in with email'))
+            .catch(errorWhile('signing in with email'))
     }
     signInWithFacebook() {
         var provider = new firebase.auth.FacebookAuthProvider()
         provider.addScope('public_profile')
         return firebase.auth().signInWithRedirect(provider)
-            .catch(handleErrorWhile('signing in with Facebook'))
+            .catch(errorWhile('signing in with Facebook'))
     }
     signOut() {
         return firebase.auth().signOut()
-            .catch(handleErrorWhile('signing out'))
+            .catch(errorWhile('signing out'))
     }
 
     get currentUser() {
@@ -52,9 +47,10 @@ class FirebaseService {
         const user = this.currentUser
         if (user) {
             return user.updateEmail(email)
+                .catch(errorWhile('updating email'))
                 .catch(error => {
                     // todo: might need to reauthenticate
-                    console.log('Error caught while updating email: ', error)
+                    return Promise.reject(error)
                 })
         }
         return Promise.resolve()
@@ -63,9 +59,10 @@ class FirebaseService {
         const user = this.currentUser
         if (user) {
             return user.updatePassword(password)
+                .catch(errorWhile('updating password'))
                 .catch(error => {
                     // todo: might need to reauthenticate
-                    console.log('Error caught while updating email: ', error)
+                    return Promise.reject(error)
                 })
         }
         return Promise.resolve()
@@ -73,11 +70,11 @@ class FirebaseService {
     sendPasswordResetEmail(email) {
         const auth = firebase.auth()
         return auth.sendPasswordResetEmail(email)
-            .catch(handleErrorWhile('sending password reset email'))
+            .catch(errorWhile('sending password reset email'))
     }
     deleteUserAccount() {
         const user = this.currentUser
-        user.delete().catch(handleErrorWhile('deleting user account'))
+        user.delete().catch(errorWhile('deleting user account'))
     }
 
   // Database --
