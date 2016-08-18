@@ -1,16 +1,24 @@
 <template>
-    <h2>Sign up</h2>
-    <form id='signup' @submit.prevent='signup'>
-        <input v-model='newUser.name' placeholder='Name'>
-        <input v-model='newUser.email' placeholder='E-mail' type='email'>
-        <input v-model='newUser.password' placeholder='Password' type='password'>
-        <input type='submit' value='Sign up'>
+    <form @submit.prevent='register' class='ui form'>
+        <div class='field' :class='{error: check(validation.name)}'>
+            <label>Name <span v-if='check(validation.name)'>cannot be empty</span></label>
+            <input type='text' v-model='newUser.name' placeholder='Santa Claus'>
+        </div>
+        <div class='field' :class='{error: check(validation.email)}'>
+            <label>E-mail <span v-if='check(validation.email)'>must be valid</span></label>
+            <input v-model='newUser.email' type='email' placeholder='santa.claus@xmas.com'>
+        </div>
+        <div class='field' :class='{error: check(validation.password)}'>
+            <label>Password (8 characters minimum)</label>
+            <input v-model='newUser.password' type='password' placeholder='8 characters minimum'>
+        </div>
+        <button class='ui basic green button' type='submit'>
+            <i class='fitted icons'>
+                <i class='icon user'></i>
+                <i class='corner add icon'></i>
+            </i> Register
+        </button>
     </form>
-    <ul class="errors">
-        <li v-show="!validation.name">Name cannot be empty.</li>
-        <li v-show="!validation.email">Please provide a valid email address.</li>
-        <li v-show="!validation.password">Password cannot be empty.</li>
-    </ul>
 </template>
 
 <script>
@@ -19,6 +27,7 @@ const emailRE = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\
 
 export default {
     data: () => ({
+        displayErrors: false,
         newUser: {
             name: '',
             email: '',
@@ -39,13 +48,18 @@ export default {
         }
     },
     methods: {
-        signup() {
+        register() {
             if (this.isValid) {
                 this.registerWithEmail(this.newUser.email,
                                        this.newUser.password)
                 this.newUser.email = ''
                 this.newUser.password = ''
+            } else {
+                this.displayErrors = true
             }
+        },
+        check(field) {
+            return this.displayErrors && !field
         }
     },
     vuex: {

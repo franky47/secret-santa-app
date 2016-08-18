@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class='ui container'>
     <register></register>
     <sign-in></sign-in>
     <img class="logo" src="./assets/logo.png">
@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style>
+    /*
 html {
   height: 100%;
 }
@@ -49,5 +50,5 @@ body {
 .logo {
   width: 100px;
   height: 100px
-}
+}*/
 </style>
