@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
-    "semantic-ui-css": "^2.2.2",
     "firebase": "^3.2.1",
     "moment": "^2.14.1",
+    "semantic-ui-css": "^2.2.2",
     "vue": "^1.0.21",
     "vue-resource": "^0.9.3",
     "vue-router": "^0.7.13",
