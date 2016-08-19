@@ -3,14 +3,14 @@
 // we are also using it with karma-webpack
 //   https://github.com/webpack/karma-webpack
 
-var path = require('path')
-var merge = require('webpack-merge')
-var baseConfig = require('../../builder/webpack.conf.base')
-var utils = require('../../builder/utils')
-var webpack = require('webpack')
-var projectRoot = path.resolve(__dirname, '../../')
+const path = require('path')
+const merge = require('webpack-merge')
+const baseConfig = require('../../builder/webpack.conf.base')
+const utils = require('../../builder/utils')
+const webpack = require('webpack')
+const projectRoot = path.resolve(__dirname, '../../')
 
-var webpackConfig = merge(baseConfig, {
+const webpackConfig = merge(baseConfig, {
   // use inline sourcemap for karma-sourcemap-loader
   module: {
     loaders: utils.styleLoaders()

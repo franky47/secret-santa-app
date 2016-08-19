@@ -2,11 +2,11 @@
 require('shelljs/global')
 env.NODE_ENV = 'production'
 
-var path = require('path')
-var config = require('../config')
-var ora = require('ora')
-var webpack = require('webpack')
-var webpackConfig = require('./webpack.conf.prod')
+const path = require('path')
+const config = require('../config')
+const ora = require('ora')
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.conf.prod')
 
 console.log(
   '  Tip:\n' +
@@ -14,13 +14,13 @@ console.log(
   '  Opening index.html over file:// won\'t work.\n'
 )
 
-var spinner = new ora({
+const spinner = new ora({
     text: 'building for production...',
     spinner: 'dots12'
 })
 spinner.start()
 
-var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+const assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
 cp('-R', 'static/', assetsPath)
