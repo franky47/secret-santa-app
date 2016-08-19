@@ -5,7 +5,7 @@
             Sign in with Facebook
         </button>
         <div class='ui horizontal divider'>Or</div>
-        <form @submit.prevent='signIn' class='ui form'>
+        <form @submit.prevent='signIn' class='ui form' :class='{loading: loading, error: errorMessage}'>
             <div class='field'>
                 <label>E-mail</label>
                 <input v-model='user.email' type='email' placeholder='santa.claus@xmas.com'>
@@ -17,6 +17,10 @@
             <button class='ui fluid blue button' type='submit'>
                 <i class='fitted icon sign in'></i> Sign In
             </button>
+            <div class='ui error message'>
+                <div class='header'>Error</div>
+                <p>{{errorMessage}}</p>
+            </div>
         </form>
         <div class='ui divider'></div>
         <div class='register'>
@@ -43,16 +47,29 @@ export default {
         user: {
             email: '',
             password: ''
-        }
+        },
+        loading: false,
+        errorMessage: ''
     }),
     methods: {
         signIn() {
             const email = this.user.email.trim()
             const password = this.user.password.trim()
+            // todo: check route args to see if reauth or sign-in.
             this.signInWithEmail(email, password).then(() => {
-                this.user.email = ''
-                this.user.password = ''
+                // todo: connect with router to redirect to target
+                this.reset()
+            }).catch(error => {
+                this.loading = false
+                this.errorMessage = error.message
             })
+            this.loading = true
+        },
+        reset() {
+            this.errorMessage = ''
+            this.user.email = ''
+            this.user.password = ''
+            this.loading = false
         }
     },
     vuex: {
