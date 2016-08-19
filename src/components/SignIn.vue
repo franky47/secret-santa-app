@@ -1,11 +1,11 @@
 <template>
-    <div class='wrapper'>
+    <div id='wrapper' class='ui very padded raised secondary segment' :class='{loading: loading}'>
         <button @click='signInWithFacebook' class='ui fluid large facebook button'>
             <i class='facebook icon'></i>
             Sign in with Facebook
         </button>
         <div class='ui horizontal divider'>Or</div>
-        <form @submit.prevent='signIn' class='ui form' :class='{loading: loading, error: errorMessage}'>
+        <form @submit.prevent='signIn' class='ui form' :class='{error: errorMessage}'>
             <div class='field'>
                 <label>E-mail</label>
                 <input v-model='user.email' type='email' placeholder='santa.claus@xmas.com'>
@@ -88,9 +88,8 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-    width: 300px;
-    margin: 50px;
+#wrapper {
+    padding-bottom: 23px;
 }
 .register {
     text-align: center;

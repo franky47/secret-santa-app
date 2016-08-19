@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './vuex/store'
 
 // Import views
+import HomeView from './views/HomeView'
+import ProfileView from './views/ProfileView'
 import RegisterView from './views/auth/RegisterView'
 import SignInView from './views/auth/SignInView'
 import PasswordResetRequestView from './views/auth/PasswordResetRequestView'
@@ -10,8 +13,7 @@ import PasswordResetChallengeView from './views/auth/PasswordResetChallengeView'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    hashbang: false, // use clean URLs
-
+    hashbang: false // use clean URLs
 })
 
 // List of available routes, by category:
@@ -41,21 +43,14 @@ router.map({
     },
 
     // Authenticated routes
-    '/games': {
-        component: GamesView,
-        auth: true
-    },
     '/profile': {
         component: ProfileView,
-        auth: true
-    },
-    '/games/:id': {
-        component: GameView,
         auth: true
     }
 })
 
 router.beforeEach(transition => {
+    const authenticated = store.state.auth.user !== null
     if (transition.to.auth && !authenticated) {
         transition.redirect('/auth/sign-in')
     } else {

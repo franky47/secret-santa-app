@@ -64,7 +64,6 @@ export default {
             }
             this.registerWithEmail(this.newUser.email, this.newUser.password)
                 .then(() => {
-                    console.log('Created user, updating profile')
                     const profile = { displayName: this.newUser.name }
                     return this.updateUserProfile(profile)
                 }).then(() => { // success
