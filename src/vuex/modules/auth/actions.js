@@ -1,24 +1,30 @@
 import { AUTH_ERROR } from '../../mutation-types'
 import firebase from '../../../services/firebase'
 
-export const registerWithEmail = (store, email, password) => {
-    firebase.registerWithEmail(email, password)
-        .catch(error => store.dispatch(AUTH_ERROR, error))
-}
-export const signInWithFacebook = (store) => {
-    firebase.signInWithFacebook()
-        .catch(error => store.dispatch(AUTH_ERROR, error))
-}
-export const signInWithEmail = (store, email, password) => {
-    firebase.signInWithEmail(email, password)
-        .catch(error => store.dispatch(AUTH_ERROR, error))
-}
-export const signOut = (store) => {
-    firebase.signOut()
-        .catch(error => store.dispatch(AUTH_ERROR, error))
+const dispatchAndChain = dispatch => error => {
+    dispatch(AUTH_ERROR, error)
+    return Promise.reject(error)
 }
 
-export const updateUserProfile = (store, profile) => {
-    firebase.updateUserProfile(profile)
-        .catch(error => store.dispatch(AUTH_ERROR, error))
+// --
+
+export const registerWithEmail = ({dispatch}, email, password) => {
+    return firebase.registerWithEmail(email, password)
+        .catch(dispatchAndChain(dispatch))
+}
+export const signInWithFacebook = ({dispatch}) => {
+    return firebase.signInWithFacebook()
+        .catch(dispatchAndChain(dispatch))
+}
+export const signInWithEmail = ({dispatch}, email, password) => {
+    return firebase.signInWithEmail(email, password)
+        .catch(dispatchAndChain(dispatch))
+}
+export const signOut = ({dispatch}) => {
+    return firebase.signOut()
+        .catch(dispatchAndChain(dispatch))
+}
+export const updateUserProfile = ({dispatch}, profile) => {
+    return firebase.updateUserProfile(profile)
+        .catch(dispatchAndChain(dispatch))
 }
