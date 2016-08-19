@@ -6,11 +6,11 @@
         </button>
         <div class='ui horizontal divider'>Or</div>
         <form @submit.prevent='signIn' class='ui form'>
-            <div class='field' :class='{error: check(validation.email)}'>
+            <div class='field'>
                 <label>E-mail</label>
                 <input v-model='user.email' type='email' placeholder='santa.claus@xmas.com'>
             </div>
-            <div class='field' :class='{error: check(validation.password)}'>
+            <div class='field'>
                 <label>Password</label>
                 <input v-model='user.password' type='password' placeholder='••••••••••••'>
             </div>
