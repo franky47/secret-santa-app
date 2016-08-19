@@ -33,14 +33,10 @@ router.map({
         component: HomeView
     },
 
-    '/auth': {
-        subRoutes: {
-            '/register': { component: RegisterView },
-            '/sign-in': { component: SignInView },
-            '/password-reset-request': { component: PasswordResetRequestView },
-            '/password-reset-challenge': { component: PasswordResetChallengeView }
-        }
-    },
+    '/auth/register': { component: RegisterView },
+    '/auth/sign-in': { component: SignInView },
+    '/auth/password-reset-request': { component: PasswordResetRequestView },
+    '/auth/password-reset-challenge': { component: PasswordResetChallengeView },
 
     // Authenticated routes
     '/profile': {
@@ -57,5 +53,7 @@ router.beforeEach(transition => {
         transition.next()
     }
 })
+
+// todo: start the router
 
 export default router
