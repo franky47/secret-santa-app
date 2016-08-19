@@ -6,7 +6,7 @@ var path = require('path')
 var config = require('../config')
 var ora = require('ora')
 var webpack = require('webpack')
-var webpackConfig = require('./webpack.prod.conf')
+var webpackConfig = require('./webpack.conf.prod')
 
 console.log(
   '  Tip:\n' +
@@ -14,7 +14,10 @@ console.log(
   '  Opening index.html over file:// won\'t work.\n'
 )
 
-var spinner = ora('building for production...')
+var spinner = new ora({
+    text: 'building for production...',
+    spinner: 'dots12'
+})
 spinner.start()
 
 var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)

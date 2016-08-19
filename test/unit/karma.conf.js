@@ -5,7 +5,7 @@
 
 var path = require('path')
 var merge = require('webpack-merge')
-var baseConfig = require('../../builder/webpack.base.conf')
+var baseConfig = require('../../builder/webpack.conf.base')
 var utils = require('../../builder/utils')
 var webpack = require('webpack')
 var projectRoot = path.resolve(__dirname, '../../')
@@ -23,7 +23,7 @@ var webpackConfig = merge(baseConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../../config/test.env')
+      'process.env': require('../../config/env.test')
     })
   ]
 })

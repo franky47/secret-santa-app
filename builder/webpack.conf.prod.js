@@ -3,11 +3,11 @@ var config = require('../config')
 var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
+var baseWebpackConfig = require('./webpack.conf.base')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
+  ? require('../config/env.test')
   : config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
