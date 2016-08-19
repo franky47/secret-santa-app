@@ -5,10 +5,10 @@
   "author": "Francois Best <francoisbest@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
+    "dev": "node builder/dev-server.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "test": "karma start test/unit/karma.conf.js --single-run",
-    "pack": "node build/build.js",
+    "pack": "node builder/build.js",
     "build": "npm run lint && npm run test && npm run pack",
     "surge": "surge -p ./dist -d secret-santa.surge.sh",
     "deploy": "npm run build && npm run surge"
