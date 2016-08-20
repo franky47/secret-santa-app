@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from './vuex/store'
+import store from '../vuex/store'
 
 // Import views
-import HomeView from './views/HomeView'
-import ProfileView from './views/ProfileView'
-import RegisterView from './views/auth/RegisterView'
-import SignInView from './views/auth/SignInView'
-import PasswordResetRequestView from './views/auth/PasswordResetRequestView'
-import PasswordResetChallengeView from './views/auth/PasswordResetChallengeView'
+import HomeView                     from '../views/HomeView'
+import ProfileView                  from '../views/ProfileView'
+import RegisterView                 from '../views/auth/RegisterView'
+import SignInView                   from '../views/auth/SignInView'
+import PasswordResetRequestView     from '../views/auth/PasswordResetRequestView'
+import PasswordResetChallengeView   from '../views/auth/PasswordResetChallengeView'
 
 import * as routes from './routes-definitions'
 
@@ -21,10 +21,10 @@ const router = new VueRouter({
 router.map({
     [routes.home]: { component: HomeView },
 
-    [routes.auth.register]: { component: RegisterView },
-    [routes.auth.signIn]:   { component: SignInView },
-    [routes.auth.passwordReset.request]: { component: PasswordResetRequestView },
-    [routes.auth.passwordReset.challenge]: { component: PasswordResetChallengeView },
+    [routes.auth.register]:                 { component: RegisterView },
+    [routes.auth.signIn]:                   { component: SignInView },
+    [routes.auth.passwordReset.request]:    { component: PasswordResetRequestView },
+    [routes.auth.passwordReset.challenge]:  { component: PasswordResetChallengeView },
 
     // Authenticated routes
     [routes.userProfile]: {

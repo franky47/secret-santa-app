@@ -2,8 +2,9 @@ import './semantic'
 import Vue from 'vue'
 import App from './App'
 import store from './vuex/store'
-import router from './routes'
+import router from './router/router'
 import { sync } from 'vuex-router-sync'
+import './style.css'
 
 sync(store, router)
 
