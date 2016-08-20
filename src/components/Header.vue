@@ -1,9 +1,9 @@
 <template>
-    <div id='wrapper' class="ui vertical clearing segment">
-        <h1 class="ui left floated red header">
-            <i class="gift icon"></i>
-            <div class="content">Secret Santa
-                <div class="sub header">Santa as a Service</div>
+    <div id='wrapper' class='ui vertical clearing segment'>
+        <h1 class='ui left floated red header'>
+            <i class='gift icon'></i>
+            <div class='content'>Secret Santa
+                <div class='sub header'>Santa as a Service</div>
             </div>
         </h1>
         <user-session class='userSession'></user-session>
