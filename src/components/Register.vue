@@ -13,12 +13,12 @@
             <label>Name <span v-if='check(validation.name)'>is required</span></label>
             <input type='text' v-model='user.name' placeholder='eg: Santa Claus'>
         </div>
-        <div class='field' v-if='user.name'>
-            <label style='user-select:none' unselectable='on'
-                onselectstart='return false'
-                onmousedown='return false'>
-                Avatar <i class='ui small grey icon refresh' @click='changeColor'></i>
-            </label>
+        <div class='field' v-if='user.name'
+            style='user-select:none' unselectable='on'
+            onselectstart='return false'
+            onmousedown='return false'
+        >
+            <label>Avatar <i class='ui small grey icon refresh' @click='changeColor'></i></label>
             <avatar :back-color='user.avatarColor' :text='avatarLetter'></avatar>
         </div>
         <div class='ui error message'>
