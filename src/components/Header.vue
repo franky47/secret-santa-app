@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical clearing segment">
+    <div id='wrapper' class="ui vertical clearing segment">
         <h1 class="ui left floated red header">
             <i class="gift icon"></i>
             <div class="content">Secret Santa
@@ -22,6 +22,10 @@ export default {
 
 <style scoped>
 .userSession {
-    margin-top: 15px;
+    margin-top: 8px;
+}
+#wrapper {
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgba(150, 10, 10, 0.1);
 }
 </style>
