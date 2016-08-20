@@ -13,7 +13,8 @@ export default {
 
 <style scoped>
 .wrapper {
-    width: 450px;
-    margin: 3em auto;
+    max-width: 450px;
+    min-width: 360px;
+    margin: 130px auto;
 }
 </style>

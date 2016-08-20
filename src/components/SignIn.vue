@@ -12,7 +12,7 @@
             </div>
             <div class='field'>
                 <label>Password</label>
-                <input v-model='user.password' type='password' placeholder='••••••••••••'>
+                <input v-model='user.password' type='password' placeholder='••••••••'>
             </div>
             <button class='ui fluid blue button' type='submit'>
                 <i class='fitted icon sign in'></i> Sign In
@@ -90,6 +90,7 @@ export default {
 <style scoped>
 #wrapper {
     padding-bottom: 23px;
+    background: #F8F8F8;
 }
 .register {
     text-align: center;

@@ -1,28 +1,33 @@
 <template>
     <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
-            :width='size' :height='size' :viewBox='0 0 size size'
-        >
+        :width='size' :height='size' :viewBox='0, 0, size, size'
+    >
         <rect x='0' y='0' :width='size' :height='size' :fill='backColor'/>
-        <text :x='size * .5' :y='size * .5'
+        <text
+            :x='size * .495'
+            :y='size * .48'
             alignment-baseline='central'
             text-anchor='middle'
             :fill='textColor'
             :font-size='size * 0.8'
+            opacity='0.9'
             font-weight='300'
-            font-family='Roboto'>
+            font-family='Roboto'
+        >
             {{text}}
         </text>
     </svg>
 </template>
 
 <script>
+import xmlSerializer from 'xmlserializer'
 export default {
     props: {
-        'size': {
+        size: {
             type: Number,
             default: () => 100
         },
-        'text': {
+        text: {
             type: String,
             default: () => ''
         },
@@ -33,6 +38,13 @@ export default {
         'text-color': {
             type: String,
             default: () => '#fff'
+        }
+    },
+    methods: {
+        convertToInlineImage() {
+            const svg = xmlSerializer.serializeToString(this.$el)
+            const base64 = window.btoa(svg)
+            return `data:image/svg+xml;base64,${base64}`
         }
     }
 }

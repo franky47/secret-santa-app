@@ -1,16 +1,14 @@
 <template>
     <div class='ui container'>
         <app-header></app-header>
-        <!-- avatar text='F' back-color='orange'></avatar -->
-        <sign-in></sign-in>
-        <!-- register></register -->
+        <register></register>
     </div>
 </template>
 
 <script>
 import AppHeader from './components/Header'
 import Avatar from './components/Avatar'
-import Register from './components/Register'
+import Register from './views/auth/RegisterView'
 import SignIn from './views/auth/SignInView'
 import UserSession from './components/UserSession'
 
