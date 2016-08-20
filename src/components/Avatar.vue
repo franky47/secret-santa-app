@@ -4,8 +4,8 @@
     >
         <rect x='0' y='0' :width='size' :height='size' :fill='backColor'/>
         <text
-            :x='size * .495'
-            :y='size * .48'
+            :x='size * .5'
+            :y='size * .475'
             alignment-baseline='central'
             text-anchor='middle'
             :fill='textColor'
