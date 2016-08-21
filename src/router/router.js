@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../vuex/store'
 
 // Import views
 import HomeView                     from '../views/HomeView'
@@ -15,7 +14,8 @@ import * as routes from './routes-definitions'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    hashbang: false // use clean URLs
+    hashbang: false,
+    history: true
 })
 
 router.map({
@@ -33,15 +33,13 @@ router.map({
     }
 })
 
-router.beforeEach(transition => {
-    const authenticated = store.state.auth.user !== null
-    if (transition.to.auth && !authenticated) {
-        transition.redirect('/auth/sign-in')
-    } else {
-        transition.next()
-    }
-})
-
-// todo: start the router
+// router.beforeEach(transition => {
+//     const authenticated = store.state.auth.user !== null
+//     if (transition.to.auth && !authenticated) {
+//         transition.redirect('/auth/sign-in')
+//     } else {
+//         transition.next()
+//     }
+// })
 
 export default router
