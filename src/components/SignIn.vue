@@ -6,14 +6,8 @@
         </button>
         <div class='ui horizontal divider'>Or</div>
         <form @submit.prevent='signIn' class='ui form' :class='{error: errorMessage}'>
-            <div class='field'>
-                <label>E-mail</label>
-                <input v-model='user.email' type='email' placeholder='santa.claus@xmas.com'>
-            </div>
-            <div class='field'>
-                <label>Password</label>
-                <input v-model='user.password' type='password' placeholder='••••••••'>
-            </div>
+            <email :value.sync='user.email' :show-errors='showErrors' v-ref:email></email>
+            <password :value.sync='user.password' :show-errors='showErrors' v-ref:password></password>
             <button class='ui fluid blue button' type='submit'>
                 <i class='fitted icon sign in'></i> Sign In
             </button>
@@ -30,6 +24,8 @@
 </template>
 
 <script>
+import Email from './form/Email'
+import Password from './form/Password'
 import {
     isSignedIn,
     getCurrentUserName,
@@ -51,6 +47,7 @@ export default {
         loading: false,
         errorMessage: ''
     }),
+    components: { Email, Password },
     methods: {
         signIn() {
             const email = this.user.email.trim()

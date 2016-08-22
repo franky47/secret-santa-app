@@ -1,14 +1,7 @@
 <template>
     <form @submit.prevent='register' class='ui form' :class='{error: errorMessage}'>
-        <div class='field' :class='{error: check(validation.email)}'>
-            <label>E-mail <span v-if='check(validation.email)'>must be valid</span></label>
-            <input v-model='user.email' type='email' placeholder='eg: santa.claus@xmas.com'>
-        </div>
-        <div class='field' :class='{error: check(validation.password)}'>
-            <label>Password (8 characters minimum)</label>
-            <input v-model='user.password' type='password' placeholder='••••••••'>
-        </div>
-        <!--h4 class='ui dividing header'>Profile information</h4-->
+        <email :value.sync='user.email' :show-errors='showErrors' v-ref:email></email>
+        <password :value.sync='user.password' :show-errors='showErrors' v-ref:password></password>
         <div class='field' :class='{error: check(validation.name)}'>
             <label>Name <span v-if='check(validation.name)'>is required</span></label>
             <input type='text' v-model='user.name' placeholder='eg: Santa Claus'>
@@ -36,34 +29,39 @@
 
 <script>
 import Avatar from './Avatar'
+import Email from './form/Email'
+import Password from './form/Password'
 import materialColors from '../utility/material-colors'
 import {
     registerWithEmail,
     updateUserProfile
 } from '../vuex/modules/auth/actions'
-const emailRE = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
     data: () => ({
-        displayErrors: false,
+        showErrors: false,
         loading: false,
         user: {
-            name: '',
             email: '',
             password: '',
+            name: '',
             avatarColor: ''
         },
         errorMessage: ''
     }),
     components: {
+        Email,
+        Password,
         Avatar
     },
     computed: {
         validation() {
+            const email     = this.$refs.email    || { valid: false }
+            const password  = this.$refs.password || { valid: false }
             return {
-                name: !!this.user.name.trim(),
-                email: emailRE.test(this.user.email),
-                password: this.user.password.trim().length >= 8
+                name:       !!this.user.name.trim(),
+                email:      email.valid,
+                password:   password.valid
             }
         },
         isValid() {
@@ -77,7 +75,7 @@ export default {
     methods: {
         register() {
             if (!this.isValid) {
-                this.displayErrors = true
+                this.showErrors = true
                 return
             }
             this.registerWithEmail(this.user.email, this.user.password)
@@ -99,10 +97,10 @@ export default {
             this.loading = true
         },
         check(field) {
-            return this.displayErrors && !field
+            return this.showErrors && !field
         },
         reset() {
-            this.displayErrors = false
+            this.showErrors = false
             this.user.email = ''
             this.user.password = ''
             this.user.name = ''
@@ -126,10 +124,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.changeColor {
-    display: inline-block;
-    font-weight: 100;
-}
-</style>
