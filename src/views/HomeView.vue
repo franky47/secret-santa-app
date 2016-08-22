@@ -1,9 +1,11 @@
 <template>
-    <h1>Home Page</h1>
-    <ul>
-        <li><a v-link='{ path: links.signIn }'>Sign In</a></li>
-        <li><a v-link='{ path: links.register }'>Register </a></li>
-    </ul>
+    <div class='wrapper'>
+        <h1>Home Page</h1>
+        <ul>
+            <li><a v-link='{ path: links.signIn }'>Sign In</a></li>
+            <li><a v-link='{ path: links.register }'>Register </a></li>
+        </ul>
+    </div>
 </template>
 
 <script>
