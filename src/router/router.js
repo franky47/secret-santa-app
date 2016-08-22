@@ -36,7 +36,7 @@ router.map({
 // router.beforeEach(transition => {
 //     const authenticated = store.state.auth.user !== null
 //     if (transition.to.auth && !authenticated) {
-//         transition.redirect('/auth/sign-in')
+//         transition.redirect(routes.auth.signIn)
 //     } else {
 //         transition.next()
 //     }
