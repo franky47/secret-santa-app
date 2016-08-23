@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../vuex/store'
+import { isSignedIn } from '../vuex/modules/auth/getters'
 
 // Import views
 import HomeView                     from '../views/HomeView'
@@ -33,13 +35,18 @@ router.map({
     }
 })
 
-// router.beforeEach(transition => {
-//     const authenticated = store.state.auth.user !== null
-//     if (transition.to.auth && !authenticated) {
-//         transition.redirect(routes.auth.signIn)
-//     } else {
-//         transition.next()
-//     }
-// })
+router.beforeEach(transition => {
+    const authenticated = isSignedIn(store.state)
+    if (transition.to.auth && !authenticated) {
+        transition.redirect({
+            path: routes.auth.signIn,
+            query: {
+                then: transition.to.path
+            }
+        })
+    } else {
+        transition.next()
+    }
+})
 
 export default router
