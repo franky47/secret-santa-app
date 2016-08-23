@@ -1,8 +1,13 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
-import { AUTH_USER_CHANGED, AUTH_ERROR } from '../vuex/mutation-types'
+import {
+    AUTH_USER_CHANGED,
+    AUTH_SIGNED_IN,
+    AUTH_ERROR
+} from '../vuex/mutation-types'
 import store from '../vuex/store'
+import { isSignedIn } from '../vuex/modules/auth/getters'
 import { errorWhile } from '../utility/utility'
 
 class FirebaseService {
@@ -127,6 +132,10 @@ class FirebaseService {
 const authChangedCallback = (user) => {
     console.log('Auth changed to', user)
     store.dispatch(AUTH_USER_CHANGED, user)
+    if (user && !isSignedIn(store.state)) {
+        // Called after refresh/redirect: update sign in state
+        store.dispatch(AUTH_SIGNED_IN)
+    }
 }
 const authErrorCallback = (error) => {
     console.log('Auth error:', error)
