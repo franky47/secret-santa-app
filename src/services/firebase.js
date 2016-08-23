@@ -106,13 +106,19 @@ class FirebaseService {
 
     deleteUserAccount() {
         const user = this.currentUser
-        return user.delete()
-            .catch(errorWhile('deleting user account'))
-            .catch(error => {
-                // todo: might need to reauthenticate
-                // todo: route to /auth/sign-in?action=reauthenticate
-                return Promise.reject(error)
-            })
+        if (user) {
+            return user.delete()
+                .catch(errorWhile('deleting user account'))
+                .catch(error => {
+                    // todo: might need to reauthenticate
+                    // todo: route to /auth/sign-in?action=reauthenticate
+                    return Promise.reject(error)
+                })
+        }
+        return Promise.reject({
+            code: 'auth/null',
+            message: 'No user signed in'
+        })
     }
 
     // Database --
