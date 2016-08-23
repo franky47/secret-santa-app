@@ -1,7 +1,7 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>Password <span class='instructions'>({{minSize}} characters minimum)</span></label>
-        <input v-model='value' type='password' :placeholder='placeholder'>
+        <label>Name <span v-if='!valid && showErrors'>is required</span></label>
+        <input v-model='value' type='text' :placeholder='placeholder'>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     }),
     computed: {
         valid() {
-            return this.value.trim().length >= this.minSize
+            return !!this.value.trim()
         }
     },
     props: {
@@ -23,11 +23,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: '••••••••'
-        },
-        minSize: {
-            type: Number,
-            default: 8
+            default: 'eg: Santa Claus'
         },
         showErrors: {
             type: Boolean,
@@ -40,11 +36,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.instructions {
-    font-style: italic;
-    font-weight: 100;
-    color: #888;
-}
-</style>

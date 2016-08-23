@@ -1,5 +1,5 @@
 <template>
-    <div class='field' :class='{error: !valid && showErrors}'>
+    <div class='field' :class='{error: !valid && showErrors, required: required}'>
         <label>E-mail <span v-if='!valid && showErrors'>must be valid</span></label>
         <input v-model='value' type='email' :placeholder='placeholder'>
     </div>
@@ -28,6 +28,10 @@ export default {
             default: 'eg: santa.claus@xmas.com'
         },
         showErrors: {
+            type: Boolean,
+            default: false
+        },
+        required: {
             type: Boolean,
             default: false
         }
