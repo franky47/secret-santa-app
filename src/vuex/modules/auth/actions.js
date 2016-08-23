@@ -21,10 +21,8 @@ export const registerWithEmail = ({dispatch}, email, password) => {
         .catch(dispatchAndChain(dispatch))
 }
 export const signInWithFacebook = ({dispatch}) => {
+    // Using redirect: don't mark as signed in yet, wait for completion.
     return firebase.signInWithFacebook()
-        .then(() => {
-            dispatch(AUTH_SIGNED_IN)
-        })
         .catch(dispatchAndChain(dispatch))
 }
 export const signInWithEmail = ({dispatch}, email, password) => {
