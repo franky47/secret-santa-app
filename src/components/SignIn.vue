@@ -75,6 +75,14 @@ export default {
             this.loading = false
         }
     },
+    watch: {
+        isSignedIn(signedIn) {
+            const redirect = this.redirect
+            if (signedIn && redirect) {
+                this.$router.go({ path: redirect })
+            }
+        }
+    },
     vuex: {
         getters: {
             isSignedIn,
