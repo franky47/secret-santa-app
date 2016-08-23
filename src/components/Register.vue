@@ -1,11 +1,8 @@
 <template>
     <form @submit.prevent='register' class='ui form' :class='{error: errorMessage}'>
-        <email :value.sync='user.email' :show-errors='showErrors' v-ref:email></email>
-        <password :value.sync='user.password' :show-errors='showErrors' v-ref:password></password>
-        <div class='field' :class='{error: check(validation.name)}'>
-            <label>Name <span v-if='check(validation.name)'>is required</span></label>
-            <input type='text' v-model='user.name' placeholder='eg: Santa Claus'>
-        </div>
+        <email :value.sync='user.email' :show-errors='showErrors' v-ref:email required></email>
+        <password :value.sync='user.password' :show-errors='showErrors' v-ref:password required></password>
+        <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
         <div class='field' v-if='user.name'
             style='user-select:none' unselectable='on'
             onselectstart='return false'
@@ -31,6 +28,7 @@
 import Avatar from './Avatar'
 import Email from './form/Email'
 import Password from './form/Password'
+import Name from './form/Name'
 import materialColors from '../utility/material-colors'
 import {
     registerWithEmail,
@@ -52,14 +50,16 @@ export default {
     components: {
         Email,
         Password,
+        Name,
         Avatar
     },
     computed: {
         validation() {
             const email     = this.$refs.email    || { valid: false }
             const password  = this.$refs.password || { valid: false }
+            const name      = this.$refs.name     || { valid: false }
             return {
-                name:       !!this.user.name.trim(),
+                name:       name.valid,
                 email:      email.valid,
                 password:   password.valid
             }

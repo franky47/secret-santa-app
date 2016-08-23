@@ -37,6 +37,7 @@ import {
     signInWithEmail,
     signOut
 } from '../vuex/modules/auth/actions'
+import * as routes from '../router/routes-definitions'
 
 export default {
     data: () => ({
@@ -54,8 +55,13 @@ export default {
             const password = this.user.password.trim()
             // todo: check route args to see if reauth or sign-in.
             this.signInWithEmail(email, password).then(() => {
-                // todo: connect with router to redirect to target
                 this.reset()
+                const redirect = this.redirect
+                if (redirect) {
+                    this.$router.go({ path: redirect })
+                } else {
+                    this.$router.go(routes.home)
+                }
             }).catch(error => {
                 this.loading = false
                 this.errorMessage = error.message
@@ -73,7 +79,10 @@ export default {
         getters: {
             isSignedIn,
             userName: getCurrentUserName,
-            userPhoto: getCurrentUserPictureURL
+            userPhoto: getCurrentUserPictureURL,
+            redirect: (state) => {
+                return state.route.query.then || null
+            }
         },
         actions: {
             signInWithFacebook,
