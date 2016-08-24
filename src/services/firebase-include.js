@@ -8,6 +8,6 @@ import firebase from 'firebase/app'
 // Disable Firebase features you don't want by commenting the import
 import 'firebase/auth'
 // import 'firebase/database'
-// import 'firebase/storage'
+import 'firebase/storage'
 
 export default firebase
