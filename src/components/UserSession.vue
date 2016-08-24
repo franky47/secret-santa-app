@@ -1,7 +1,7 @@
 <template>
     <div class='ui horizontal list right floated' v-show='isSignedIn' transition='fade'>
-        <div class='item' @click='goToProfile()'>
-            <img class='ui mini circular image' :src='photoUrl'>
+        <div class='item'>
+            <img class='ui mini circular image' :src='photoUrl' @click='goToProfile'>
             <div class='content'>
                 <div class='ui sub header'><span class='no-transform'>{{name}}</span></div>
                 <a href='#' @click.stop='triggerSignOut'>
@@ -22,6 +22,7 @@ import {
 import {
     signOut
 } from '../vuex/modules/auth/actions'
+import * as routes from '../router/routes-definitions'
 
 export default {
     data: () => ({
@@ -36,7 +37,7 @@ export default {
     },
     methods: {
         goToProfile: () => {
-            // todo: route to /profile
+            this.$router.go(routes.userProfile)
         },
         triggerSignOut: function() {
             const buffer = this.fadeOutBuffer
@@ -46,7 +47,9 @@ export default {
             setTimeout(() => {
                 buffer.use = false // Let the animation end
             }, 300)
-            this.signOut()
+            this.signOut().then(() => {
+                this.$router.go(routes.home)
+            })
         }
     },
     computed: {
