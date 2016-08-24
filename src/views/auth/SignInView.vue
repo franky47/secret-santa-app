@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import Email from '../../components/form/Email'
-import Password from '../../components/form/Password'
-import { isSignedIn } from '../../vuex/modules/auth/getters'
+import Email            from '../../components/form/Email'
+import Password         from '../../components/form/Password'
+import { isSignedIn }   from '../../vuex/modules/auth/getters'
 import {
     signInWithFacebook,
     signInWithEmail,
