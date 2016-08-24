@@ -1,5 +1,5 @@
 <template>
-    <div id='wrapper' class='ui very padded raised secondary segment' :class='{loading: loading}'>
+    <div id='wrapper' class='ui very padded raised segment' :class='{loading: loading}'>
         <button @click='signInWithFacebook' class='ui fluid large facebook button'>
             <i class='facebook icon'></i>
             Sign in with Facebook
@@ -26,12 +26,7 @@
 <script>
 import Email from './form/Email'
 import Password from './form/Password'
-import {
-    isSignedIn,
-    getCurrentUserName,
-    getCurrentUserPictureURL
-} from '../vuex/modules/auth/getters'
-
+import { isSignedIn } from '../vuex/modules/auth/getters'
 import {
     signInWithFacebook,
     signInWithEmail,
@@ -86,11 +81,7 @@ export default {
     vuex: {
         getters: {
             isSignedIn,
-            userName: getCurrentUserName,
-            userPhoto: getCurrentUserPictureURL,
-            redirect: (state) => {
-                return state.route.query.then || null
-            }
+            redirect: state => state.route.query.then || null
         },
         actions: {
             signInWithFacebook,
@@ -104,7 +95,7 @@ export default {
 <style scoped>
 #wrapper {
     padding-bottom: 23px;
-    background: #F8F8F8;
+    background: #fafafa;
 }
 .register {
     text-align: center;
