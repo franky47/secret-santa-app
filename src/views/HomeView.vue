@@ -4,6 +4,7 @@
         <ul>
             <li><a v-link='{ path: links.signIn }'>Sign In</a></li>
             <li><a v-link='{ path: links.register }'>Register </a></li>
+            <li><a v-link='{ path: links.profile }'>Profile </a></li>
         </ul>
     </div>
 </template>
@@ -15,7 +16,8 @@ export default {
     data: () => ({
         links: {
             signIn:     routes.auth.signIn,
-            register:   routes.auth.register
+            register:   routes.auth.register,
+            profile:    routes.userProfile
         }
     })
 }
