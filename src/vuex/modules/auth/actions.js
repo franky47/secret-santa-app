@@ -17,8 +17,9 @@ const dispatchAndChain = dispatch => error => {
 
 export const registerWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
-        .then(() => {
+        .then(result => {
             dispatch(AUTH_SIGNED_IN)
+            return result
         })
         .catch(dispatchAndChain(dispatch))
 }
@@ -29,30 +30,34 @@ export const signInWithFacebook = ({dispatch}) => {
 }
 export const signInWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.signInWithEmail(email, password)
-        .then(() => {
+        .then(result => {
             dispatch(AUTH_SIGNED_IN)
+            return result
         })
         .catch(dispatchAndChain(dispatch))
 }
 export const signOut = ({dispatch}) => {
     return firebase.auth.signOut()
-        .then(() => {
+        .then(result => {
             dispatch(AUTH_SIGNED_OUT)
+            return result
         })
         .catch(dispatchAndChain(dispatch))
 }
 export const updateUserProfile = ({dispatch}, profile) => {
     return firebase.auth.updateUserProfile(profile)
-        .then(() => {
+        .then(result => {
             // Update user info as it might not be notified by auth changed cbk
             dispatch(AUTH_USER_UPDATED, profile)
+            return result
         })
         .catch(dispatchAndChain(dispatch))
 }
 export const deleteAccount = ({dispatch}, profile) => {
     return firebase.auth.deleteUserAccount()
-        .then(() => {
+        .then(result => {
             dispatch(AUTH_SIGNED_OUT)
+            return result
         })
         .catch(dispatchAndChain(dispatch))
 }
