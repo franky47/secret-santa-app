@@ -1,6 +1,10 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>Password <span class='instructions'>({{minSize}} characters minimum)</span></label>
+        <label>Password
+            <span v-if='instructions' class='instructions'>
+                ({{minSize}} characters minimum)
+            </span>
+        </label>
         <input v-model='value' type='password' :placeholder='placeholder'>
     </div>
 </template>
@@ -30,6 +34,10 @@ export default {
             default: 8
         },
         showErrors: {
+            type: Boolean,
+            default: false
+        },
+        instructions: {
             type: Boolean,
             default: false
         },

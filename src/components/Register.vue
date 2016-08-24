@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent='register' class='ui form' :class='{error: errorMessage}'>
         <email :value.sync='user.email' :show-errors='showErrors' v-ref:email required></email>
-        <password :value.sync='user.password' :show-errors='showErrors' v-ref:password required></password>
+        <password :value.sync='user.password' :show-errors='showErrors' v-ref:password instructions required></password>
         <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
         <div class='field' v-if='user.name'
             style='user-select:none' unselectable='on'
