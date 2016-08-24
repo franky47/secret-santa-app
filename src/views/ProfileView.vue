@@ -62,6 +62,11 @@ export default {
         },
         errorMessage: ''
     }),
-    components: { Email, Password, Name, DeleteAccount }
+    components: { Email, Password, Name, DeleteAccount },
+    methods: {
+        update() {
+
+        }
+    }
 }
 </script>
