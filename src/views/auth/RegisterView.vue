@@ -38,6 +38,7 @@ import {
     registerWithEmail,
     updateUserProfile
 } from '../../vuex/modules/auth/actions'
+import { home } from '../../router/routes-definitions'
 
 export default {
     data: () => ({
@@ -94,6 +95,7 @@ export default {
                 }).then(() => { // success
                     this.loading = false
                     this.reset()
+                    this.$router.go(home)
                 }).catch((error) => { // failed
                     this.loading = false
                     this.errorMessage = error.message

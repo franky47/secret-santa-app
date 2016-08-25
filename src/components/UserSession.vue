@@ -49,11 +49,11 @@ export default {
         }
     },
     computed: {
-        name: function() {
+        name() {
             const buffer = this.fadeOutBuffer
             return buffer.use ? buffer.name : this.userName
         },
-        photoUrl: function() {
+        photoUrl() {
             const buffer = this.fadeOutBuffer
             return buffer.use ? buffer.photoUrl : this.userPhoto
         }

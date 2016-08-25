@@ -18,7 +18,7 @@
         </form>
         <div class='ui divider'></div>
         <div class='register'>
-            <a href='#'>Create an account</a></p>
+            <a v-link='{ path: routes.auth.register }'>Create an account</a></p>
         </div>
     </div>
 </template>
@@ -41,7 +41,8 @@ export default {
             password: ''
         },
         loading: false,
-        errorMessage: ''
+        errorMessage: '',
+        routes
     }),
     components: { Email, Password },
     methods: {
