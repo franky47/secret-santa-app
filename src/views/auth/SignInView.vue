@@ -1,11 +1,11 @@
 <template>
     <div id='wrapper' class='ui very padded raised segment' :class='{loading: loading}'>
-        <button @click='signInWithFacebook' class='ui fluid large facebook button'>
+        <button @click='facebookSignIn' class='ui fluid large facebook button'>
             <i class='facebook icon'></i>
             Sign in with Facebook
         </button>
         <div class='ui horizontal divider'>Or</div>
-        <form @submit.prevent='signIn' class='ui form' :class='{error: errorMessage}'>
+        <form @submit.prevent='emailSignIn' class='ui form' :class='{error: errorMessage}'>
             <email :value.sync='user.email' :show-errors='showErrors' v-ref:email></email>
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password></password>
             <button class='ui fluid blue button' type='submit'>
@@ -46,18 +46,23 @@ export default {
     }),
     components: { Email, Password },
     methods: {
-        signIn() {
+        facebookSignIn() {
+            this.loading = true
+            this.signInWithFacebook()
+                .then(() => {
+                    this.reset()
+                }).catch(error => {
+                    this.loading = false
+                    this.errorMessage = error.message
+                })
+        },
+        emailSignIn() {
             const email = this.user.email.trim()
             const password = this.user.password.trim()
             // todo: check route args to see if reauth or sign-in.
             this.signInWithEmail(email, password).then(() => {
                 this.reset()
-                const redirect = this.redirect
-                if (redirect) {
-                    this.$router.go({ path: redirect })
-                } else {
-                    this.$router.go(routes.home)
-                }
+                this.handleRedirect()
             }).catch(error => {
                 this.loading = false
                 this.errorMessage = error.message
@@ -65,10 +70,18 @@ export default {
             this.loading = true
         },
         reset() {
-            this.errorMessage = ''
-            this.user.email = ''
-            this.user.password = ''
-            this.loading = false
+            this.errorMessage   = ''
+            this.user.email     = ''
+            this.user.password  = ''
+            this.loading        = false
+        },
+        handleRedirect() {
+            const redirect = this.redirect
+            if (redirect) {
+                this.$router.go({ path: redirect })
+            } else {
+                this.$router.go(routes.home)
+            }
         }
     },
     watch: {
