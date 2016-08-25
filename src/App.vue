@@ -1,8 +1,10 @@
 <template>
-    <div class='ui container'>
+    <div>
         <app-header></app-header>
-        <router-view class='fade' transition='fade' transition-mode='out-in'>
-        </router-view>
+        <div class='ui top-margin container'>
+            <router-view class='fade' transition='fade' transition-mode='out-in'>
+            </router-view>
+        </div>
     </div>
 </template>
 
@@ -22,5 +24,8 @@ export default {
 }
 .fade-enter, .fade-leave {
     opacity: 0;
+}
+.ui.top-margin.container {
+    margin-top: 75px;
 }
 </style>

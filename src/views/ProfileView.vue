@@ -18,8 +18,8 @@
     </div>
   </div>
 </div-->
-
-        <h1>Edit Profile</h1>
+        <profile-tab></profile-tab>
+        <!--h1>Edit Profile</h1>
         <form @submit.prevent='update' class='ui form' :class='{error: errorMessage}'>
             <email :value.sync='user.email' placeholder=''></email>
             <password :value.sync='user.password' placeholder=''></password>
@@ -30,7 +30,7 @@
                 onmousedown='return false'
             >
                 <label>Avatar</label>
-                <!-- todo: add image & file upload here -->
+
             </div>
             <delete-account></delete-account>
             <div class='ui error message'>
@@ -40,7 +40,8 @@
             <button class='ui basic green button' :class='{loading: loading}' type='submit'>
                 <i class='fitted icon checkmark'></i> Update
             </button>
-        </form>
+        </form-->
+
     </div>
 </template>
 
@@ -49,6 +50,8 @@ import Email            from '../components/form/Email'
 import Password         from '../components/form/Password'
 import Name             from '../components/form/Name'
 import DeleteAccount    from '../components/form/DeleteAccountButton'
+
+import ProfileTab from './profile/Profile'
 
 export default {
     data: () => ({
@@ -62,7 +65,7 @@ export default {
         },
         errorMessage: ''
     }),
-    components: { Email, Password, Name, DeleteAccount },
+    components: { Email, Password, Name, DeleteAccount, ProfileTab },
     methods: {
         update() {
 
