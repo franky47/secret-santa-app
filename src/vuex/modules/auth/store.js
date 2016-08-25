@@ -1,4 +1,3 @@
-// import Vue from 'vue'
 import {
     AUTH_SIGNED_IN,
     AUTH_SIGNED_OUT,
@@ -6,9 +5,19 @@ import {
     AUTH_ERROR
 } from '../../mutation-types'
 
+const defaults = {
+    photoURL: 'http://gravatar.com/avatar?d=mm&s=100'
+}
+
 const state = {
     signedIn: false,
-    user: null,
+    firebaseUser: null,
+    user: {
+        id:     '',
+        email:  '',
+        name:   '',
+        photoURL: defaults.photoURL
+    },
     error: null
 }
 
@@ -22,7 +31,18 @@ const mutations = {
         state.error = null
     },
     [AUTH_USER_CHANGED] (state, user) {
-        state.user = user
+        if (user) {
+            state.user.id       = user.id
+            state.user.email    = user.email
+            state.user.name     = user.displayName || user.email
+            state.user.photoURL = user.photoURL || defaults.photoURL
+        } else {
+            state.user.id       = ''
+            state.user.name     = ''
+            state.user.email    = ''
+            state.user.photoURL = defaults.photoURL
+        }
+        state.firebaseUser = user
         state.error = null
     },
     [AUTH_ERROR] (state, error) {

@@ -1,7 +1,7 @@
 <template>
     <div class='ui horizontal list right floated' v-show='isSignedIn' transition='fade'>
         <div class='item'>
-            <img class='ui mini circular image' :src='photoUrl' @click='goToProfile'>
+            <img class='ui mini circular image' :src='photoURL' @click='goToProfile'>
             <div class='content'>
                 <div class='ui sub header'><span class='no-transform'>{{name}}</span></div>
                 <a href='#' @click.stop='triggerSignOut'>
@@ -13,21 +13,15 @@
 </template>
 
 <script>
-import {
-    isSignedIn,
-    getCurrentUserName,
-    getCurrentUserPictureURL
-} from '../vuex/modules/auth/getters'
-import {
-    signOut
-} from '../vuex/modules/auth/actions'
+import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
+import { signOut } from '../vuex/modules/auth/actions'
 import * as routes from '../router/routes-definitions'
 
 export default {
     data: () => ({
         fadeOutBuffer: {
             name: '',
-            photoUrl: '',
+            photoURL: '',
             use: false
         }
     }),
@@ -38,7 +32,7 @@ export default {
         triggerSignOut: function() {
             const buffer = this.fadeOutBuffer
             buffer.name     = this.userName
-            buffer.photoUrl = this.userPhoto
+            buffer.photoURL = this.userPhoto
             buffer.use      = true
             setTimeout(() => {
                 buffer.use = false // Let the animation end
@@ -53,16 +47,16 @@ export default {
             const buffer = this.fadeOutBuffer
             return buffer.use ? buffer.name : this.userName
         },
-        photoUrl() {
+        photoURL() {
             const buffer = this.fadeOutBuffer
-            return buffer.use ? buffer.photoUrl : this.userPhoto
+            return buffer.use ? buffer.photoURL : this.userPhoto
         }
     },
     vuex: {
         getters: {
             isSignedIn,
-            userName: getCurrentUserName,
-            userPhoto: getCurrentUserPictureURL
+            userName:  getCurrentUser.name,
+            userPhoto: getCurrentUser.photoURL
         },
         actions: {
             signOut
