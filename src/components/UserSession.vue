@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import Avatar from './Avatar'
 import {
     isSignedIn,
     getCurrentUserName,
@@ -32,9 +31,6 @@ export default {
             use: false
         }
     }),
-    components: {
-        Avatar
-    },
     methods: {
         goToProfile: () => {
             this.$router.go(routes.userProfile)

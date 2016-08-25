@@ -11,8 +11,9 @@
                 onmousedown='return false'
             >
                 <label>Avatar <i class='ui small grey icon refresh' @click='changeColor'></i></label>
-                <avatar :back-color='user.avatarColor' :text='avatarLetter'></avatar>
+                <avatar :back-color='user.avatarColor' :text='avatarLetter' v-ref:avatar></avatar>
             </div>
+            <avatar v-ref:avatar></avatar>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import Avatar   from '../../components/Avatar'
+import Avatar   from '../../components/form/Avatar'
 import Email    from '../../components/form/Email'
 import Password from '../../components/form/Password'
 import Name     from '../../components/form/Name'
@@ -83,7 +84,7 @@ export default {
             }
             this.registerWithEmail(this.user.email, this.user.password)
                 .then(() => {
-                    const avatar = this.$children[0]
+                    const avatar = this.$refs.avatar
                     const photoURL = avatar.convertToInlineImage()
                     const profile = {
                         displayName: this.user.name,
