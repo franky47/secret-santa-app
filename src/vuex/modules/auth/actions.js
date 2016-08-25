@@ -2,7 +2,6 @@ import {
     AUTH_SIGNED_IN,
     AUTH_SIGNED_OUT,
     AUTH_USER_CHANGED,
-    AUTH_USER_UPDATED,
     AUTH_ERROR
 } from '../../mutation-types'
 import { isSignedIn } from './getters'
@@ -48,7 +47,8 @@ export const updateUserProfile = ({dispatch}, profile) => {
     return firebase.auth.updateUserProfile(profile)
         .then(result => {
             // Update user info as it might not be notified by auth changed cbk
-            dispatch(AUTH_USER_UPDATED, profile)
+            const user = firebase.auth.currentUser
+            dispatch(AUTH_USER_CHANGED, user)
             return result
         })
         .catch(dispatchAndChain(dispatch))
