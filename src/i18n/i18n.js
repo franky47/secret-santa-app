@@ -4,7 +4,7 @@ import userLocale from 'locale2'
 
 export const setLocale = locale => { Vue.config.lang = locale }
 export const loadLocale = locale => {
-    Vue.locale(locale, require(`./translations-${locale}`).default)
+    Vue.locale(locale, require(`./translations/${locale}`).default)
 }
 
 Vue.use(VueI18n)
