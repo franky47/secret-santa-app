@@ -1,8 +1,8 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>Password
+        <label>{{ $t('password') }}
             <span v-if='instructions' class='instructions'>
-                ({{minSize}} characters minimum)
+                {{ $t('passwordLength', { length: minSize }) }}
             </span>
         </label>
         <input v-model='value' type='password' :placeholder='placeholder'>
