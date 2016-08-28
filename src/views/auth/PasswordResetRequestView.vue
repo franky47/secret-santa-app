@@ -1,4 +1,5 @@
 <template>
+    <p>Enter your email to reset your password</p>
 </template>
 
 <script>
