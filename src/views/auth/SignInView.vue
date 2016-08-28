@@ -11,14 +11,17 @@
             <button class='ui fluid blue button' type='submit'>
                 <i class='fitted icon sign in'></i> Sign In
             </button>
+            <div class='field centered text padded'>
+                <a v-link='{ path: routes.auth.passwordReset.request }'>Forgot your password ?</a>
+            </div>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
             </div>
         </form>
         <div class='ui divider'></div>
-        <div class='register'>
-            <a v-link='{ path: routes.auth.register }'>Create an account</a></p>
+        <div class='centered text'>
+            <a v-link='{ path: routes.auth.register }'>Create an account</a>
         </div>
     </div>
 </template>
@@ -49,9 +52,7 @@ export default {
         facebookSignIn() {
             this.loading = true
             this.signInWithFacebook()
-                .then(() => {
-                    this.reset()
-                }).catch(error => {
+                .catch(error => {
                     this.loading = false
                     this.errorMessage = error.message
                 })
@@ -112,9 +113,12 @@ export default {
     min-width: 360px;
     margin: 130px auto;
     padding-bottom: 23px;
-    background: #fafafa;
+    /*background: #fafafa;*/
 }
-.register {
+.centered.text {
     text-align: center;
+}
+.padded {
+    padding-top: 12px;
 }
 </style>
