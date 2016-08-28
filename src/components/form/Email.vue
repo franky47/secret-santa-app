@@ -1,11 +1,12 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>E-mail <span v-if='!valid && showErrors'>must be valid</span></label>
+        <label>E-mail <span v-if='!valid && showErrors'>{{ $t('validation.mustBeValid') }}</span></label>
         <input v-model='value' type='email' :placeholder='placeholder'>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 const emailRE = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
@@ -25,7 +26,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: 'eg: santa.claus@xmas.com'
+            default: () => Vue.t('eg') + ': santa.claus@xmas.com'
         },
         showErrors: {
             type: Boolean,

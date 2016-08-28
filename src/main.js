@@ -11,6 +11,7 @@ import {
     authChangedCallback,
     authErrorCallback
 } from './vuex/modules/auth/actions'
+import { initLocale } from './vuex/modules/i18n/actions'
 import './style.css'
 
 sync(store, router)
@@ -23,11 +24,16 @@ firebase.use(FirebaseAuth, {
 })
 firebase.use(FirebaseStorage, {})
 
-firebase.auth.getRedirectResult().then(user => {
-    // Start the routed when auth state is known,
+Promise.all([
+    firebase.auth.getRedirectResult(),
+    initLocale(store)
+]).then(results => {
+    // Start the router when everything is initialized,
     // to avoid FOUC (Flashes Of Unauthorized Content).
     router.start({
         store,
         components: { App }
     }, '#app')
+}).catch(error => {
+    console.log('Error starting app', error)
 })

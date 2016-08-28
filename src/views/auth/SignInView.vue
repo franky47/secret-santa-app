@@ -2,17 +2,19 @@
     <div id='wrapper' class='ui very padded raised segment' :class='{loading: loading}'>
         <button @click='facebookSignIn' class='ui fluid large facebook button'>
             <i class='facebook icon'></i>
-            Sign in with Facebook
+            {{ $t('auth.signInWithFacebook') }}
         </button>
-        <div class='ui horizontal divider'>Or</div>
+        <div class='ui horizontal divider'>{{ $t('or') }}</div>
         <form @submit.prevent='emailSignIn' class='ui form' :class='{error: errorMessage}'>
             <email :value.sync='user.email' :show-errors='showErrors' v-ref:email></email>
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password></password>
             <button class='ui fluid blue button' type='submit'>
-                <i class='fitted icon sign in'></i> Sign In
+                <i class='fitted icon sign in'></i> {{ $t('auth.signIn') }}
             </button>
             <div class='field centered text padded'>
-                <a v-link='{ path: routes.auth.passwordReset.request }'>Forgot your password ?</a>
+                <a v-link='{ path: routes.auth.passwordReset.request }'>
+                    {{ $t('auth.forgotPassword') }}
+                </a>
             </div>
             <div class='ui error message'>
                 <div class='header'>Error</div>
@@ -21,7 +23,9 @@
         </form>
         <div class='ui divider'></div>
         <div class='centered text'>
-            <a v-link='{ path: routes.auth.register }'>Create an account</a>
+            <a v-link='{ path: routes.auth.register }'>
+                {{ $t('auth.register')}}
+            </a>
         </div>
     </div>
 </template>
