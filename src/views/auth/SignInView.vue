@@ -81,7 +81,7 @@ export default {
             this.loading        = false
         },
         handleRedirect() {
-            const redirect = this.redirect
+            const redirect = this.$router.query.next || null
             if (redirect) {
                 this.$router.go({ path: redirect })
             } else {
@@ -89,18 +89,21 @@ export default {
             }
         }
     },
+    created() {
+        if (this.isSignedIn) {
+            this.handleRedirect()
+        }
+    },
     watch: {
         isSignedIn(signedIn) {
-            const redirect = this.redirect
-            if (signedIn && redirect) {
-                this.$router.go({ path: redirect })
+            if (signedIn) {
+                this.handleRedirect()
             }
         }
     },
     vuex: {
         getters: {
-            isSignedIn,
-            redirect: state => state.route.query.then || null
+            isSignedIn
         },
         actions: {
             signInWithFacebook,
@@ -117,7 +120,6 @@ export default {
     min-width: 360px;
     margin: 130px auto;
     padding-bottom: 23px;
-    /*background: #fafafa;*/
 }
 .centered.text {
     text-align: center;

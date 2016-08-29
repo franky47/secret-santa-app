@@ -41,7 +41,7 @@ router.beforeEach(transition => {
         transition.redirect({
             path: routes.auth.signIn,
             query: {
-                then: transition.to.path
+                next: transition.to.path
             }
         })
     } else {
