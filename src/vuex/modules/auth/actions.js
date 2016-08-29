@@ -6,6 +6,7 @@ import {
 } from '../../mutation-types'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
+import * as db from '../../../api/db/user'
 
 const dispatchAndChain = dispatch => error => {
     dispatch(AUTH_ERROR, error)
@@ -18,6 +19,7 @@ export const registerWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
         .then(result => {
             dispatch(AUTH_SIGNED_IN)
+            db.create(result.uid, result)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -44,14 +46,15 @@ export const signOut = ({dispatch}) => {
         .catch(dispatchAndChain(dispatch))
 }
 export const updateUserProfile = ({dispatch}, profile) => {
-    return firebase.auth.updateUserProfile(profile)
-        .then(result => {
-            // Update user info as it might not be notified by auth changed cbk
-            const user = firebase.auth.currentUser
-            dispatch(AUTH_USER_CHANGED, user)
-            return result
-        })
-        .catch(dispatchAndChain(dispatch))
+    const user = firebase.auth.currentUser
+    return Promise.all([
+        firebase.auth.updateUserProfile(profile),
+        db.update(user.uid, profile)
+    ]).then(result => {
+        dispatch(AUTH_USER_CHANGED, user)
+        return result
+    })
+    .catch(dispatchAndChain(dispatch))
 }
 export const deleteAccount = ({dispatch}, profile) => {
     return firebase.auth.deleteUserAccount()
