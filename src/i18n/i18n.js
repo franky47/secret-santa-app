@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
-// todo: check if there's not that already available on NPM..
+// Use l10n if needs grow bigger
 export const localeNames = {
     'en': 'English',
     'fr': 'Français'
