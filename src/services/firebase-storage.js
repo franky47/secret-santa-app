@@ -58,6 +58,7 @@ export default class FirebaseStorageService extends FirebaseFeature {
         if (this.uploadTasks.has(path)) {
             const task = this.uploadTasks[path]
             task.unregisterListener()
+            this.uploadTasks.delete(path)
         }
     }
 }
