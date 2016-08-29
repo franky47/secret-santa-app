@@ -13,5 +13,7 @@ export default {
     language: 'Language',
     or: 'or',
     eg: 'eg',
-    password:       'Password'
+    password:       'Password',
+    home: 'Home',
+    profile: 'Profile'
 }

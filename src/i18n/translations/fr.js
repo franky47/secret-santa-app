@@ -13,5 +13,7 @@ export default {
     language: 'Langue',
     or: 'ou',
     eg: 'ex',
-    password:       'Mot de passe'
+    password:       'Mot de passe',
+    home: 'Accueil',
+    profile: 'Profil'
 }
