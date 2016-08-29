@@ -5,8 +5,7 @@ export const mock = {
     users: {
         'userId': {
             displayName: 'François Best',
-            photoURL: 'http://placehold.it/100x100',
-            locale: 'fr',
+            photoURL: 'http://placehold.it/100x100'
             // ...
         }
     }
