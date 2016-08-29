@@ -81,7 +81,10 @@ export default {
             this.loading        = false
         },
         handleRedirect() {
-            const redirect = this.$router.query.next || null
+            let redirect = null
+            if (this.$router.query) {
+                redirect = this.$router.query.next
+            }
             if (redirect) {
                 this.$router.go({ path: redirect })
             } else {
