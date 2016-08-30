@@ -13,8 +13,15 @@
                     {{item.name}}
                 </div>
             </div>
-            <div class='right item'>
-                <div class='circle avatar'></div>
+            <div class='right item' v-if='isSignedIn'>
+                <div class='circle avatar' @click='accountOpen = !accountOpen'></div>
+                <account-panel v-if='accountOpen'
+                    transition='popup'
+                    :open.sync='accountOpen'>
+                </account-panel>
+            </div>
+            <div class='right item' v-if='!isSignedIn'>
+                <a v-link='signInLink'></a>
             </div>
         </div>
     </div>
@@ -22,13 +29,15 @@
 
 <script>
 import Vue from 'vue'
-import UserSession from './UserSession'
+import AccountPanel from './AccountPanel'
 import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
+import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
 
 export default {
     data: () => ({
         mobile: false,
+        accountOpen: false,
         links: [
             { name: 'home',             path: routes.home },
             { name: 'auth.signIn',      path: routes.auth.signIn },
@@ -37,7 +46,7 @@ export default {
         ]
     }),
     components: {
-        UserSession
+        AccountPanel
     },
     computed: {
         menu() {
@@ -49,6 +58,15 @@ export default {
                     exact: true
                 }
             }))
+        },
+        signInLink() {
+            let link = {
+                path: routes.auth.signIn
+            }
+            if (this.path) {
+                Object.assign(link, { query: { next: this.path } })
+            }
+            return link
         }
     },
     mixins: [ onWindowResize ],
@@ -56,6 +74,13 @@ export default {
         this.onWindowResize(() => {
             this.mobile = window.innerWidth <= 768
         })
+    },
+    vuex: {
+        getters: {
+            isSignedIn,
+            userPhoto: getCurrentUser.photoURL,
+            path: state => state.route.path
+        }
     }
 }
 </script>
@@ -112,6 +137,12 @@ export default {
 
 .circle {
   border-radius: 100%;
+}
+.popup-transition {
+    transition: all .3s ease;
+}
+.popup-enter, .popup-leave {
+    opacity: 0;
 }
 
 </style>
