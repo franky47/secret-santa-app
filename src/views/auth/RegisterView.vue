@@ -5,15 +5,7 @@
             <email :value.sync='user.email' :show-errors='showErrors' v-ref:email required></email>
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password instructions required></password>
             <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
-            <div class='field' v-if='user.name'
-                style='user-select:none' unselectable='on'
-                onselectstart='return false'
-                onmousedown='return false'
-            >
-                <label>Avatar <i class='ui small grey icon refresh' @click='changeColor'></i></label>
-                <avatar :back-color='user.avatarColor' :text='avatarLetter' v-ref:avatar></avatar>
-            </div>
-            <avatar v-ref:avatar></avatar>
+            <avatar v-ref:avatar :user-name='user.name'></avatar>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
@@ -33,7 +25,6 @@ import Avatar   from '../../components/form/Avatar'
 import Email    from '../../components/form/Email'
 import Password from '../../components/form/Password'
 import Name     from '../../components/form/Name'
-import materialColors from '../../utility/material-colors'
 import {
     registerWithEmail,
     updateUserProfile
@@ -47,8 +38,7 @@ export default {
         user: {
             email: '',
             password: '',
-            name: '',
-            avatarColor: ''
+            name: ''
         },
         errorMessage: ''
     }),
@@ -111,12 +101,6 @@ export default {
             this.user.password = ''
             this.user.name = ''
             this.errorMessage = ''
-        },
-        changeColor() {
-            const colors = []
-            for (let color in materialColors) { colors.push(materialColors[color]) }
-            const pick = (array) => array[Math.floor(Math.random() * array.length)]
-            this.user.avatarColor = pick(colors)
         }
     },
     vuex: {
@@ -124,9 +108,6 @@ export default {
             registerWithEmail,
             updateUserProfile
         }
-    },
-    attached() {
-        this.changeColor()
     }
 }
 </script>

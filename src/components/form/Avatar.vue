@@ -7,8 +7,12 @@
         <label>Avatar</label>
         <generic-avatar :back-color='color' :text='letter' v-ref:avatar></generic-avatar>
         <div class='avatar controls'>
+            <color-picker :value.sync='color' v-if='selectColor' class='color-picker'
+                v-on-clickaway='selectColor = false'
+                transition='popup'
+            ></color-picker>
             <div class='ui list'>
-                <div class='item'><i class='icon refresh'></i><div class='content'><a @click='changeColor'>Change color</a></div></div>
+                <div class='item'><i class='icon paint brush'></i><div class='content'><a @click.stop='selectColor = true'>Change color</a></div></div>
                 <div class='item'><i class='icon close'></i><div class='content'><a @click='removeImage'>Remove image</a></div></div>
             </div>
         </div>
@@ -19,13 +23,17 @@
 <script>
 import { avatarColors } from '../../utility/material-colors'
 import GenericAvatar from '../GenericAvatar'
+import ColorPicker from '../ColorPicker'
+import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
     data: () => ({
         useGeneric: false,
+        selectColor: false,
         color: ''
     }),
-    components: { GenericAvatar },
+    mixins: [ clickaway ],
+    components: { GenericAvatar, ColorPicker },
     props: {
         userName: {
             type: String,
@@ -61,5 +69,14 @@ export default {
     margin-left: 10px;
     display: inline-block;
     vertical-align: top
+}
+.color-picker {
+    position: absolute;
+}
+.popup-transition {
+    transition: all .3s ease;
+}
+.popup-enter, .popup-leave {
+    opacity: 0;
 }
 </style>
