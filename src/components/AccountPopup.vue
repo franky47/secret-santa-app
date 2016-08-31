@@ -1,11 +1,10 @@
 <template>
-    <div class='account popup'>
+    <div class='account popup' v-on-clickaway='open=false'>
         <div class='ui center aligned segment'>
             <img class='ui circular centered image' :src='userPhoto'>
             <div class='ui header'>{{userName}}
                 <div class='sub header'>{{userEmail}}</div>
             </div>
-            <div class='meta'></div>
             <div class='ui primary basic fluid button'>
                 <i class='fitted user icon'></i>
                 My Account
@@ -20,6 +19,7 @@
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway'
 import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
 import { signOut } from '../vuex/modules/auth/actions'
 import * as routes from '../router/routes-definitions'
@@ -39,6 +39,7 @@ export default {
             twoWay: true
         }
     },
+    mixins: [ clickaway ],
     methods: {
         goToProfile: () => {
             this.$router.go(routes.userProfile)
@@ -94,6 +95,11 @@ export default {
     top: 45px;
     right: 0;
     min-width: 250px;
+}
+@media only screen and (max-width: 768px) {
+    .account.popup {
+        right: 5px;
+    }
 }
 
 </style>

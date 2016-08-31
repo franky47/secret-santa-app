@@ -14,11 +14,11 @@
                 </div>
             </div>
             <div class='right item' v-if='isSignedIn'>
-                <div class='circle avatar' @click='accountOpen = !accountOpen'></div>
-                <account-panel v-if='accountOpen'
+                <img class='ui circular avatar image' @click.stop='accountOpen = !accountOpen' :src='userPhoto'>
+                <account-popup v-if='accountOpen'
                     transition='popup'
                     :open.sync='accountOpen'>
-                </account-panel>
+                </account-popup>
             </div>
             <div class='right item' v-if='!isSignedIn'>
                 <a v-link='signInLink'></a>
@@ -29,7 +29,7 @@
 
 <script>
 import Vue from 'vue'
-import AccountPanel from './AccountPanel'
+import AccountPopup from './AccountPopup'
 import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
 import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
@@ -46,7 +46,7 @@ export default {
         ]
     }),
     components: {
-        AccountPanel
+        AccountPopup
     },
     computed: {
         menu() {
