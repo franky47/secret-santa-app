@@ -35,5 +35,5 @@ Promise.all([
         components: { App }
     }, '#app')
 }).catch(error => {
-    console.log('Error starting app', error)
+    console.log('Error starting app:' + error.message)
 })

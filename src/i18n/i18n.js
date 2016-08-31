@@ -21,7 +21,7 @@ export const loadLocale = locale => {
                     break
                 }
             }
-            locale = matched === null ? 'en' : locale
+            locale = matched || 'en'
             Vue.locale(locale, require(`./translations/${locale}`).default)
             resolve(locale)
         } catch (error) {
