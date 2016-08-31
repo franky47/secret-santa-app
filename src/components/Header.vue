@@ -71,6 +71,7 @@ export default {
     },
     mixins: [ onWindowResize ],
     created() {
+        this.mobile = window.innerWidth <= 768
         this.onWindowResize(() => {
             this.mobile = window.innerWidth <= 768
         })
