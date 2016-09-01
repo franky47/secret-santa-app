@@ -22,20 +22,14 @@ import Avatar                   from '../../components/form/Avatar'
 import LanguageSelector         from '../../components/form/Select'
 import { getCurrentUser }       from '../../vuex/modules/auth/getters'
 import { updateUserProfile }    from '../../vuex/modules/auth/actions'
-import {
-    localeNames,
-    supportedLocales
-} from '../../i18n/i18n'
+import { localeNames }          from '../../i18n/i18n'
 import { setLocale }            from '../../vuex/modules/i18n/actions'
 import { locale } from '../../vuex/modules/i18n/getters'
 
 export default {
     data: () => ({
         newName: '',
-        newLocale: {
-            value: '',
-            name: ''
-        },
+        newLocale: '',
         loading: false,
         errorMessage: ''
     }),
@@ -47,7 +41,7 @@ export default {
                 displayName: this.newName
             }
             Promise.all([
-                this.setLocale(this.newLocale.value),
+                this.setLocale(this.newLocale),
                 this.updateUserProfile(profile)
             ]).then(() => {
                 this.reset()
@@ -59,27 +53,20 @@ export default {
         },
         reset() {
             this.newName = this.name
-            this.newLocale.value = this.locale
-            this.newLocale.name  = supportedLocales[this.locale]
+            this.newLocale = this.locale
             this.loading = false
         }
     },
     computed: {
-        currentLocale() {
-            return {
-                value: this.locale,
-                name: localeNames[this.locale]
-            }
-        },
-        availableLocales() {
-            return supportedLocales.map(l => ({
-                value: l,
-                name: localeNames[l]
-            }))
-        }
+        availableLocales: () => localeNames
     },
     created() {
         this.reset()
+    },
+    watch: {
+        locale(value) {
+            this.newLocale = value
+        }
     },
     vuex: {
         actions: {

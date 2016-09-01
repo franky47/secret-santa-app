@@ -3,13 +3,13 @@
         <label>{{ label }}</label>
         <div class='ui fluid search dropdown selection' @click='this.menuVisible = !this.menuVisible' :class='dropDownClass'>
             <select class='ui compact dropdown'>
-                <option v-for='opt in options' :value='opt.value'>{{ opt.name }}</option>
+                <option v-for='opt in optionKeys' :value='opt'>{{ options[opt] }}</option>
             </select>
             <i class='dropdown icon'></i>
             <!-- input v-if='searchable' class='search' autocomplete='off' tabindex='0' @change='' -->
-            <div class='text'>{{ value.name }}</div>
+            <div class='text'>{{ options[value] }}</div>
             <div class='menu transition' tabindex='-1' :class='menuClass'>
-                <div v-for='opt in options' class='item' :data-value='opt.value' @click='select(opt)'>{{ opt.name }}</div>
+                <div v-for='opt in optionKeys' class='item' :data-value='opt' @click='select(opt)'>{{ options[opt] }}</div>
             </div>
         </div>
     </div>
@@ -31,8 +31,8 @@ export default {
             default: false
         },
         options: {
-            type: Array,
-            default: () => [],
+            type: Object,
+            default: () => ({}),
             required: true
         },
         defaultText: {
@@ -40,9 +40,8 @@ export default {
             default: ''
         },
         value: {
-            type: Object,
+            type: String,
             required: true,
-            default: () => ({ value: null, name: '' }),
             twoWay: true
         }
     },
@@ -50,6 +49,9 @@ export default {
         select(option) {
             this.value = option
         }
+    },
+    ready() {
+        console.log(this.options)
     },
     computed: {
         dropDownClass() {
@@ -63,6 +65,11 @@ export default {
                 visible: this.menuVisible,
                 hidden: !this.menuVisible
             }
+        },
+        optionKeys() {
+            const keys = Object.keys(this.options)
+            console.log(keys)
+            return keys
         }
     }
 }
