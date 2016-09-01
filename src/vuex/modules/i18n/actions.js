@@ -8,10 +8,13 @@ import Vue from 'vue'
 import * as i18n from '../../../i18n/i18n'
 import * as getters from './getters'
 import nativeLocale from 'locale2'
+import localStorage from '../../../api/localStorage'
 
 export const initLocale = ({dispatch, state}) => {
     dispatch(I18N_INIT, nativeLocale)
-    return setLocale({dispatch, state}, nativeLocale)
+    const persistentLocale = localStorage.get('locale')
+    const locale = persistentLocale || nativeLocale
+    return setLocale({dispatch, state}, locale)
 }
 
 export const loadLocale = ({dispatch, state}, locale) => {
