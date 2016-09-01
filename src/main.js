@@ -1,11 +1,12 @@
 import './semantic'
 import App from './App'
 import './i18n/i18n'
-import store from './vuex/store'
-import router from './router/router'
-import firebase from './services/firebase'
-import FirebaseAuth from './services/firebase-auth'
-import FirebaseStorage from './services/firebase-storage'
+import store                from './vuex/store'
+import router               from './router/router'
+import firebase             from './services/firebase'
+import FirebaseAuth         from './services/firebase-auth'
+import FirebaseDatabase     from './services/firebase-database'
+import FirebaseStorage      from './services/firebase-storage'
 import { sync } from 'vuex-router-sync'
 import {
     authChangedCallback,
@@ -22,6 +23,7 @@ firebase.use(FirebaseAuth, {
         error:   error => authErrorCallback(store, error)
     }
 })
+firebase.use(FirebaseDatabase, {})
 firebase.use(FirebaseStorage, {})
 
 Promise.all([
