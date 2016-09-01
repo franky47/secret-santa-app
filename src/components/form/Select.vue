@@ -9,7 +9,7 @@
             <!-- input v-if='searchable' class='search' autocomplete='off' tabindex='0' @change='' -->
             <div class='text'>{{ options[value] }}</div>
             <div class='menu transition' tabindex='-1' :class='menuClass'>
-                <div v-for='opt in optionKeys' class='item' :data-value='opt' @click='select(opt)'>{{ options[opt] }}</div>
+                <div v-for='opt in optionKeys' class='item' :data-value='opt' @click='value = opt'>{{ options[opt] }}</div>
             </div>
         </div>
     </div>
@@ -45,14 +45,6 @@ export default {
             twoWay: true
         }
     },
-    methods: {
-        select(option) {
-            this.value = option
-        }
-    },
-    ready() {
-        console.log(this.options)
-    },
     computed: {
         dropDownClass() {
             return {
@@ -67,9 +59,7 @@ export default {
             }
         },
         optionKeys() {
-            const keys = Object.keys(this.options)
-            console.log(keys)
-            return keys
+            return Object.keys(this.options)
         }
     }
 }

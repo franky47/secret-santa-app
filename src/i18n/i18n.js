@@ -23,14 +23,11 @@ export const getSuitableLocaleFor = locale => {
 }
 
 export const loadLocale = locale => {
-    console.log('Loading locale ' + locale)
     return new Promise((resolve, reject) => {
         try {
             Vue.locale(locale, require(`./translations/${locale}`).default)
-            console.log('Loaded locale ' + locale)
             resolve(locale)
         } catch (error) {
-            console.log(error.message)
             reject(error)
         }
     })
