@@ -29,9 +29,10 @@ export const loadLocale = ({dispatch, state}, locale) => {
 }
 
 export const setLocale = ({dispatch, state}, locale) => {
-    return loadLocale({dispatch, state}, locale).then(() => {
-        Vue.config.lang = locale
-        dispatch(I18N_SET_LOCALE, locale)
-        return Promise.resolve(locale)
+    const suited = i18n.getSuitableLocaleFor(locale)
+    return loadLocale({dispatch, state}, suited).then(() => {
+        Vue.config.lang = suited
+        dispatch(I18N_SET_LOCALE, suited)
+        return Promise.resolve(suited)
     })
 }
