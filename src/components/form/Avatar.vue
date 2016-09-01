@@ -78,6 +78,7 @@ export default {
 }
 .popup-transition {
     transition: all .3s ease;
+    z-index: 1;
 }
 .popup-enter, .popup-leave {
     opacity: 0;
