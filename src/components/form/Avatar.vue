@@ -54,8 +54,11 @@ export default {
             const input = document.getElementById('avatarSelectFile')
             input.click()
         },
-        getUrl() {
+        getURL() {
             return this.$refs.avatar.convertToInlineImage()
+        },
+        removeImage() {
+            // todo: implement me.
         }
     },
     attached() {

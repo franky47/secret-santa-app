@@ -76,7 +76,7 @@ export default {
             this.registerWithEmail(this.user.email, this.user.password)
                 .then(() => {
                     const avatar = this.$refs.avatar
-                    const photoURL = avatar.convertToInlineImage()
+                    const photoURL = avatar.getURL()
                     const profile = {
                         displayName: this.user.name,
                         photoURL
