@@ -19,7 +19,7 @@ export const registerWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
         .then(result => {
             dispatch(AUTH_SIGNED_IN)
-            db.create(result.uid, result)
+            db.createUser(result.uid, result)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -49,7 +49,7 @@ export const updateUserProfile = ({dispatch}, profile) => {
     const user = firebase.auth.currentUser
     return Promise.all([
         firebase.auth.updateUserProfile(profile),
-        db.update(user.uid, profile)
+        db.updateUser(user.uid, profile)
     ]).then(result => {
         dispatch(AUTH_USER_CHANGED, user)
         return result

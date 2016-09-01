@@ -11,19 +11,20 @@ export const mock = {
     }
 }
 
-export const create = (id, user = {}) => {
+export const createUser = (id, user = {}) => {
     const path = `/users/${id}`
-    firebase.db.once(path).then(snapshot => {
-        if (snapshot.val() === null) {
-            return firebase.db.set(path, {
-                displayName: user.displayName || null,
-                photoURL:    user.photoURL || null
-            })
-        } else {
+    return firebase.db.once(path).then(snapshot => {
+        if (snapshot.val() !== null) {
             return Promise.resolve() // Already exists
         }
+        return firebase.db.set(path, {
+            displayName: user.displayName || null,
+            photoURL:    user.photoURL    || null
+        })
     }).catch(errorWhile('creating user'))
 }
-export const update = (id, user) => {
+
+export const updateUser = (id, user) => {
     return firebase.db.update(`/users/${id}`, user)
+        .catch(errorWhile('updating user'))
 }
