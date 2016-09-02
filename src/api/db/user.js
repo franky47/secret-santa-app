@@ -11,8 +11,8 @@ export const mock = {
     }
 }
 
-export const createUser = (id, user = {}) => {
-    const path = `/users/${id}`
+export const createUser = (uid, user = {}) => {
+    const path = `/users/${uid}`
     return firebase.db.once(path).then(snapshot => {
         if (snapshot.val() !== null) {
             return Promise.resolve() // Already exists
@@ -24,7 +24,7 @@ export const createUser = (id, user = {}) => {
     }).catch(errorWhile('creating user'))
 }
 
-export const updateUser = (id, user) => {
-    return firebase.db.update(`/users/${id}`, user)
+export const updateUser = (uid, user) => {
+    return firebase.db.update(`/users/${uid}`, user)
         .catch(errorWhile('updating user'))
 }

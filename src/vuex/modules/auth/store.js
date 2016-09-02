@@ -13,7 +13,7 @@ const state = {
     signedIn: false,
     firebaseUser: null,
     user: {
-        id:     '',
+        uid:    '',
         email:  '',
         name:   '',
         photoURL: defaults.photoURL
@@ -32,12 +32,12 @@ const mutations = {
     },
     [AUTH_USER_CHANGED] (state, user) {
         if (user) {
-            state.user.id       = user.id
+            state.user.uid      = user.uid
             state.user.email    = user.email
             state.user.name     = user.displayName || user.email
             state.user.photoURL = user.photoURL || defaults.photoURL
         } else {
-            state.user.id       = ''
+            state.user.uid      = ''
             state.user.name     = ''
             state.user.email    = ''
             state.user.photoURL = defaults.photoURL
