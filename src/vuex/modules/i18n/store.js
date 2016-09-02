@@ -21,7 +21,6 @@ const mutations = {
     },
     [I18N_SET_LOCALE]: (state, locale) => {
         state.locale.current = locale
-        localStorage.set('locale', locale)
     },
     [I18N_ADD_LOCALE]: (state, locale) => {
         if (state.locale.loaded.indexOf(locale) === -1) {
@@ -36,4 +35,14 @@ const mutations = {
 export default {
     state,
     mutations
+}
+
+export const plugin = store => {
+    store.subscribe((mutation, state) => {
+        switch (mutation.type) {
+        case I18N_SET_LOCALE:
+            localStorage.set('locale', mutation.payload[0])
+            break
+        }
+    })
 }
