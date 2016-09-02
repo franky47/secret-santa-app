@@ -22,4 +22,43 @@ export default class FirebaseDatabaseService extends FirebaseFeature {
     once(path) {
         return this.db.ref(path).once('value')
     }
+
+    onValueChanged(path, callback) {
+        const ref = this.db.ref(path)
+        ref.on('value', callback)
+        return () => {
+            ref.off('value', callback)
+        }
+    }
+    onChildAdded(path, callback) {
+        const ref = this.db.ref(path)
+        ref.on('child_added', callback)
+        return () => {
+            ref.off('child_added', callback)
+        }
+    }
+    onChildRemoved(path, callback) {
+        const ref = this.db.ref(path)
+        ref.on('child_removed', callback)
+        return () => {
+            ref.off('child_removed', callback)
+        }
+    }
+    onChildChanged(path, callback) {
+        const ref = this.db.ref(path)
+        ref.on('child_changed', callback)
+        return () => {
+            ref.off('child_changed', callback)
+        }
+    }
+    onChildrenChanged(path, callback) {
+        const offAdded   = this.onChildAdded(path, callback)
+        const offRemoved = this.onChildRemoved(path, callback)
+        const offChanged = this.onChildChanged(path, callback)
+        return () => {
+            offAdded()
+            offRemoved()
+            offChanged()
+        }
+    }
 }
