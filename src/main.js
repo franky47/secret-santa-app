@@ -29,7 +29,7 @@ firebase.use(FirebaseStorage, {})
 Promise.all([
     firebase.auth.getRedirectResult(),
     initLocale(store)
-]).then(results => {
+]).then(() => {
     // Start the router when everything is initialized,
     // to avoid FOUC (Flashes Of Unauthorized Content).
     router.start({
