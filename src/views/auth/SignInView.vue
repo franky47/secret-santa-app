@@ -92,18 +92,6 @@ export default {
             }
         }
     },
-    created() {
-        if (this.isSignedIn) {
-            this.handleRedirect()
-        }
-    },
-    watch: {
-        isSignedIn(signedIn) {
-            if (signedIn) {
-                this.handleRedirect()
-            }
-        }
-    },
     vuex: {
         getters: {
             isSignedIn
@@ -112,6 +100,11 @@ export default {
             signInWithFacebook,
             signInWithEmail,
             signOut
+        }
+    },
+    route: {
+        canActivate() {
+            return !this.isSignedIn
         }
     }
 }
