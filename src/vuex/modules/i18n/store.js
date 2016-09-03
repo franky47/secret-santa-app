@@ -37,12 +37,3 @@ export default {
     mutations
 }
 
-export const plugin = store => {
-    store.subscribe((mutation, state) => {
-        switch (mutation.type) {
-        case I18N_SET_LOCALE:
-            localStorage.set('locale', mutation.payload[0])
-            break
-        }
-    })
-}

@@ -2,8 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Import modules
-import auth from './modules/auth/store'
-import i18n, { plugin as i18nPlugin } from './modules/i18n/store'
+import auth         from './modules/auth/store'
+import authPlugin   from './modules/auth/plugin'
+import i18n         from './modules/i18n/store'
+import i18nPlugin   from './modules/i18n/plugin'
+import user         from './modules/user/store'
+import userPlugin   from './modules/user/plugin'
 
 // --
 
@@ -12,9 +16,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     modules: {
         auth,
-        i18n
+        i18n,
+        user
     },
     plugins: [
-        i18nPlugin
+        authPlugin,
+        i18nPlugin,
+        userPlugin
     ]
 })
