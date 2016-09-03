@@ -63,7 +63,7 @@ export default {
     },
     vuex: {
         actions: {
-            auth.actions.deleteAccount
+            deleteAccount: auth.actions.deleteAccount
         }
     }
 }
