@@ -1,9 +1,4 @@
-import {
-    AUTH_SIGNED_IN,
-    AUTH_SIGNED_OUT,
-    AUTH_USER_CHANGED,
-    AUTH_ERROR
-} from '../../mutation-types'
+import auth from './mutations'
 
 const defaults = {
     photoURL: 'http://gravatar.com/avatar?d=mm&s=100'
@@ -22,15 +17,15 @@ const state = {
 }
 
 const mutations = {
-    [AUTH_SIGNED_IN] (state) {
+    [auth.SIGNED_IN] (state) {
         state.signedIn = true
         state.error = null
     },
-    [AUTH_SIGNED_OUT] (state) {
+    [auth.SIGNED_OUT] (state) {
         state.signedIn = false
         state.error = null
     },
-    [AUTH_USER_CHANGED] (state, user) {
+    [auth.USER_CHANGED] (state, user) {
         if (user) {
             state.user.uid      = user.uid
             state.user.email    = user.email
@@ -45,7 +40,7 @@ const mutations = {
         state.firebaseUser = user
         state.error = null
     },
-    [AUTH_ERROR] (state, error) {
+    [auth.ERROR] (state, error) {
         state.error = error
     }
 }

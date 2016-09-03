@@ -1,6 +1,4 @@
-import {
-    USER_SET_INFO
-} from '../../mutation-types'
+import user from './mutations'
 
 const state = {
     uid:            null,
@@ -11,7 +9,7 @@ const state = {
 }
 
 const mutations = {
-    [USER_SET_INFO]: (state, user) => {
+    [user.SET_INFO]: (state, user) => {
         state.uid               = user.uid          || null
         state.info.displayName  = user.displayName  || null
         state.info.photoURL     = user.photoURL     || null

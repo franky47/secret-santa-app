@@ -1,9 +1,9 @@
-import { I18N_SET_LOCALE } from '../../mutation-types'
+import mutations from './mutations'
 import localStorage from '../../../api/localStorage'
 import { locale } from './getters'
 
 const subscriptions = {
-    [I18N_SET_LOCALE]: ({state}) => {
+    [mutations.SET_LOCALE]: ({state}) => {
         localStorage.set('locale', locale(state))
     }
 }

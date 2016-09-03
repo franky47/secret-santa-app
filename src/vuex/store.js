@@ -8,6 +8,7 @@ import i18n         from './modules/i18n/store'
 import i18nPlugin   from './modules/i18n/plugin'
 import user         from './modules/user/store'
 import userPlugin   from './modules/user/plugin'
+import ui           from './modules/ui/store'
 
 // --
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     modules: {
         auth,
         i18n,
-        user
+        user,
+        ui
     },
     plugins: [
         authPlugin,

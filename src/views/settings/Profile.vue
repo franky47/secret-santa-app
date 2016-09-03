@@ -20,11 +20,9 @@
 import Name                     from '../../components/form/Name'
 import Avatar                   from '../../components/form/Avatar'
 import LanguageSelector         from '../../components/form/Select'
-import { getCurrentUser }       from '../../vuex/modules/auth/getters'
-import { updateUserProfile }    from '../../vuex/modules/auth/actions'
+import * as auth                from '../../vuex/modules/auth'
 import { localeNames }          from '../../i18n/i18n'
-import { setLocale }            from '../../vuex/modules/i18n/actions'
-import { locale } from '../../vuex/modules/i18n/getters'
+import * as i18n                from '../../vuex/modules/i18n'
 
 export default {
     data: () => ({
@@ -69,13 +67,13 @@ export default {
         }
     },
     vuex: {
-        actions: {
-            updateUserProfile,
-            setLocale
-        },
         getters: {
-            name:    getCurrentUser.name,
-            locale
+            name:                   auth.getters.getCurrentUser.name,
+            locale:                 i18n.getters.locale
+        },
+        actions: {
+            updateUserProfile:      auth.actions.updateUserProfile,
+            setLocale:              i18n.actions.setLocale
         }
     }
 }

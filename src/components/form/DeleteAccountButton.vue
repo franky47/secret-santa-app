@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { deleteAccount } from '../../vuex/modules/auth/actions'
+import * as auth from '../../vuex/modules/auth'
 import * as routes from '../../router/routes-definitions'
 
 export default {
@@ -63,7 +63,7 @@ export default {
     },
     vuex: {
         actions: {
-            deleteAccount
+            auth.actions.deleteAccount
         }
     }
 }

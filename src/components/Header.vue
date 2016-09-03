@@ -1,9 +1,9 @@
 <template>
     <div class='ui top fixed borderless menu'>
         <div class='ui container'>
-            <div class='item' v-if='mobile'>
+            <a class='item' v-if='mobile' @click.stop='openNavDrawer'>
                 <i class='large content icon'></i>
-            </div>
+            </a>
             <div class='item'>
                 <i class='large red gift icon' v-if='!mobile'></i>
                 <span class='red title'>Secret Santa</span>
@@ -32,7 +32,8 @@ import Vue from 'vue'
 import AccountPopup from './AccountPopup'
 import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
-import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
+import { getters as auth } from '../vuex/modules/auth'
+import { mutations as ui } from '../vuex/modules/ui'
 
 export default {
     data: () => ({
@@ -79,9 +80,12 @@ export default {
     },
     vuex: {
         getters: {
-            isSignedIn,
-            userPhoto: getCurrentUser.photoURL,
+            isSignedIn:     auth.isSignedIn,
+            userPhoto:      auth.getCurrentUser.photoURL,
             path: state => state.route.path
+        },
+        actions: {
+            openNavDrawer: ({dispatch}) => dispatch(ui.OPEN_NAV_DRAWER)
         }
     }
 }

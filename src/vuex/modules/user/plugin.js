@@ -3,11 +3,8 @@ import {
     updateUser,
     watchUser
 } from '../../../api/db/user'
-import {
-    AUTH_SIGNED_IN,
-    AUTH_SIGNED_OUT,
-    USER_SET_INFO
-} from '../../mutation-types'
+import userMutations from './mutations'
+import authMutations from '../auth/mutations'
 import { info as getUserInfo } from './getters'
 
 const watchers = {
@@ -17,21 +14,21 @@ const watchers = {
 }
 
 const subscriptions = {
-    [USER_SET_INFO]: ({state}) => {
+    [userMutations.SET_INFO]: ({state}) => {
         const user = getUserInfo(state)
         createUser(user.uid, user).then(() => {
             updateUser(user.uid, user)
         })
     },
-    [AUTH_SIGNED_IN]: ({dispatch, state}) => {
+    [authMutations.SIGNED_IN]: ({dispatch, state}) => {
         const user = state.auth.user
         watchers.user.off()
         watchers.user.off = watchUser(user.uid, snapshot => {
             const user = snapshot.val()
-            dispatch(USER_SET_INFO, user)
+            dispatch(userMutations.SET_INFO, user)
         })
     },
-    [AUTH_SIGNED_OUT]: () => {
+    [authMutations.SIGNED_OUT]: () => {
         watchers.user.off() // Unregister watcher
         watchers.user.off = () => {}
     }

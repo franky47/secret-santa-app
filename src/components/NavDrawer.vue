@@ -8,29 +8,34 @@
         <div class='item'>
             <i class='settings icon'></i>Settings
             <div class='menu'>
-                <a class='item'>Account</a>
-                <a class='item'>Profile</a>
+                <a class='item' v-link='{ path: routes.settings.account }'>Account</a>
+                <a class='item' v-link='{ path: routes.settings.profile }'>Profile</a>
             </div>
         </div>
+        <a class='item' @click.stop='signOut'><i class='icon sign out'></i>{{ $t('auth.signOut') }}</a>
     </div>
 </template>
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import * as routes from '../router/routes-definitions'
+import { mutations as ui } from '../vuex/modules/ui'
+import { signOut } from '../vuex/modules/auth/actions'
 
 export default {
     data: () => ({
-        open: true
+        routes
     }),
-    methods: {
-        open() {
-            this.open = true
+    mixins: [ clickaway ],
+    vuex: {
+        getters: {
+            open: state => state.ui.navDrawerOpen
         },
-        dismiss() {
-            this.open = false
+        actions: {
+            dismiss: ({dispatch}) => dispatch(ui.CLOSE_NAV_DRAWER),
+            signOut
         }
-    },
-    mixins: [ clickaway ]
+    }
 }
 </script>
 

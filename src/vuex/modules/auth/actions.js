@@ -1,15 +1,10 @@
-import {
-    AUTH_SIGNED_IN,
-    AUTH_SIGNED_OUT,
-    AUTH_USER_CHANGED,
-    AUTH_ERROR
-} from '../../mutation-types'
+import mutations from './mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
 import * as db from '../../../api/db/user'
 
 const dispatchAndChain = dispatch => error => {
-    dispatch(AUTH_ERROR, error)
+    dispatch(mutations.ERROR, error)
     return Promise.reject(error)
 }
 
@@ -18,7 +13,7 @@ const dispatchAndChain = dispatch => error => {
 export const registerWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
         .then(result => {
-            dispatch(AUTH_SIGNED_IN)
+            dispatch(mutations.SIGNED_IN)
             db.createUser(result.uid, result)
             return result
         })
@@ -32,7 +27,7 @@ export const signInWithFacebook = ({dispatch}) => {
 export const signInWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.signInWithEmail(email, password)
         .then(result => {
-            dispatch(AUTH_SIGNED_IN)
+            dispatch(mutations.SIGNED_IN)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -40,7 +35,7 @@ export const signInWithEmail = ({dispatch}, email, password) => {
 export const signOut = ({dispatch}) => {
     return firebase.auth.signOut()
         .then(result => {
-            dispatch(AUTH_SIGNED_OUT)
+            dispatch(mutations.SIGNED_OUT)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -51,7 +46,7 @@ export const updateUserProfile = ({dispatch}, profile) => {
         firebase.auth.updateUserProfile(profile),
         db.updateUser(user.uid, profile)
     ]).then(result => {
-        dispatch(AUTH_USER_CHANGED, user)
+        dispatch(mutations.USER_CHANGED, user)
         return result
     })
     .catch(dispatchAndChain(dispatch))
@@ -59,7 +54,7 @@ export const updateUserProfile = ({dispatch}, profile) => {
 export const deleteAccount = ({dispatch}, profile) => {
     return firebase.auth.deleteUserAccount()
         .then(result => {
-            dispatch(AUTH_SIGNED_OUT)
+            dispatch(mutations.SIGNED_OUT)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -69,12 +64,12 @@ export const deleteAccount = ({dispatch}, profile) => {
 
 export const authChangedCallback = ({dispatch, state}, user) => {
     console.log('Auth changed to', user)
-    dispatch(AUTH_USER_CHANGED, user)
+    dispatch(mutations.USER_CHANGED, user)
     if (user && !isSignedIn(state)) {
-        dispatch(AUTH_SIGNED_IN)
+        dispatch(mutations.SIGNED_IN)
     }
 }
 export const authErrorCallback = ({dispatch}, error) => {
     console.log('Auth error:', error)
-    dispatch(AUTH_ERROR, error)
+    dispatch(mutations.ERROR, error)
 }

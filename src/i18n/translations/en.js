@@ -1,9 +1,9 @@
 export default {
     auth: {
         register:           'Create new account',
-        signIn:             'Sign In',
+        signIn:             'Sign in',
         signInWithFacebook: 'Sign in with Facebook',
-        signOut:            'Sign Out',
+        signOut:            'Sign out',
         forgotPassword:     'Forgot password ?'
     },
     validation: {

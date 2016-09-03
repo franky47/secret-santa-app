@@ -31,15 +31,10 @@
 </template>
 
 <script>
-import Email            from '../../components/form/Email'
-import Password         from '../../components/form/Password'
-import { isSignedIn }   from '../../vuex/modules/auth/getters'
-import {
-    signInWithFacebook,
-    signInWithEmail,
-    signOut
-} from '../../vuex/modules/auth/actions'
-import * as routes from '../../router/routes-definitions'
+import Email        from '../../components/form/Email'
+import Password     from '../../components/form/Password'
+import * as auth    from '../../vuex/modules/auth'
+import * as routes  from '../../router/routes-definitions'
 
 export default {
     data: () => ({
@@ -94,12 +89,12 @@ export default {
     },
     vuex: {
         getters: {
-            isSignedIn
+            isSignedIn:             auth.getters.isSignedIn
         },
         actions: {
-            signInWithFacebook,
-            signInWithEmail,
-            signOut
+            signInWithFacebook:     auth.actions.signInWithFacebook,
+            signInWithEmail:        auth.actions.signInWithEmail,
+            signOut:                auth.actions.signOut
         }
     },
     route: {

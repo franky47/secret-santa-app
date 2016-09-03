@@ -1,9 +1,4 @@
-import {
-    I18N_INIT,
-    I18N_ADD_LOCALE,
-    I18N_SET_LOCALE,
-    I18N_ERROR
-} from '../../mutation-types'
+import mutations from './mutations'
 import Vue from 'vue'
 import * as i18n from '../../../i18n/i18n'
 import * as getters from './getters'
@@ -11,7 +6,7 @@ import nativeLocale from 'locale2'
 import localStorage from '../../../api/localStorage'
 
 export const initLocale = ({dispatch, state}) => {
-    dispatch(I18N_INIT, nativeLocale)
+    dispatch(mutations.INIT, nativeLocale)
     const persistentLocale = localStorage.get('locale')
     const locale = persistentLocale || nativeLocale
     return setLocale({dispatch, state}, locale)
@@ -20,11 +15,11 @@ export const initLocale = ({dispatch, state}) => {
 export const loadLocale = ({dispatch, state}, locale) => {
     if (!getters.hasLocale(state, locale)) {
         return i18n.loadLocale(locale).then(() => {
-            dispatch(I18N_ADD_LOCALE, locale)
-            dispatch(I18N_ERROR, null)
+            dispatch(mutations.ADD_LOCALE, locale)
+            dispatch(mutations.ERROR, null)
             return Promise.resolve()
         }).catch(error => {
-            dispatch(I18N_ERROR, error)
+            dispatch(mutations.ERROR, error)
             return Promise.reject(error)
         })
     }
@@ -35,7 +30,7 @@ export const setLocale = ({dispatch, state}, locale) => {
     const suited = i18n.getSuitableLocaleFor(locale)
     return loadLocale({dispatch, state}, suited).then(() => {
         Vue.config.lang = suited
-        dispatch(I18N_SET_LOCALE, suited)
+        dispatch(mutations.SET_LOCALE, suited)
         return Promise.resolve(suited)
     })
 }

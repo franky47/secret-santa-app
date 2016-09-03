@@ -1,9 +1,4 @@
-import {
-    I18N_INIT,
-    I18N_SET_LOCALE,
-    I18N_ADD_LOCALE,
-    I18N_ERROR
-} from '../../mutation-types'
+import i18n from './mutations'
 import localStorage from '../../../api/localStorage'
 
 const state = {
@@ -16,18 +11,18 @@ const state = {
 }
 
 const mutations = {
-    [I18N_INIT]: (state, nativeLocale) => {
+    [i18n.INIT]: (state, nativeLocale) => {
         state.locale.native = nativeLocale
     },
-    [I18N_SET_LOCALE]: (state, locale) => {
+    [i18n.SET_LOCALE]: (state, locale) => {
         state.locale.current = locale
     },
-    [I18N_ADD_LOCALE]: (state, locale) => {
+    [i18n.ADD_LOCALE]: (state, locale) => {
         if (state.locale.loaded.indexOf(locale) === -1) {
             state.locale.loaded.push(locale)
         }
     },
-    [I18N_ERROR]: (state, error) => {
+    [i18n.ERROR]: (state, error) => {
         state.error = error
     }
 }
