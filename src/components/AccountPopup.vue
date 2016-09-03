@@ -42,7 +42,7 @@ export default {
     mixins: [ clickaway ],
     methods: {
         goToProfile: () => {
-            this.$router.go(routes.userProfile)
+            this.$router.go(routes.settings.profile)
             this.dismiss()
         },
         triggerSignOut: function() {

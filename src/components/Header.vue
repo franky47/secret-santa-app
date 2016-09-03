@@ -42,7 +42,8 @@ export default {
             { name: 'home',             path: routes.home },
             { name: 'auth.signIn',      path: routes.auth.signIn },
             { name: 'auth.register',    path: routes.auth.register },
-            { name: 'profile',          path: routes.userProfile }
+            { name: 'profile',          path: routes.settings.profile },
+            { name: 'account',          path: routes.settings.account }
         ]
     }),
     components: {

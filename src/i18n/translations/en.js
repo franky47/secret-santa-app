@@ -15,5 +15,6 @@ export default {
     eg: 'eg',
     password:       'Password',
     home: 'Home',
-    profile: 'Profile'
+    profile: 'Profile',
+    account: 'Account'
 }

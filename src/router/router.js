@@ -5,7 +5,9 @@ import { isSignedIn } from '../vuex/modules/auth/getters'
 
 // Import views
 import HomeView                     from '../views/HomeView'
-import ProfileView                  from '../views/ProfileView'
+import SettingsView                 from '../views/SettingsView'
+import   SettingsAccount            from '../views/settings/Account'
+import   SettingsProfile            from '../views/settings/Profile'
 import RegisterView                 from '../views/auth/RegisterView'
 import SignInView                   from '../views/auth/SignInView'
 import PasswordResetRequestView     from '../views/auth/PasswordResetRequestView'
@@ -29,9 +31,13 @@ router.map({
     [routes.auth.passwordReset.challenge]:  { component: PasswordResetChallengeView },
 
     // Authenticated routes
-    [routes.userProfile]: {
-        component: ProfileView,
-        auth: true
+    [routes.settings.root]: {
+        component: SettingsView,
+        auth: true,
+        subRoutes: {
+            [routes.settings.subRoutes.account]: { component: SettingsAccount },
+            [routes.settings.subRoutes.profile]: { component: SettingsProfile }
+        }
     }
 })
 

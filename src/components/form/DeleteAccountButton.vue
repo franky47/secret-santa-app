@@ -31,28 +31,24 @@ export default {
                 }, 3000)
                 return
             }
-
-            this.deleteAccount().then(() => {
-                this.$router.go(routes.home)
-            }).catch(error => {
+            this.deleteAccount().catch(error => {
                 switch (error.code) {
                 case 'auth/null':
-                    this.$router.go({
-                        path: routes.auth.signIn,
-                        params: {
-                            message: 'Please sign in again to continue'
-                        },
-                        query: {
-                            redirect: routes.auth.profile
-                        }
-                    })
-                    break
                 case 'auth/requires-recent-login':
-                    this.$router.go(routes.auth.reauthenticate)
+                    this.reauthenticate()
                     break
                 default:
                     // todo: display error code somewhere (toastr?)
                     break
+                }
+            })
+        },
+        reauthenticate() {
+            this.$router.go({
+                path: routes.auth.signIn,
+                query: {
+                    message: 'Please sign in again to continue',
+                    next: this.$route.path
                 }
             })
         }

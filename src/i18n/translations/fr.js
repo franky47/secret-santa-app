@@ -15,5 +15,6 @@ export default {
     eg: 'ex',
     password:       'Mot de passe',
     home: 'Accueil',
-    profile: 'Profil'
+    profile: 'Profil',
+    account: 'Compte'
 }

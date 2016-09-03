@@ -17,7 +17,7 @@ export default {
         links: {
             signIn:     routes.auth.signIn,
             register:   routes.auth.register,
-            profile:    routes.userProfile
+            profile:    routes.settings.profile
         }
     })
 }
