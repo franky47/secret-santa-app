@@ -1,19 +1,24 @@
 <template>
     <div>
-        <app-header></app-header>
-        <div class='ui top-margin container'>
-            <router-view class='fade' transition='fade' transition-mode='out-in'>
-            </router-view>
+        <nav-drawer></nav-drawer>
+        <div class='pusher'>
+            <app-header></app-header>
+            <div class='ui top-margin container'>
+                <router-view class='fade' transition='fade' transition-mode='out-in'>
+                </router-view>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import AppHeader from './components/Header'
+import NavDrawer from './components/NavDrawer'
 
 export default {
     components: {
-        AppHeader
+        AppHeader,
+        NavDrawer
     }
 }
 </script>
