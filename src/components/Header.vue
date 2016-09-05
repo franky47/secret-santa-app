@@ -5,7 +5,7 @@
                 <i class='large content icon'></i>
             </a>
             <div class='item'>
-                <i class='large red gift icon' v-if='!mobile'></i>
+                <i class='large red gift icon' v-if='!mobile' @click.stop='openNavDrawer'></i>
                 <span class='red title'>Secret Santa</span>
             </div>
             <div class='ui secondary pointing menu' v-if='!mobile'>
@@ -34,6 +34,7 @@ import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
 import { getters as auth } from '../vuex/modules/auth'
 import { getters as user } from '../vuex/modules/user'
+import { actions as ui } from '../vuex/modules/ui'
 
 export default {
     data: () => ({
@@ -85,7 +86,7 @@ export default {
             path: state => state.route.path
         },
         actions: {
-            openNavDrawer: ({dispatch}) => dispatch(ui.OPEN_NAV_DRAWER)
+            openNavDrawer: ui.openNavDrawer
         }
     }
 }

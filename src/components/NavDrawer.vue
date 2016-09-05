@@ -18,9 +18,9 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import * as routes from '../router/routes-definitions'
-import { mutations as ui } from '../vuex/modules/ui'
-import { signOut } from '../vuex/modules/auth/actions'
+import * as routes      from '../router/routes-definitions'
+import * as ui          from '../vuex/modules/ui'
+import { signOut }      from '../vuex/modules/auth/actions'
 
 export default {
     data: () => ({
@@ -29,10 +29,10 @@ export default {
     mixins: [ clickaway ],
     vuex: {
         getters: {
-            open: state => state.ui.navDrawerOpen
+            open:   ui.getters.isNavDrawerOpen
         },
         actions: {
-            dismiss: ({dispatch}) => dispatch(ui.CLOSE_NAV_DRAWER),
+            dismiss: ui.actions.closeNavDrawer,
             signOut
         }
     }
