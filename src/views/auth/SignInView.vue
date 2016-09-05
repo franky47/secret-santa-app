@@ -35,6 +35,7 @@ import Email        from '../../components/form/Email'
 import Password     from '../../components/form/Password'
 import * as auth    from '../../vuex/modules/auth'
 import * as routes  from '../../router/routes-definitions'
+import store        from '../../vuex/store'
 
 export default {
     data: () => ({
@@ -99,8 +100,8 @@ export default {
     },
     route: {
         canActivate() {
-            console.log('Fix null this !!')
-            return !this.isSignedIn
+            // We don't have access to `this` here.
+            return !auth.getters.isSignedIn(store.state)
         }
     }
 }
