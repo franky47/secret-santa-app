@@ -21,6 +21,7 @@ import Name                     from '../../components/form/Name'
 import Avatar                   from '../../components/form/Avatar'
 import LanguageSelector         from '../../components/form/Select'
 import * as auth                from '../../vuex/modules/auth'
+import * as user                from '../../vuex/modules/user'
 import { localeNames }          from '../../i18n/i18n'
 import * as i18n                from '../../vuex/modules/i18n'
 
@@ -50,9 +51,9 @@ export default {
             })
         },
         reset() {
-            this.newName = this.name
-            this.newLocale = this.locale
-            this.loading = false
+            this.newName    = this.name
+            this.newLocale  = this.locale
+            this.loading    = false
         }
     },
     computed: {
@@ -68,7 +69,7 @@ export default {
     },
     vuex: {
         getters: {
-            name:                   auth.getters.getCurrentUser.name,
+            name:                   user.getters.getCurrentUser.displayName,
             locale:                 i18n.getters.locale
         },
         actions: {

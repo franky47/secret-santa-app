@@ -99,6 +99,7 @@ export default {
     },
     route: {
         canActivate() {
+            console.log('Fix null this !!')
             return !this.isSignedIn
         }
     }

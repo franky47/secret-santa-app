@@ -33,7 +33,7 @@ import AccountPopup from './AccountPopup'
 import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
 import { getters as auth } from '../vuex/modules/auth'
-import { mutations as ui } from '../vuex/modules/ui'
+import { getters as user } from '../vuex/modules/user'
 
 export default {
     data: () => ({
@@ -81,7 +81,7 @@ export default {
     vuex: {
         getters: {
             isSignedIn:     auth.isSignedIn,
-            userPhoto:      auth.getCurrentUser.photoURL,
+            userPhoto:      user.getCurrentUser.photoURL,
             path: state => state.route.path
         },
         actions: {

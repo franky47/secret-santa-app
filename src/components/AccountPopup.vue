@@ -20,7 +20,8 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import { isSignedIn, getCurrentUser } from '../vuex/modules/auth/getters'
+import { isSignedIn } from '../vuex/modules/auth/getters'
+import { getCurrentUser } from '../vuex/modules/user/getters'
 import { signOut } from '../vuex/modules/auth/actions'
 import * as routes from '../router/routes-definitions'
 
@@ -76,8 +77,8 @@ export default {
     vuex: {
         getters: {
             isSignedIn,
-            userName:  getCurrentUser.name,
             userEmail: getCurrentUser.email,
+            userName:  getCurrentUser.displayName,
             userPhoto: getCurrentUser.photoURL
         },
         actions: {

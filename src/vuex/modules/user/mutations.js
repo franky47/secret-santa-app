@@ -1,3 +1,4 @@
 export default {
-    SET_INFO:   'user/SET_INFO'
+    RESET:          'user/RESET',
+    CHANGED:        'user/CHANGED'
 }

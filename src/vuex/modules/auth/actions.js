@@ -1,7 +1,6 @@
 import mutations from './mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
-import * as db from '../../../api/db/user'
 
 const dispatchAndChain = dispatch => error => {
     dispatch(mutations.ERROR, error)
@@ -14,7 +13,6 @@ export const registerWithEmail = ({dispatch}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
         .then(result => {
             dispatch(mutations.SIGNED_IN)
-            db.createUser(result.uid, result)
             return result
         })
         .catch(dispatchAndChain(dispatch))
@@ -42,16 +40,14 @@ export const signOut = ({dispatch}) => {
 }
 export const updateUserProfile = ({dispatch}, profile) => {
     const user = firebase.auth.currentUser
-    return Promise.all([
-        firebase.auth.updateUserProfile(profile),
-        db.updateUser(user.uid, profile)
-    ]).then(result => {
-        dispatch(mutations.USER_CHANGED, user)
-        return result
-    })
-    .catch(dispatchAndChain(dispatch))
+    return firebase.auth.updateUserProfile(profile)
+        .then(result => {
+            dispatch(mutations.USER_CHANGED, user)
+            return result
+        })
+        .catch(dispatchAndChain(dispatch))
 }
-export const deleteAccount = ({dispatch}, profile) => {
+export const deleteAccount = ({dispatch}) => {
     return firebase.auth.deleteUserAccount()
         .then(result => {
             dispatch(mutations.SIGNED_OUT)
