@@ -1,4 +1,4 @@
-# Secret Santa - Font-End
+# Secret Santa - Front-End
 Secret Santa 2.0 - Santa as a Service.
 
 This web application aims to simplify the random process of assinging gifts for
