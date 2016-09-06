@@ -1,4 +1,4 @@
-import './semantic'
+// import './semantic'
 import App from './App'
 import './i18n/i18n'
 import store                from './vuex/store'
