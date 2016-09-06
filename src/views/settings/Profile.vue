@@ -65,6 +65,9 @@ export default {
     watch: {
         locale(value) {
             this.newLocale = value
+        },
+        name(value) {
+            this.newName = value
         }
     },
     vuex: {
