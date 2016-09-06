@@ -16,7 +16,6 @@ export const loadLocale = ({dispatch, state}, locale) => {
     if (!getters.hasLocale(state, locale)) {
         return i18n.loadLocale(locale).then(() => {
             dispatch(mutations.ADD_LOCALE, locale)
-            dispatch(mutations.ERROR, null)
             return Promise.resolve()
         }).catch(error => {
             dispatch(mutations.ERROR, error)
