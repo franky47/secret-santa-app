@@ -6,10 +6,10 @@ export const filterUserInfo = input => {
     const keptKeys = ['uid', 'email', 'displayName', 'photoURL']
     const output = {}
     for (const key in input) {
-        if (keptKeys.indexOf(key) < 0) {
-            console.warn('The following key will be filtered out from user info:', key)
-        } else {
+        if (keptKeys.indexOf(key) !== -1) {
             output[key] = input[key]
+        } else {
+            // console.warn('The following key will be filtered out from user info:', key)
         }
     }
     return output
