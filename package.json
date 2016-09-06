@@ -2,7 +2,16 @@
   "name": "secret-santa",
   "version": "1.0.0",
   "description": "Santa as a service",
-  "author": "Francois Best <francoisbest@gmail.com>",
+  "author": {
+      "name": "Francois Best",
+      "email": "francoisbest@gmail.com",
+      "url": "secret-santa.surge.sh"
+  },
+  "repository": {
+      "url": "https://github.com/Franky47/secret-santa-app",
+      "type": "git"
+  },
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "node builder/dev-server.js",
