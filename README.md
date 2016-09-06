@@ -3,7 +3,7 @@ Secret Santa 2.0 - Santa as a Service.
 
 [![Build Status](https://travis-ci.org/Franky47/secret-santa-app.svg?branch=master)](https://travis-ci.org/Franky47/secret-santa-app)
 [![Dependency Status](https://dependencyci.com/github/Franky47/secret-santa-app/badge)](https://dependencyci.com/github/Franky47/secret-santa-app)
-[![license](https://img.shields.io/github/license/Franky47/secret-santa-app.svg?maxAge=2592000)]()
+[![license](https://img.shields.io/github/license/Franky47/secret-santa-app.svg?maxAge=2592000)](LICENSE)
 
 This web application aims to simplify the random process of assinging gifts for
 a "Secret Santa" party, where a group of friends choose to exchange gifts to one
