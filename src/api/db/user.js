@@ -1,5 +1,5 @@
 import firebase from '../../services/firebase'
-import { errorWhile } from '../../utility/utility'
+import { errorWhile } from '../../utility'
 import * as paths from './paths'
 
 export const filterUserInfo = input => {

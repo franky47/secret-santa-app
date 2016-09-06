@@ -6,6 +6,7 @@ import {
 import userMutations from './mutations'
 import authMutations from '../auth/mutations'
 import { getCurrentUserObject } from './getters'
+import { errorWhile } from '../../../utility'
 
 const watchers = {
     user: {

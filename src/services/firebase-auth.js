@@ -1,6 +1,6 @@
 import firebase from './firebase-include'
 import { FirebaseFeature } from './firebase'
-import { errorWhile } from '../utility/utility'
+import { errorWhile } from '../utility'
 
 export default class FirebaseAuthService extends FirebaseFeature {
     constructor(firebaseApp, config) {
