@@ -1,10 +1,9 @@
 import i18n from './mutations'
-import localStorage from '../../../api/localStorage'
 
 const state = {
     locale: {
         native: null,
-        current: localStorage.get('locale') || null,
+        current: null,
         loaded: []
     },
     error: null
