@@ -22,14 +22,12 @@ export const createUser = (uid, user = {}) => {
             return Promise.resolve() // Already exists
         }
         const data = filterUserInfo(user)
-        console.log('Creating user ' + uid, data)
         return firebase.db.set(path, data)
     }).catch(errorWhile('creating user'))
 }
 
 export const updateUser = (uid, user) => {
     const data = filterUserInfo(user)
-    console.log('Updating user', data)
     return firebase.db.update(paths.user(uid), data)
         .catch(errorWhile('updating user'))
 }
