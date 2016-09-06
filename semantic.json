@@ -1,5 +1,5 @@
 {
-  "base": "external/semantic-ui",
+  "base": "external/semantic-ui/",
   "paths": {
     "source": {
       "config": "src/theme.config",
@@ -16,7 +16,7 @@
     "clean": "../../static/semantic-ui"
   },
   "permission": false,
-  "autoInstall": false,
+  "autoInstall": true,
   "rtl": false,
   "components": [
     "reset",
