@@ -31,7 +31,3 @@ export const updateUser = (uid, user) => {
     return firebase.db.update(paths.user(uid), data)
         .catch(errorWhile('updating user'))
 }
-
-export const watchUser = (uid, callback) => {
-    return firebase.db.onValueChanged(paths.user(uid), callback)
-}
