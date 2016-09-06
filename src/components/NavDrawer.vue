@@ -27,12 +27,19 @@ export default {
         routes
     }),
     mixins: [ clickaway ],
+    methods: {
+        dismiss() {
+            if (this.open) {
+                this.close()
+            }
+        }
+    },
     vuex: {
         getters: {
             open:   ui.getters.isNavDrawerOpen
         },
         actions: {
-            dismiss: ui.actions.closeNavDrawer,
+            close: ui.actions.closeNavDrawer,
             signOut
         }
     }
