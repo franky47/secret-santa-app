@@ -17,6 +17,9 @@ export default class FirebaseDatabaseService extends FirebaseFeature {
     update(path, data) {
         return this.db.ref(path).update(data)
     }
+    remove(path, data) {
+        return this.db.ref(path).remove()
+    }
 
     // Read --
     once(path) {
