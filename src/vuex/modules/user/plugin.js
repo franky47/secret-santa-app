@@ -34,6 +34,7 @@ const subscriptions = {
             })
         } else {
             observers.user.stop()
+            dispatch(userMutations.RESET)
         }
     }
 }
