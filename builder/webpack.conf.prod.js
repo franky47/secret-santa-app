@@ -6,11 +6,14 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.conf.base')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const StatsPlugin = require('stats-webpack-plugin')
+const Visualizer = require('webpack-visualizer-plugin')
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/env.test')
   : config.build.env
 
 const webpackConfig = merge(baseWebpackConfig, {
+  profile: true,
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
   },
@@ -27,6 +30,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     })
   },
   plugins: [
+    new StatsPlugin('stats.json', {
+        chunkModules: true
+    }),
+    new Visualizer(),
     // http://vuejs.github.io/vue-loader/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

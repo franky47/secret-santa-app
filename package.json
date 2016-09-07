@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Santa as a service",
   "author": {
-      "name": "Francois Best",
-      "email": "francoisbest@gmail.com",
-      "url": "secret-santa.surge.sh"
+    "name": "Francois Best",
+    "email": "francoisbest@gmail.com",
+    "url": "secret-santa.surge.sh"
   },
   "repository": {
-      "url": "https://github.com/Franky47/secret-santa-app",
-      "type": "git"
+    "url": "https://github.com/Franky47/secret-santa-app",
+    "type": "git"
   },
   "license": "MIT",
   "private": true,
@@ -89,6 +89,7 @@
     "shelljs": "^0.6.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "stats-webpack-plugin": "^0.4.2",
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
@@ -97,6 +98,7 @@
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
-    "webpack-merge": "^0.8.3"
+    "webpack-merge": "^0.8.3",
+    "webpack-visualizer-plugin": "^0.1.5"
   }
 }
