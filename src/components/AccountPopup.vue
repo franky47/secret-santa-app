@@ -1,11 +1,11 @@
 <template>
     <div class='account popup' v-on-clickaway='open=false'>
         <div class='ui center aligned segment'>
-            <img class='ui circular centered image' :src='userPhoto'>
-            <div class='ui header'>{{userName}}
-                <div class='sub header'>{{userEmail}}</div>
+            <img class='ui circular centered image pointer' :src='userPhoto' @click.stop='goToProfile'>
+            <div class='ui header pointer' @click.stop='goToProfile'>{{userName}}
+                <div class='sub header pointer'>{{userEmail}}</div>
             </div>
-            <div class='ui primary basic fluid button'>
+            <div class='ui primary basic fluid button' @click.stop='goToAccount'>
                 <i class='fitted user icon'></i>
                 My Account
             </div>
@@ -27,12 +27,6 @@ import * as routes from '../router/routes-definitions'
 
 export default {
     data: () => ({
-        fadeOutBuffer: {
-            name: '',
-            email: '',
-            photoURL: '',
-            use: false
-        }
     }),
     props: {
         open: {
@@ -42,16 +36,15 @@ export default {
     },
     mixins: [ clickaway ],
     methods: {
-        goToProfile: () => {
+        goToAccount() {
+            this.$router.go(routes.settings.account)
+            this.dismiss()
+        },
+        goToProfile() {
             this.$router.go(routes.settings.profile)
             this.dismiss()
         },
-        triggerSignOut: function() {
-            const buffer = this.fadeOutBuffer
-            buffer.name     = this.userName
-            buffer.email    = this.userEmail
-            buffer.photoURL = this.userPhoto
-            buffer.use      = true
+        triggerSignOut() {
             this.signOut().then(() => {
                 this.dismiss()
                 this.$router.go(routes.home)
@@ -59,19 +52,6 @@ export default {
         },
         dismiss() {
             this.open = false
-        }
-    },
-    computed: {
-        name() {
-            const buffer = this.fadeOutBuffer
-            return buffer.use ? buffer.name : this.userName
-        },
-        email() {
-            const buffer = this.fadeOutBuffer
-            return buffer.use ? buffer.email : this.userEmail
-        },
-        photoURL() {
-            return this.userPhoto
         }
     },
     vuex: {
@@ -101,6 +81,9 @@ export default {
     .account.popup {
         right: 5px;
     }
+}
+.pointer {
+    cursor: pointer;
 }
 
 </style>
