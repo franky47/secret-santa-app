@@ -7,7 +7,7 @@
             </div>
             <div class='ui primary basic fluid button' @click.stop='goToAccount'>
                 <i class='fitted user icon'></i>
-                My Account
+                {{ $t('settings.my') + ' ' + $t('settings.account')}}
             </div>
             <div class='ui divider'></div>
             <a @click='triggerSignOut'>

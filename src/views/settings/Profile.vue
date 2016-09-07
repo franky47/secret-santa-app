@@ -1,9 +1,9 @@
 <template>
-    <h2>Your Profile</h2>
+    <h2>{{ $t('settings.your') + ' ' + $t('settings.profile') }}</h2>
     <form @submit.prevent='update' class='ui form' :class='{error: errorMessage}'>
         <name :value.sync='newName'></name>
         <avatar :user-name='newName'></avatar>
-        <language-selector :value.sync='newLocale' :label="$t('language')"
+        <language-selector :value.sync='newLocale' :label="$t('form.language')"
             :options='availableLocales'
         ></language-selector>
         <div class='ui error message'>

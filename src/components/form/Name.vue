@@ -1,11 +1,12 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>Name <span v-if='!valid && showErrors'>is required</span></label>
+        <label>{{ $t('form.name') }} <span v-if='!valid && showErrors'>{{ $t('form.validation.isRequired') }}</span></label>
         <input v-model='value' type='text' :placeholder='placeholder'>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
     data: () => ({
 
@@ -23,7 +24,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: 'eg: Santa Claus'
+            default: () => Vue.t('eg') + ': Santa Claus'
         },
         showErrors: {
             type: Boolean,

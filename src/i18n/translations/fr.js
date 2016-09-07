@@ -4,17 +4,30 @@ export default {
         signIn:             'Se connecter',
         signInWithFacebook: 'Se connecter avec Facebook',
         signOut:            'Déconnexion',
-        forgotPassword:     'Mot de passe oublié ?'
+        forgotPassword:     'Mot de passe oublié ?',
+        createNewAccount:   'Nouveau compte utilisateur',
+        createAccount:      'Créer un compte'
     },
-    validation: {
-        mustBeValid:        'doit être valide',
-        passwordLength:     '{length} caractères minimum'
+    form: {
+        name: 'Nom',
+        language: 'Langue',
+        validation: {
+            isRequired:         'est requis',
+            mustBeValid:        'doit être valide',
+            passwordLength:     '{length} caractères minimum'
+        }
     },
-    language: 'Langue',
     or: 'ou',
     eg: 'ex',
     password:       'Mot de passe',
     home: 'Accueil',
-    profile: 'Profil',
-    account: 'Compte'
+    settings: {
+        settings:       'Réglages',
+        your:           'Votre',
+        my:             'Mon',
+        profile:        'Profil',
+        account:        'Compte',
+        preferences:    'Préférences'
+    }
+
 }

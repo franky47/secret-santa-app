@@ -1,6 +1,6 @@
 <template>
     <div class='wrapper'>
-        <h1>Create New Account</h1>
+        <h1>{{ $t('auth.createNewAccount') }}</h1>
         <form @submit.prevent='register' class='ui form' :class='{error: errorMessage}'>
             <email :value.sync='user.email' :show-errors='showErrors' v-ref:email required></email>
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password instructions required></password>
@@ -14,7 +14,7 @@
                 <i class='fitted icons'>
                     <i class='icon user'></i>
                     <i class='corner add icon'></i>
-                </i> Create Account
+                </i> {{ $t('auth.createAccount') }}
             </button>
         </form>
     </div>

@@ -4,17 +4,29 @@ export default {
         signIn:             'Sign in',
         signInWithFacebook: 'Sign in with Facebook',
         signOut:            'Sign out',
-        forgotPassword:     'Forgot password ?'
+        forgotPassword:     'Forgot password ?',
+        createNewAccount:   'Create New Account',
+        createAccount:      'Create Account'
     },
-    validation: {
-        mustBeValid:        'must be valid',
-        passwordLength:     '{length} characters minimum'
+    form: {
+        name: 'Nom',
+        language: 'Language',
+        validation: {
+            isRequired:         'is required',
+            mustBeValid:        'must be valid',
+            passwordLength:     '{length} characters minimum'
+        }
     },
-    language: 'Language',
     or: 'or',
     eg: 'eg',
     password:       'Password',
     home: 'Home',
-    profile: 'Profile',
-    account: 'Account'
+    settings: {
+        settings:       'Settings',
+        your:           'Your',
+        my:             'My',
+        profile:        'Profile',
+        account:        'Account',
+        preferences:    'Preferences'
+    }
 }

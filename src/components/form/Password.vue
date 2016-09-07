@@ -2,7 +2,7 @@
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
         <label>{{ $t('password') }}
             <span v-if='instructions' class='instructions'>
-                {{ $t('validation.passwordLength', { length: minSize }) }}
+                {{ $t('form.validation.passwordLength', { length: minSize }) }}
             </span>
         </label>
         <input v-model='value' type='password' :placeholder='placeholder'>
