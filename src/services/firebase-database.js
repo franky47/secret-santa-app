@@ -64,4 +64,9 @@ export default class FirebaseDatabaseService extends FirebaseFeature {
             offChanged()
         }
     }
+
+    // Offline helpers --
+    onDisconnect(path) {
+        return this.db.ref(path).onDisconnect()
+    }
 }
