@@ -24,10 +24,7 @@ const subscriptions = {
     [user.mutations.CHANGED]: ({dispatch, state}) => {
         userId = user.getters.getCurrentUser.uid(state)
         if (userId === null) {
-            // Signed out: restore system native locale
-            observers.userLocale.stop()
-            const nativeLocale = getters.nativeLocale(state)
-            setLocale({dispatch, state}, nativeLocale)
+            console.warn('Use user/RESET to indicate logout or invalid user')
         } else {
             // Signed in: sync to user preferred locale
             const path = paths.userPreferences.locale(userId)
@@ -41,6 +38,12 @@ const subscriptions = {
                 }
             })
         }
+    },
+    [user.mutations.RESET]: ({dispatch, state}) => {
+        // Signed out: restore system native locale
+        observers.userLocale.stop()
+        const nativeLocale = getters.nativeLocale(state)
+        setLocale({dispatch, state}, nativeLocale)
     }
 }
 
