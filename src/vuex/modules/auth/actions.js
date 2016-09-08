@@ -2,6 +2,7 @@ import mutations from './mutations'
 import userMutations from '../user/mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
+import { markUserAsOffline } from '../../../api/db/user'
 
 const dispatchAndChain = dispatch => error => {
     dispatch(mutations.ERROR, error)
@@ -23,8 +24,20 @@ export const signInWithEmail = ({dispatch}, email, password) => {
         .catch(dispatchAndChain(dispatch))
 }
 export const signOut = ({dispatch}) => {
-    return firebase.auth.signOut()
-        .catch(dispatchAndChain(dispatch))
+    return new Promise((resolve, reject) => {
+        // Mark current user as offline first (as it requires auth)
+        const user = firebase.auth.currentUser
+        console.log(user)
+        if (user) {
+            markUserAsOffline(user.uid)
+                .then(result => resolve(result))
+                .catch(error => reject(error))
+        } else {
+            resolve()
+        }
+    }).then(() => {
+        return firebase.auth.signOut()
+    }).catch(dispatchAndChain(dispatch))
 }
 export const updateUserProfile = ({dispatch}, profile) => {
     const user = firebase.auth.currentUser
@@ -36,6 +49,7 @@ export const updateUserProfile = ({dispatch}, profile) => {
         .catch(dispatchAndChain(dispatch))
 }
 export const deleteAccount = ({dispatch}) => {
+    // todo: delete entries in the database as well..
     return firebase.auth.deleteUserAccount()
         .catch(dispatchAndChain(dispatch))
 }

@@ -1,6 +1,8 @@
 import {
     createUser,
-    updateUser
+    updateUser,
+    markUserAsOnline,
+    markUserAsOffline
 } from '../../../api/db/user'
 import userMutations from './mutations'
 import authMutations from '../auth/mutations'
@@ -11,6 +13,8 @@ import * as paths from '../../../api/db/paths'
 const observers = {
     user: new ValueChangedObserver()
 }
+
+let currentUserId = null
 
 const subscriptions = {
     [userMutations.CHANGED]: ({state}) => {
@@ -32,9 +36,15 @@ const subscriptions = {
                     createUser(user.uid, user)
                 }
             })
+            if (currentUserId) {
+                markUserAsOffline(currentUserId)
+            }
+            currentUserId = user.uid
+            markUserAsOnline(user.uid)
         } else {
             observers.user.stop()
             dispatch(userMutations.RESET)
+            // Don't mark user as offline here as the database is write-protected
         }
     }
 }

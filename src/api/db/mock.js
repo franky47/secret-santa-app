@@ -22,6 +22,15 @@ export default {
         'bran':     { displayName: 'Bran Stark' },
         'rickon':   { displayName: 'Rickon Stark' }
     },
+    online_users: {
+        'cersei': {
+            'iphone': 123456789     // string(userAgentHash): timestamp of last connection
+        },
+        'jaime': {
+            'chrome': 123456789,
+            'iphone': 587232192
+        }
+    },
     games: {
         CLASHOFKINGS: {
             game_date: '',
