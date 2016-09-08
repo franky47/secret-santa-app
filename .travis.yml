@@ -4,5 +4,8 @@ node_js:
 before_script:
   - npm install -g gulp
 
+script:
+  - npm run build   # Will also perform the tests
+
 notifications:
   email: false
