@@ -11,6 +11,10 @@
     "url": "https://github.com/Franky47/secret-santa-app",
     "type": "git"
   },
+  "main": "src/main.js",
+  "bugs": {
+      "url": "https://github.com/Franky47/secret-santa-app/issues"
+  },
   "license": "MIT",
   "private": true,
   "scripts": {
