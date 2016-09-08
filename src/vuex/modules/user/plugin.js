@@ -31,6 +31,8 @@ const subscriptions = {
             const path = paths.user(user.uid)
             observers.user.start(path, data => {
                 if (data) {
+                    // Append uid as it's not stored in the node content.
+                    data.uid = user.uid
                     dispatch(userMutations.CHANGED, data)
                 } else {
                     createUser(user.uid, user)

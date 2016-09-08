@@ -3,7 +3,7 @@ import { errorWhile, fingerprint } from '../../utility'
 import * as paths from './paths'
 
 export const filterUserInfo = input => {
-    const keptKeys = ['uid', 'email', 'displayName', 'photoURL']
+    const keptKeys = ['email', 'displayName', 'photoURL']
     const output = {}
     for (const key in input) {
         if (keptKeys.indexOf(key) !== -1) {
