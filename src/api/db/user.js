@@ -1,5 +1,5 @@
 import firebase from '../../services/firebase'
-import { errorWhile, hash } from '../../utility'
+import { errorWhile, fingerprint } from '../../utility'
 import * as paths from './paths'
 
 export const filterUserInfo = input => {
@@ -33,16 +33,14 @@ export const updateUser = (uid, user) => {
 }
 
 export const markUserAsOnline = (uid) => {
-    const location = hash(window.navigator.userAgent)
-    const path = paths.online.user.location(uid, location)
+    const path = paths.online.user.location(uid, fingerprint.asNumber())
     firebase.db.onDisconnect(path).remove()
     return firebase.db.set(path, firebase.db.timestamp)
         .catch(errorWhile('marking user as online'))
 }
 
 export const markUserAsOffline = (uid) => {
-    const location = hash(window.navigator.userAgent)
-    const path = paths.online.user.location(uid, location)
+    const path = paths.online.user.location(uid, fingerprint.asNumber())
     return firebase.db.remove(path)
         .catch(errorWhile('marking user as offline'))
 }

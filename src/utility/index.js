@@ -1,3 +1,5 @@
+import uuid from 'uuid'
+
 // Error handler to use in Promise.catch
 export const errorWhile = (context, keyword = 'while') => (error) => {
     console.log(`Error caught ${keyword} ${context}:`, error)
@@ -14,3 +16,17 @@ export const hash = (str) => {
     }
     return h
 }
+
+class Fingerprint {
+    constructor() {
+        this.userAgent  = window.navigator.userAgent
+        this.uuid       = uuid.v4()
+        this.timestamp  = new Date().getTime()
+    }
+
+    asNumber() {
+        return hash(this.userAgent + this.uuid + this.timestamp)
+    }
+}
+
+export const fingerprint = new Fingerprint()
