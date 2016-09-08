@@ -65,6 +65,10 @@ export default class FirebaseDatabaseService extends FirebaseFeature {
         }
     }
 
+    get timestamp() {
+        return firebase.database.ServerValue.TIMESTAMP
+    }
+
     // Offline helpers --
     onDisconnect(path) {
         return this.db.ref(path).onDisconnect()
