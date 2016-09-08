@@ -14,11 +14,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "clean": "rm -rf ./build",
     "dev": "node builder/dev-server.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "test": "karma start test/unit/karma.conf.js --single-run",
     "pack": "node builder/build.js",
-    "build": "npm run lint && npm run test && npm run pack",
+    "build": "npm run clean && npm run lint && npm run test && npm run pack",
     "surge": "surge -p ./build -d secret-santa.surge.sh",
     "deploy": "npm run build && npm run surge",
     "chrome": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --remote-debugging-port=9222 &",

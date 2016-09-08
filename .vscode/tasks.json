@@ -8,12 +8,16 @@
     "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "build",
+            "taskName": "Build",
             "args": ["run", "build"]
         },
         {
-            "taskName": "test",
+            "taskName": "Test",
             "args": ["run", "test"]
+        },
+        {
+            "taskName": "Deploy",
+            "args": ["run", "deploy"]
         }
     ]
 }
