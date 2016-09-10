@@ -48,6 +48,20 @@ export const updateUserProfile = ({dispatch}, profile) => {
         })
         .catch(dispatchAndChain(dispatch))
 }
+export const updateUserEmail = ({dispatch}, email, password) => {
+    return firebase.auth.reauthenticate(password)
+        .then(() => {
+            return firebase.auth.updateUserEmail(email)
+        })
+        .catch(dispatchAndChain(dispatch))
+}
+export const updateUserPassword = ({dispatch}, oldPassword, newPassword) => {
+    return firebase.auth.reauthenticate(oldPassword)
+        .then(() => {
+            return firebase.auth.updateUserPassword(newPassword)
+        })
+        .catch(dispatchAndChain(dispatch))
+}
 export const deleteAccount = ({dispatch}) => {
     // todo: delete entries in the database as well..
     return firebase.auth.deleteUserAccount()
