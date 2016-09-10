@@ -11,10 +11,7 @@
                 <p>{{errorMessage}}</p>
             </div>
             <button class='ui basic green button' :class='{loading: loading}' type='submit'>
-                <i class='fitted icons'>
-                    <i class='icon user'></i>
-                    <i class='corner add icon'></i>
-                </i> {{ $t('auth.createAccount') }}
+                <i class='fitted add user icon'></i> {{ $t('auth.createAccount') }}
             </button>
         </form>
     </div>
