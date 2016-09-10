@@ -36,9 +36,9 @@ export default class FirebaseAuthService extends FirebaseFeature {
         return this.auth.signOut()
             .catch(errorWhile('signing out'))
     }
-    reauthenticate(email, password) {
+    reauthenticate(password) {
         const user = this.currentUser
-        const credential = firebase.auth.EmailAuthProvider.credential(email, password)
+        const credential = firebase.auth.EmailAuthProvider.credential(user.email, password)
         if (user) {
             return user.reauthenticate(credential)
                 .catch(errorWhile('reauthenticating'))
