@@ -37,18 +37,16 @@ export default {
     mixins: [ clickaway ],
     methods: {
         goToAccount() {
-            this.$router.go(routes.settings.account)
             this.dismiss()
+            this.$router.go(routes.settings.account)
         },
         goToProfile() {
-            this.$router.go(routes.settings.profile)
             this.dismiss()
+            this.$router.go(routes.settings.profile)
         },
         triggerSignOut() {
-            this.signOut().then(() => {
-                this.dismiss()
-                this.$router.go(routes.home)
-            })
+            this.dismiss()
+            this.signOut()
         },
         dismiss() {
             this.open = false
