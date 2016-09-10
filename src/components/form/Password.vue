@@ -1,15 +1,16 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>{{ $t('password') }}
+        <label>{{ label }}
             <span v-if='instructions' class='instructions'>
                 {{ $t('form.validation.passwordLength', { length: minSize }) }}
             </span>
         </label>
-        <input v-model='value' type='password' :placeholder='placeholder'>
+        <input v-model='value' type='password' :placeholder='placeholder' :class='{matching: matching}'>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
     data: () => ({
 
@@ -24,6 +25,10 @@ export default {
             type: String,
             default: '',
             twoWay: true
+        },
+        label: {
+            type: String,
+            default: () => Vue.t('password')
         },
         placeholder: {
             type: String,
@@ -44,6 +49,10 @@ export default {
         required: {
             type: Boolean,
             default: false
+        },
+        matching: {
+            type: Boolean,
+            default: false
         }
     }
 }
@@ -54,5 +63,8 @@ export default {
     font-style: italic;
     font-weight: 100;
     color: #888;
+}
+.ui.form input[type=password].matching:focus {
+    border-color: #72d272;
 }
 </style>
