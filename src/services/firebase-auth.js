@@ -69,11 +69,6 @@ export default class FirebaseAuthService extends FirebaseFeature {
         if (user) {
             return user.updateEmail(email)
                 .catch(errorWhile('updating email'))
-                .catch(error => {
-                    // todo: might need to reauthenticate
-                    // todo: route to /auth/sign-in?action=reauthenticate
-                    return Promise.reject(error)
-                })
         }
         return Promise.reject({
             code: 'auth/null',
@@ -85,11 +80,6 @@ export default class FirebaseAuthService extends FirebaseFeature {
         if (user) {
             return user.updatePassword(password)
                 .catch(errorWhile('updating password'))
-                .catch(error => {
-                    // todo: might need to reauthenticate
-                    // todo: route to /auth/sign-in?action=reauthenticate
-                    return Promise.reject(error)
-                })
         }
         return Promise.reject({
             code: 'auth/null',
@@ -114,11 +104,6 @@ export default class FirebaseAuthService extends FirebaseFeature {
         if (user) {
             return user.delete()
                 .catch(errorWhile('deleting user account'))
-                .catch(error => {
-                    // todo: might need to reauthenticate
-                    // todo: route to /auth/sign-in?action=reauthenticate
-                    return Promise.reject(error)
-                })
         }
         return Promise.reject({
             code: 'auth/null',
