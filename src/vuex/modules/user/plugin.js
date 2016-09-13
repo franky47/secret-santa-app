@@ -28,19 +28,26 @@ const subscriptions = {
     [authMutations.USER_CHANGED]: ({dispatch}, mutation) => {
         const user = mutation.payload[0]
         if (user) {
-            const path = paths.user(user.uid)
-            observers.user.start(path, data => {
-                if (data) {
-                    // Append uid as it's not stored in the node content.
-                    data.uid = user.uid
-                    dispatch(userMutations.CHANGED, data)
-                } else {
-                    createUser(user.uid, user)
-                }
-            })
-            if (currentUserId) {
+            if (currentUserId !== null) {
                 markUserAsOffline(currentUserId)
             }
+            createUser(user.uid, user).then(() => {
+                return updateUser(user.uid, user)
+            })
+            .then(() => {
+                // Connect database to mutation
+                const path = paths.user(user.uid)
+                observers.user.start(path, data => {
+                    if (!data) {
+                        console.warn('Invalid data from database')
+                    } else {
+                        dispatch(userMutations.CHANGED, data)
+                    }
+                })
+            })
+            .catch(error => {
+                console.log(`Error while creating/updating user on ${authMutations.USER_CHANGED}: ${error.message}`)
+            })
             currentUserId = user.uid
             markUserAsOnline(user.uid)
         } else {
