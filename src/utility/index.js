@@ -6,6 +6,21 @@ export const errorWhile = (context, keyword = 'while') => (error) => {
     return Promise.reject(error) // Allow chaining of error handlers
 }
 
+export const override = (dst, src) => {
+    if (src === null || JSON.stringify(src) === '{}') {
+        return dst // Nothing to change
+    }
+    if (dst === null || JSON.stringify(dst) === '{}') {
+        return dst // No keys to override
+    }
+    for (const key of Object.keys(src)) {
+        if (key in dst) {
+            dst[key] = src[key]
+        }
+    }
+    return dst
+}
+
 // From http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
 export const hash = (str) => {
     let h = 0
