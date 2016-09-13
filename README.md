@@ -1,12 +1,14 @@
 # Secret Santa - Front-End
-Secret Santa 2.0 - Santa as a Service.
+Front-end code for Secret Santa.
 
 [![Build Status](https://travis-ci.org/Franky47/secret-santa-app.svg?branch=master)](https://travis-ci.org/Franky47/secret-santa-app)
 [![dependencies Status](https://david-dm.org/franky47/secret-santa-app/status.svg)](https://david-dm.org/franky47/secret-santa-app)
 [![devDependencies Status](https://david-dm.org/franky47/secret-santa-app/dev-status.svg)](https://david-dm.org/franky47/secret-santa-app?type=dev)
 [![License](https://img.shields.io/github/license/Franky47/secret-santa-app.svg?maxAge=2592000)](LICENSE)
 
-This web application aims to simplify the random process of assinging gifts for
+## Santa as a Service
+
+This web application aims to bring a modern touch to the random process of assinging gifts for
 a "Secret Santa" party, where a group of friends choose to exchange gifts to one
 another without knowing from whom they are receiving, and then guessing.
 
@@ -20,9 +22,15 @@ The secret chat will be anonymous so that the receiver does not know the identit
 
 ## Install
 
+1. Install requirements
 ```
-npm install
-npm start
+$ npm install -g gulp       # For Semantic UI's initial build process
+$ npm install               # Will build Semantic UI from source
+```
+
+2. Run with Chrome Remote Debugging
+```
+$ npm start
 ```
 
 ## Tech Stuff
