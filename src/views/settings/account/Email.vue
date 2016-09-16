@@ -6,7 +6,7 @@
         <div class='ui segment'>
             <form class='ui form' :class='{error: error}' @submit.prevent='update'>
                 <email :value.sync='email' v-ref:email></email>
-                <password :value.sync='password' label='Enter your password' placeholder=''></password>
+                <password :value.sync='password' label='Enter your password'></password>
                 <button class='ui button' :class='{loading: loading}' type='submit'>Update email</button>
             </form>
         </div>
@@ -56,6 +56,14 @@ export default {
     watch: {
         userEmail(value) {
             this.email = value
+        }
+    },
+    route: {
+        activate: function() {
+            console.log('activate')
+        },
+        data: function() {
+            console.log('data')
         }
     },
     vuex: {

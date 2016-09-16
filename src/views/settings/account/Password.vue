@@ -3,9 +3,9 @@
         <div class='ui secondary segment header'><h4><i class='ui fitted lock icon'></i>Change your password</h4></div>
         <div class='ui segment'>
             <form class='ui form' :class='{error: error}' @submit.prevent='update'>
-                <password :value.sync='password.current' label='Current password' placeholder=''></password>
-                <password :value.sync='password.updated' label='New password' placeholder=''></password>
-                <password :value.sync='password.confirm' label='Confirm new password' placeholder='' :matching='matching_passwords'></password>
+                <password :value.sync='password.current' label='Current password'></password>
+                <password :value.sync='password.updated' label='New password' ></password>
+                <password :value.sync='password.confirm' label='Confirm new password' :matching='matching_passwords'></password>
                 <button class='ui button' :class='{loading: loading}' type='submit'>Update password</button>
             </form>
         </div>

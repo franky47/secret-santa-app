@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 const emailRE = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
@@ -26,7 +25,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: () => Vue.t('eg') + ': santa.claus@xmas.com'
+            default: ''
         },
         showErrors: {
             type: Boolean,
