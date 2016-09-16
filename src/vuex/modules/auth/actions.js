@@ -1,7 +1,7 @@
 import mutations from './mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
-import { markUserAsOffline, filterUserInfo } from '../../../api/db/user'
+import { markUserAsOffline } from '../../../api/db/user'
 
 const dispatchAndChain = dispatch => error => {
     dispatch(mutations.ERROR, error)
@@ -166,7 +166,7 @@ export const deleteUserAccount = ({dispatch}, password) => {
  * It is used as a the main endpoint for auth info.
  */
 export const authChangedCallback = ({dispatch, state}, user) => {
-    console.log('Auth changed to', filterUserInfo(user))
+    console.log('Auth changed to', user)
 
     if (user && !isSignedIn(state)) {
         dispatch(mutations.SIGNED_IN)
