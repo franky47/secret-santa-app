@@ -2,9 +2,6 @@ import mutations from './mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
 import { markUserAsOffline, filterUserInfo } from '../../../api/db/user'
-import { override } from '../../../utility'
-
-let userOverride = null
 
 const dispatchAndChain = dispatch => error => {
     dispatch(mutations.ERROR, error)
@@ -51,7 +48,6 @@ export const signOut = ({dispatch}) => {
     return new Promise((resolve, reject) => {
         // Mark current user as offline first (as it requires auth)
         const user = firebase.auth.currentUser
-        console.log(user)
         if (user) {
             markUserAsOffline(user.uid)
                 .then(result => resolve(result))
@@ -94,7 +90,6 @@ export const updateUserProfile = ({dispatch, state}, profile) => {
 export const updateUserEmail = ({dispatch}, email, password) => {
     return firebase.auth.reauthenticate(password)
         .then(() => {
-            userOverride = { email }
             return firebase.auth.updateUserEmail(email)
         })
         .catch(dispatchAndChain(dispatch))
@@ -169,17 +164,14 @@ export const deleteAccount = ({dispatch}) => {
  */
 export const authChangedCallback = ({dispatch, state}, user) => {
     console.log('Auth changed to', filterUserInfo(user))
+
     if (user && !isSignedIn(state)) {
         dispatch(mutations.SIGNED_IN)
     }
     if (!user && isSignedIn(state)) {
         dispatch(mutations.SIGNED_OUT)
     }
-    if (userOverride) {
-        console.log('Overriding user with', userOverride)
-    }
-    dispatch(mutations.USER_CHANGED, override(user, userOverride))
-    userOverride = null
+    dispatch(mutations.USER_CHANGED, user)
 }
 
 /**
