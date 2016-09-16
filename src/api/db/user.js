@@ -3,6 +3,10 @@ import { errorWhile, fingerprint } from '../../utility'
 import * as paths from './paths'
 
 export const filterUserInfo = input => {
+    if (input === null) {
+        return null
+    }
+
     const keptKeys = ['email', 'displayName', 'photoURL']
     const output = {}
     for (const key in input) {
