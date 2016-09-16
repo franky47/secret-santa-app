@@ -2,29 +2,25 @@
     <h2>Manage your account</h2>
     <update-email></update-email>
     <update-password></update-password>
-    <div class='ui segments'>
-        <div class='ui red segment header'>
-            <h4><i class='ui fitted warning sign icon'></i>Danger Zone</h4>
-        </div>
-        <div class='ui segment'>
-            <delete-account-button></delete-account-button>
-        </div>
-        <div class='ui bottom attached error message' v-if='errors.deleteAccount'>
-            <i class='fitted warning circle icon'></i> {{errors.deleteAccount}}
-        </div>
-    </div>
+    <delete-account></delete-account>
 </template>
 
 <script>
 import UpdateEmail    from './account/Email'
 import UpdatePassword from './account/Password'
-import DeleteAccountButton from '../../components/form/DeleteAccountButton'
+import DeleteAccount  from './account/DeleteAccount'
 
 export default {
     data: () => ({
 
     }),
-    components: { UpdateEmail, UpdatePassword, DeleteAccountButton }
+    components: { UpdateEmail, UpdatePassword, DeleteAccount },
+    route: {
+        data: function() {
+            // todo: pass to child
+            console.log('data-account')
+        }
+    }
 }
 </script>
 
