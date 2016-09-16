@@ -69,9 +69,10 @@ export const signOut = ({dispatch}) => {
  */
 export const updateUserProfile = ({dispatch, state}, profile) => {
     return firebase.auth.updateUserProfile(profile)
-        .then(result => {
-            authChangedCallback({dispatch, state}, result)
-            return result
+        .then(() => {
+            const user = firebase.auth.currentUser
+            authChangedCallback({dispatch, state}, user)
+            return user
         })
         .catch(dispatchAndChain(dispatch))
 }
