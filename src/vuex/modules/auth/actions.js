@@ -118,6 +118,33 @@ export const updateUserPassword = ({dispatch}, oldPassword, newPassword) => {
 }
 
 /**
+ * Start the password reset worflow.
+ * This will send an email to the given address containing a link
+ * to /auth/reset-password/challenge?oobCode=<code>
+ */
+export const sendPasswordResetEmail = ({dispatch}, email) => {
+    return firebase.auth.sendPasswordResetEmail(email)
+        .catch(dispatchAndChain(dispatch))
+}
+
+/**
+ * Finalizes the password reset workflow.
+ * It will check the code sent in the password reset email (embedded as a query
+ * in the URL), then reset the password with the supplied password.
+ * Note: it does not log the user in automatically.
+ */
+export const resetUserPassword = ({dispatch}, code, newPassword) => {
+    let userEmail = null
+    return firebase.auth.verifyPasswordResetCode(code)
+        .then(email => {
+            userEmail = email
+            return firebase.auth.confirmPasswordReset(code, newPassword)
+        })
+        .then(() => userEmail) // Return the email address.
+        .catch(dispatchAndChain(dispatch))
+}
+
+/**
  * Delete the current user account.
  * This will need to perform a few tasks in a specific order:
  * - Mark the user as offline in the database.
