@@ -41,6 +41,7 @@ const subscriptions = {
                     if (!data) {
                         console.warn('Invalid data from database')
                     } else {
+                        data.uid = user.uid // Append uid as it's not stored in db
                         dispatch(userMutations.CHANGED, data)
                     }
                 })
