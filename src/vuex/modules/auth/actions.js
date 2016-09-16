@@ -147,9 +147,12 @@ export const resetUserPassword = ({dispatch}, code, newPassword) => {
  * - Delete the auth account, which will trigger a sign out.
  * todo: Check authChangedCallback workflow here.
  */
-export const deleteAccount = ({dispatch}) => {
+export const deleteUserAccount = ({dispatch}, password) => {
     // todo: delete entries in the database as well..
-    return firebase.auth.deleteUserAccount()
+    return firebase.auth.reauthenticate(password)
+        .then(() => {
+            return firebase.auth.deleteUserAccount()
+        })
         .catch(dispatchAndChain(dispatch))
 }
 
