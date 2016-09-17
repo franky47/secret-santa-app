@@ -1,6 +1,6 @@
 <template>
-    <div id='wrapper' class='ui very padded raised segment' :class='{loading: loading}'>
-        <button @click='facebookSignIn' class='ui fluid large facebook button'>
+    <div id='wrapper' class='ui padded raised segment' :class='{loading: loading}'>
+        <button @click='facebookSignIn' class='ui fluid large-on-desktop facebook button'>
             <i class='facebook icon'></i>
             {{ $t('auth.signInWithFacebook') }}
         </button>
@@ -107,10 +107,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 #wrapper {
     max-width: 450px;
-    min-width: 360px;
+    min-width: 280px;
     margin: 130px auto;
     padding-bottom: 23px;
 }
@@ -120,4 +120,11 @@ export default {
 .padded {
     padding-top: 12px;
 }
+
+@media only screen and (min-width: 480px) {
+    .large-on-desktop {
+        font-size: 1.14286rem;
+    }
+}
+
 </style>
