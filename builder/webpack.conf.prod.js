@@ -7,10 +7,13 @@ const baseWebpackConfig = require('./webpack.conf.base')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const Visualizer = require('webpack-visualizer-plugin')
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/env.test')
   : config.build.env
+
+const rootDir = path.join(__dirname, '../')
 
 const webpackConfig = merge(baseWebpackConfig, {
   profile: true,
@@ -84,7 +87,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    })
+    }),
+    new CopyPlugin([
+        { from: path.join(rootDir, '.surgeignore') }
+    ])
   ]
 })
 
