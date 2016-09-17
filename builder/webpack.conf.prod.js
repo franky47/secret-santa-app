@@ -7,13 +7,14 @@ const baseWebpackConfig = require('./webpack.conf.base')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const ShellPlugin = require('webpack-shell-plugin')
 const Visualizer = require('webpack-visualizer-plugin')
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/env.test')
   : config.build.env
 
 const rootDir = path.join(__dirname, '../')
+const buildDir = path.join(rootDir, 'build')
 
 const webpackConfig = merge(baseWebpackConfig, {
   profile: true,
@@ -88,10 +89,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
-    new CopyPlugin([
-        { from: path.join(rootDir, '.surgeignore') },
-        { from: config.build.index, to: path.resolve(__dirname, '../build/200.html')}
-    ])
+    new ShellPlugin({
+        onBuildExit: [
+            `cp -f ${path.join(rootDir, '.surgeignore')} ${buildDir}`,
+            `cp -f ${path.join(buildDir, 'index.html')} ${path.join(buildDir, '200.html')}`
+        ]
+    })
   ]
 })
 
