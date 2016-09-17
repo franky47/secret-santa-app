@@ -53,12 +53,10 @@ router.map({
                         transition.redirect(routes.auth.resetEmail)
                         break
                     default:
-                        console.log(transition)
                         const context = {
                             path:   transition.to.path,
                             query:  JSON.stringify(transition.to.query)
                         }
-                        console.log(context)
                         transition.redirect({
                             path:   routes.invalid,
                             query:  context
