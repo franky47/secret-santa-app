@@ -1,7 +1,7 @@
 import user from './mutations'
 
 const defaults = {
-    photoURL: 'http://gravatar.com/avatar?d=mm&s=100'
+    photoURL: 'https://gravatar.com/avatar?d=mm&s=100'
 }
 
 const state = {
