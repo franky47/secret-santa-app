@@ -5,7 +5,7 @@
   "author": {
     "name": "Francois Best",
     "email": "francoisbest@gmail.com",
-    "url": "secret-santa.surge.sh"
+    "url": "https://secret-santa-e1f38.firebaseapp.com/"
   },
   "repository": {
     "url": "https://github.com/Franky47/secret-santa-app",
@@ -24,8 +24,9 @@
     "test": "karma start test/unit/karma.conf.js --single-run",
     "pack": "node builder/build.js",
     "build": "npm run clean && npm run lint && npm run test && npm run pack",
-    "surge": "surge -p ./build -d secret-santa.surge.sh",
-    "deploy": "npm run build && npm run surge",
+    "deploy-firebase": "firebase deploy",
+    "deploy-surge": "surge -p ./build -d secret-santa.surge.sh",
+    "deploy": "npm run build && npm run deploy-firebase && npm run deploy-surge",
     "chrome": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --remote-debugging-port=9222 &",
     "start": "npm run chrome && npm run dev",
     "build-semantic": "gulp --cwd=./external/semantic-ui build",
@@ -73,6 +74,7 @@
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "firebase-tools": "^3.0.7",
     "function-bind": "^1.1.0",
     "html-webpack-plugin": "^2.22.0",
     "http-proxy-middleware": "^0.17.1",

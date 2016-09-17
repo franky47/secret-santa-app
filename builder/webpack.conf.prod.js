@@ -89,7 +89,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunks: ['vendor']
     }),
     new CopyPlugin([
-        { from: path.join(rootDir, '.surgeignore') }
+        { from: path.join(rootDir, '.surgeignore') },
+        { from: config.build.index, to: path.resolve(__dirname, '../build/200.html')}
     ])
   ]
 })

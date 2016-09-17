@@ -1,0 +1,20 @@
+{
+  "database": {
+    "rules": "firebase.db.rules.json"
+  },
+  "hosting": {
+    "public": "build",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "ignore": [
+        "stats.json",
+        "stats.html",
+        "200.html",
+        ".surgeignore"
+    ]
+  }
+}
