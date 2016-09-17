@@ -7,9 +7,13 @@ const populateSubRoutes = obj => {
 
 export const home = '/'
 
+export const invalid = '/invalid'
+
 export const auth = {
+    root:               '/auth',
     signIn:             '/auth/sign-in',
-    reauthenticate:     '/auth/sign-in?action=reauthenticate',  // Helper for $router.go(), uses the sign-in route
+    verifyEmail:        '/auth/verify-email',
+    resetEmail:         '/auth/reset-email',
     register:           '/auth/register',
     passwordReset: {
         request:        '/auth/password-reset/request',

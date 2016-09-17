@@ -15,6 +15,17 @@ import PasswordResetChallengeView   from '../views/auth/PasswordResetChallengeVi
 
 import * as routes from './routes-definitions'
 
+const unimplementedComponent = {
+    template: `
+    <div class=''>
+        <h2 class='ui red header'><i class='fitted delete icon'></i>Unimplemented View</h2>
+        <p>Please report this issue on <a href='https://github.com/Franky47/secret-santa-app/issues'>GitHub</a>,
+        adding the following information to the issue description:</p>
+        <pre class='ui secondary segment'>{{$route.query | json}}</pre>
+    </div>
+    `
+}
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -24,9 +35,44 @@ const router = new VueRouter({
 
 router.map({
     [routes.home]: { component: HomeView },
-
+    [routes.invalid]: { component: unimplementedComponent },
+    [routes.auth.root]: {
+        component: {
+            template: '',
+            route: {
+                canActivate(transition) {
+                    const mode = transition.to.query.mode || null
+                    switch (mode) {
+                    case 'verifyEmail':
+                        transition.redirect(routes.auth.verifyEmail)
+                        break
+                    case 'resetPassword':
+                        transition.redirect(routes.auth.passwordReset.challenge)
+                        break
+                    case 'resetEmail':
+                        transition.redirect(routes.auth.resetEmail)
+                        break
+                    default:
+                        console.log(transition)
+                        const context = {
+                            path:   transition.to.path,
+                            query:  JSON.stringify(transition.to.query)
+                        }
+                        console.log(context)
+                        transition.redirect({
+                            path:   routes.invalid,
+                            query:  context
+                        })
+                        break
+                    }
+                }
+            }
+        }
+    },
     [routes.auth.register]:                 { component: RegisterView },
     [routes.auth.signIn]:                   { component: SignInView },
+    [routes.auth.verifyEmail]:              { component: unimplementedComponent },
+    [routes.auth.resetEmail]:               { component: unimplementedComponent },
     [routes.auth.passwordReset.request]:    { component: PasswordResetRequestView },
     [routes.auth.passwordReset.challenge]:  { component: PasswordResetChallengeView },
 
@@ -39,6 +85,10 @@ router.map({
             [routes.settings.subRoutes.profile]: { component: SettingsProfile }
         }
     }
+})
+
+router.redirect({
+    '*': routes.home    // Unmatched routes go to home
 })
 
 router.beforeEach(transition => {
