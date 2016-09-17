@@ -31,10 +31,6 @@ const subscriptions = {
             observers.userLocale.start(path, data => {
                 if (data) {
                     setLocale({dispatch, state}, data)
-                } else {
-                    // Init database entry
-                    const currentLocale = getters.locale(state) || getters.nativeLocale(state)
-                    firebase.db.set(path, currentLocale)
                 }
             })
         }

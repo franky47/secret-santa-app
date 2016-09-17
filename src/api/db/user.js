@@ -48,3 +48,9 @@ export const markUserAsOffline = (uid) => {
     return firebase.db.remove(path)
         .catch(errorWhile('marking user as offline'))
 }
+
+export const deleteUserData = (uid) => {
+    const path = paths.user(uid)
+    return firebase.db.remove(path)
+        .catch(errorWhile('deleting user information'))
+}

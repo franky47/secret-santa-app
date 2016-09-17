@@ -17,6 +17,9 @@ const observers = {
 let currentUserId = null
 
 const subscriptions = {
+    [userMutations.RESET]: () => {
+        observers.user.stop()
+    },
     [userMutations.CHANGED]: ({state}) => {
         const user = getCurrentUserObject(state)
         createUser(user.uid, user).then(() => {
@@ -52,7 +55,6 @@ const subscriptions = {
             currentUserId = user.uid
             markUserAsOnline(user.uid)
         } else {
-            observers.user.stop()
             dispatch(userMutations.RESET)
             // Don't mark user as offline here as the database is write-protected
         }

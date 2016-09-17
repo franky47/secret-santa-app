@@ -1,7 +1,8 @@
 import mutations from './mutations'
 import { isSignedIn } from './getters'
 import firebase from '../../../services/firebase'
-import { markUserAsOffline } from '../../../api/db/user'
+import { markUserAsOffline, deleteUserData } from '../../../api/db/user'
+import userMutations from '../user/mutations'
 
 const dispatchAndChain = dispatch => error => {
     dispatch(mutations.ERROR, error)
@@ -149,8 +150,18 @@ export const resetUserPassword = ({dispatch}, code, newPassword) => {
  * todo: Check authChangedCallback workflow here.
  */
 export const deleteUserAccount = ({dispatch}, password) => {
-    // todo: delete entries in the database as well..
+    const user = firebase.auth.currentUser
     return firebase.auth.reauthenticate(password)
+        .then(() => {
+            return markUserAsOffline(user.uid)
+        })
+        .then(() => {
+            dispatch(userMutations.RESET)
+            return Promise.resolve()
+        })
+        .then(() => {
+            return deleteUserData(user.uid)
+        })
         .then(() => {
             return firebase.auth.deleteUserAccount()
         })
