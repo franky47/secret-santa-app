@@ -68,9 +68,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.focus.matching {
-    border-color: green;
-}
-</style>
