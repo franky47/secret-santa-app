@@ -10,7 +10,7 @@
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
             </div>
-            <button class='ui basic green button' :class='{loading: loading}' type='submit'>
+            <button class='ui basic green fluid--mobile button' :class='{loading: loading}' type='submit'>
                 <i class='fitted add user icon'></i> {{ $t('auth.createAccount') }}
             </button>
         </form>
@@ -114,5 +114,10 @@ export default {
     max-width: 450px;
     min-width: 292px;
     margin: 50px auto;
+}
+@media only screen and (max-width: 480px) {
+    .fluid--mobile {
+        width: 100%;
+    }
 }
 </style>
