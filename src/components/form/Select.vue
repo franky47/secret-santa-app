@@ -6,7 +6,6 @@
                 <option v-for='opt in optionKeys' :value='opt'>{{ options[opt] }}</option>
             </select>
             <i class='dropdown icon'></i>
-            <!-- input v-if='searchable' class='search' autocomplete='off' tabindex='0' @change='' -->
             <div class='text'>{{ options[value] }}</div>
             <div class='menu transition' tabindex='-1' :class='menuClass'>
                 <div v-for='opt in optionKeys' class='item' :data-value='opt' @click='value = opt'>{{ options[opt] }}</div>
@@ -25,10 +24,6 @@ export default {
             type: String,
             default: 'Select',
             required: true
-        },
-        searchable: {
-            type: Boolean,
-            default: false
         },
         options: {
             type: Object,
