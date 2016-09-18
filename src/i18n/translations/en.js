@@ -27,6 +27,7 @@ export default {
         my:             'My',
         profile:        'Profile',
         account:        'Account',
-        preferences:    'Preferences'
+        preferences:    'Preferences',
+        update:         'Update'
     }
 }

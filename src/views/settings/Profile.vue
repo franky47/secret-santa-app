@@ -11,7 +11,7 @@
             <p>{{errorMessage}}</p>
         </div>
         <button class='ui basic green button' :class='{loading: loading}' type='submit'>
-            <i class='fitted icon checkmark'></i> Update
+            <i class='fitted icon checkmark'></i> {{ $t('settings.update') }}
         </button>
     </form>
 </template>

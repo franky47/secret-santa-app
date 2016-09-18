@@ -27,7 +27,7 @@ export default {
         my:             'Mon',
         profile:        'Profil',
         account:        'Compte',
-        preferences:    'Préférences'
+        preferences:    'Préférences',
+        update:         'Sauvegarder'
     }
-
 }
