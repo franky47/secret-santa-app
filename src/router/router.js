@@ -86,7 +86,13 @@ router.map({
 })
 
 router.redirect({
-    '*': routes.home    // Unmatched routes go to home
+    '*': routes.home,    // Unmatched routes go to home
+
+    // Aliases & shortcuts
+    '/register':    routes.auth.register,
+    '/sign-up':     routes.auth.register,
+    '/sign-in':     routes.auth.signIn,
+    '/login':       routes.auth.signIn
 })
 
 router.beforeEach(transition => {
