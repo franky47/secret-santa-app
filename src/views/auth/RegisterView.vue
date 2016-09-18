@@ -6,6 +6,7 @@
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password instructions required></password>
             <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
             <avatar v-ref:avatar :user-name='user.name'></avatar>
+            <image-upload v-ref:upload></image-upload>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
@@ -22,11 +23,13 @@ import Avatar   from '../../components/form/Avatar'
 import Email    from '../../components/form/Email'
 import Password from '../../components/form/Password'
 import Name     from '../../components/form/Name'
+import ImageUpload from '../../components/ImageUpload'
 import {
     registerWithEmail,
     updateUserProfile
 } from '../../vuex/modules/auth/actions'
 import { home } from '../../router/routes-definitions'
+import firebase from '../../services/firebase'
 
 export default {
     data: () => ({
@@ -39,12 +42,7 @@ export default {
         },
         errorMessage: ''
     }),
-    components: {
-        Email,
-        Password,
-        Name,
-        Avatar
-    },
+    components: { Email, Password, Name, Avatar, ImageUpload },
     computed: {
         validation() {
             const email     = this.$refs.email    || { valid: false }
@@ -71,9 +69,13 @@ export default {
                 return
             }
             this.registerWithEmail(this.user.email, this.user.password)
-                .then(() => {
-                    const avatar = this.$refs.avatar
-                    const photoURL = avatar.getURL()
+                .then(user => {
+                    const uid = user.uid
+                    const blob = this.$refs.upload.blob
+                    return firebase.storage.uploadFile(blob, `${uid}/avatar`)
+                })
+                .then(uploadResult => {
+                    const photoURL = uploadResult.downloadURL
                     const profile = {
                         displayName: this.user.name,
                         photoURL
