@@ -4,9 +4,9 @@ import './i18n/i18n'
 import store                from './vuex/store'
 import router               from './router/router'
 import firebase             from './services/firebase'
-import FirebaseAuth         from './services/firebase-auth'
-import FirebaseDatabase     from './services/firebase-database'
-import FirebaseStorage      from './services/firebase-storage'
+import FirebaseAuth         from './services/firebase/auth'
+import FirebaseDatabase     from './services/firebase/database'
+import FirebaseStorage      from './services/firebase/storage'
 import { sync } from 'vuex-router-sync'
 import {
     authChangedCallback,

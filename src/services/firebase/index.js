@@ -1,4 +1,4 @@
-import firebase from './firebase-include'
+import firebase from './include'
 
 export class FirebaseFeature {
     constructor(firebaseApp, featureName) {

@@ -1,5 +1,5 @@
-import firebase from './firebase-include'
-import { FirebaseFeature } from './firebase'
+import firebase from './include'
+import { FirebaseFeature } from '.'
 
 export default class FirebaseDatabaseService extends FirebaseFeature {
     constructor(firebaseApp, config) {
