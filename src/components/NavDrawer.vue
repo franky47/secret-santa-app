@@ -9,10 +9,10 @@
             <a @click.stop='signIn'>{{ $t('auth.signIn') }}</a>
         </div>
         <div class='item' v-if='isSignedIn'>
-            <i class='settings icon'></i>Settings
+            <i class='settings icon'></i>{{$t('settings._')}}
             <div class='menu'>
-                <a class='item' v-link='{ path: routes.settings.account }'>Account</a>
-                <a class='item' v-link='{ path: routes.settings.profile }'>Profile</a>
+                <a class='item' v-link='{ path: routes.settings.profile }'>{{ $t('settings.profile._') }}</a>
+                <a class='item' v-link='{ path: routes.settings.account }'>{{ $t('settings.account._') }}</a>
             </div>
         </div>
         <a class='item' @click.stop='signOut' v-if='isSignedIn'>

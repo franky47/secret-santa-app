@@ -1,12 +1,26 @@
 <template>
     <div class='ui segments'>
-        <div class='ui secondary segment header'><h4><i class='ui fitted lock icon'></i>Change your password</h4></div>
+        <div class='ui secondary segment header'>
+            <h4><i class='ui fitted lock icon'></i>{{ $t('settings.account.password.header') }}</h4>
+        </div>
         <div class='ui segment'>
             <form class='ui form' :class='{error: error}' @submit.prevent='update'>
-                <password :value.sync='password.current' label='Current password'></password>
-                <password :value.sync='password.updated' label='New password' ></password>
-                <password :value.sync='password.confirm' label='Confirm new password' :matching='matching_passwords'></password>
-                <button class='ui button' :class='{loading: loading}' type='submit'>Update password</button>
+                <password :value.sync='password.current'
+                          :label="$t('settings.account.password.currentPassword')"
+                ></password>
+                <password :value.sync='password.updated'
+                          :label="$t('settings.account.password.newPassword')"
+                ></password>
+                <password :value.sync='password.confirm'
+                          :label="$t('settings.account.password.confirm')"
+                          :matching='matching_passwords'
+                ></password>
+                <button class='ui button'
+                       :class='{loading: loading}'
+                       type='submit'
+                >
+                       {{ $t('settings.account.password.update') }}
+                </button>
             </form>
         </div>
         <div class='ui bottom attached error message' v-if='error'>
@@ -16,6 +30,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Password from '../../../components/form/Password'
 import { updateUserPassword } from '../../../vuex/modules/auth/actions'
 
@@ -33,7 +48,7 @@ export default {
     methods: {
         update() {
             if (!this.matching_passwords) {
-                this.error = "Passwords don't match."
+                this.error = Vue.t('settings.account.password.dontMatch')
                 return
             }
             this.loading = true

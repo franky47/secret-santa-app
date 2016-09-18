@@ -19,15 +19,38 @@ export default {
     },
     or: 'or',
     eg: 'eg',
+    my: 'My',
+    your: 'Your',
     password:       'Password',
     home: 'Home',
     settings: {
-        settings:       'Settings',
-        your:           'Your',
-        my:             'My',
-        profile:        'Profile',
-        account:        'Account',
+        _:              'Settings',
         preferences:    'Preferences',
-        update:         'Update'
+        your:           'Your',
+        account: {
+            _: 'Account',
+            email: {
+                header:             'Change your e-mail',
+                newEmail:           'New e-mail address',
+                enterPassword:      'Enter your password',
+                update:             'Update e-mail',
+                validEmail:         'Please enter a valid e-mail address'
+            },
+            password: {
+                header:             'Change your password',
+                currentPassword:    'Current password',
+                newPassword:        'New password',
+                confirm:            'Confirm new password',
+                update:             'Update password',
+                dontMatch:          "Passwords don't match."
+            },
+            deleteAccount: {
+
+            }
+        },
+        profile: {
+            _: 'Profile',
+            update: 'Update'
+        }
     }
 }

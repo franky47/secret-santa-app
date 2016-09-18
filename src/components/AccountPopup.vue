@@ -1,13 +1,17 @@
 <template>
     <div class='account popup' v-on-clickaway='open=false'>
         <div class='ui center aligned segment'>
-            <img class='ui circular centered image pointer' :src='userPhoto' @click.stop='goToProfile'>
+            <img class='ui circular centered image pointer'
+                :src='userPhoto'
+                @click.stop='goToProfile'
+                height='100px'
+            >
             <div class='ui header pointer' @click.stop='goToProfile'>{{userName}}
                 <div class='sub header pointer'>{{userEmail}}</div>
             </div>
             <div class='ui primary basic fluid button' @click.stop='goToAccount'>
                 <i class='fitted user icon'></i>
-                {{ $t('settings.my') + ' ' + $t('settings.account')}}
+                {{ $t('my') + ' ' + $t('settings.account._')}}
             </div>
             <div class='ui divider'></div>
             <a @click='triggerSignOut'>

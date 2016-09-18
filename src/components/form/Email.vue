@@ -1,6 +1,6 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
-        <label>E-mail <span v-if='!valid && showErrors'>{{ $t('form.validation.mustBeValid') }}</span></label>
+        <label>{{label}} <span v-if='!valid && showErrors'>{{ $t('form.validation.mustBeValid') }}</span></label>
         <input v-model='value' type='email' :placeholder='placeholder'>
     </div>
 </template>
@@ -22,6 +22,10 @@ export default {
             type: String,
             default: '',
             twoWay: true
+        },
+        label: {
+            type: String,
+            default: 'E-mail'
         },
         placeholder: {
             type: String,

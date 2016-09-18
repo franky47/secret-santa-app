@@ -1,5 +1,5 @@
 <template>
-    <h2>{{ $t('settings.your') + ' ' + $t('settings.profile') }}</h2>
+    <h2>{{ $t('your') + ' ' + $t('settings.profile._') }}</h2>
     <form @submit.prevent='update' class='ui form' :class='{error: errorMessage}'>
         <name :value.sync='newName'></name>
         <avatar :user-name='newName'></avatar>
@@ -11,7 +11,7 @@
             <p>{{errorMessage}}</p>
         </div>
         <button class='ui basic green button' :class='{loading: loading}' type='submit'>
-            <i class='fitted icon checkmark'></i> {{ $t('settings.update') }}
+            <i class='fitted icon checkmark'></i> {{ $t('settings.profile.update') }}
         </button>
     </form>
 </template>

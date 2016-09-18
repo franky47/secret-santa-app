@@ -19,15 +19,38 @@ export default {
     },
     or: 'ou',
     eg: 'ex',
+    my: 'Mon',
+    your: 'Votre',
     password:       'Mot de passe',
     home: 'Accueil',
     settings: {
-        settings:       'Réglages',
-        your:           'Votre',
-        my:             'Mon',
-        profile:        'Profil',
-        account:        'Compte',
+        _:              'Réglages',
         preferences:    'Préférences',
-        update:         'Sauvegarder'
+        your:           'Votre',
+        account: {
+            _: 'Compte',
+            email: {
+                header:             "Modification de l'adresse e-mail",
+                newEmail:           'Nouvelle adresse e-mail',
+                enterPassword:      'Entrez votre mot de passe',
+                update:             "Changer d'adresse e-mail",
+                validEmail:         'Veuillez entrer une adresse e-mail valide'
+            },
+            password: {
+                header:             'Modification du mot de passe',
+                currentPassword:    'Ancien mot de passe',
+                newPassword:        'Nouveau mot de passe',
+                confirm:            'Confirmation du nouveau mot de passe',
+                update:             'Changer de mot de passe',
+                dontMatch:          'Les mots de passe ne correspondent pas.'
+            },
+            deleteAccount: {
+
+            }
+        },
+        profile: {
+            _: 'Profil',
+            update: 'Valider'
+        }
     }
 }

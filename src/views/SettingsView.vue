@@ -1,7 +1,7 @@
 <template>
     <div class='ui two column grid'>
         <div class='four wide column'>
-            <h1 class='ui header'>{{ $t('settings.settings') }}</h1>
+            <h1 class='ui header'>{{ $t('settings._') }}</h1>
             <div class='ui vertical pointing menu'>
                 <a v-for='item in menu' class='item' v-link='item.link'>{{ item.name }}</a>
             </div>
@@ -23,8 +23,8 @@ import * as routes from '../router/routes-definitions'
 export default {
     data: () => ({
         links: [
-            { name: 'settings.account', path: routes.settings.account },
-            { name: 'settings.profile', path: routes.settings.profile }
+            { name: 'settings.profile._', path: routes.settings.profile },
+            { name: 'settings.account._', path: routes.settings.account }
         ]
     }),
     computed: {
