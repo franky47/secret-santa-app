@@ -19,17 +19,15 @@
 </template>
 
 <script>
-import Avatar   from '../../components/form/Avatar'
-import Email    from '../../components/form/Email'
-import Password from '../../components/form/Password'
-import Name     from '../../components/form/Name'
-import ImageUpload from '../../components/ImageUpload'
-import {
-    registerWithEmail,
-    updateUserProfile
-} from '../../vuex/modules/auth/actions'
-import { home } from '../../router/routes-definitions'
-import firebase from '../../services/firebase'
+import Avatar               from '../../components/form/Avatar'
+import Email                from '../../components/form/Email'
+import Password             from '../../components/form/Password'
+import Name                 from '../../components/form/Name'
+import ImageUpload          from '../../components/ImageUpload'
+import store                from '../../vuex/store'
+import * as auth            from '../../vuex/modules/auth'
+import { home }             from '../../router/routes-definitions'
+import { uploadUserAvatar } from '../../api/storage/user'
 
 export default {
     data: () => ({
@@ -68,11 +66,12 @@ export default {
                 this.showErrors = true
                 return
             }
+            this.loading = true
             this.registerWithEmail(this.user.email, this.user.password)
                 .then(user => {
                     const uid = user.uid
                     const blob = this.$refs.upload.blob
-                    return firebase.storage.uploadFile(blob, `${uid}/avatar`)
+                    return uploadUserAvatar(uid, blob)
                 })
                 .then(uploadResult => {
                     const photoURL = uploadResult.downloadURL
@@ -81,18 +80,14 @@ export default {
                         photoURL
                     }
                     return this.updateUserProfile(profile)
-                }).then(() => { // success
+                }).then(() => {
                     this.loading = false
                     this.reset()
                     this.$router.go(home)
-                }).catch((error) => { // failed
+                }).catch((error) => {
                     this.loading = false
                     this.errorMessage = error.message
                 })
-            this.loading = true
-        },
-        check(field) {
-            return this.showErrors && !field
         },
         reset() {
             this.showErrors = false
@@ -104,8 +99,14 @@ export default {
     },
     vuex: {
         actions: {
-            registerWithEmail,
-            updateUserProfile
+            registerWithEmail:      auth.actions.registerWithEmail,
+            updateUserProfile:      auth.actions.updateUserProfile
+        }
+    },
+    route: {
+        canActivate() {
+            // We don't have access to `this` here.
+            return !auth.getters.isSignedIn(store.state)
         }
     }
 }
