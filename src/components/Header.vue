@@ -13,7 +13,7 @@
                     {{item.name}}
                 </div>
             </div>
-            <div class='right item' v-if='isSignedIn'>
+            <div class='right item' v-if='isSignedIn && userPhoto'>
                 <img class='ui circular avatar image' @click.stop='accountOpen = !accountOpen' :src='userPhoto'>
                 <account-popup v-if='accountOpen'
                     transition='popup'
@@ -131,15 +131,6 @@ export default {
 }
 .ui.container .secondary.menu .active.item:hover {
   border-bottom-color: #e66a6a;
-}
-
-.avatar {
-  width: 30px;
-  height: 30px;
-  background: url(http://gravatar.com/avatar?d=mm&s=100);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
 .circle {

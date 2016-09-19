@@ -1,14 +1,14 @@
 import user from './mutations'
 
-const defaults = {
-    photoURL: 'https://gravatar.com/avatar?d=mm&s=100'
-}
+// const defaults = {
+//     photoURL: 'https://gravatar.com/avatar?d=mm&s=100'
+// }
 
 const state = {
     uid:            null,
     email:          null,
     displayName:    null,
-    photoURL:       defaults.photoURL
+    photoURL:       null
 }
 
 const mutations = {
@@ -16,7 +16,7 @@ const mutations = {
         state.uid           = null
         state.email         = null
         state.displayName   = null
-        state.photoURL      = defaults.photoURL
+        state.photoURL      = null
     },
     [user.CHANGED]: (state, user) => {
         // Update only what's changed
