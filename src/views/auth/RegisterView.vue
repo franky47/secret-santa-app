@@ -7,6 +7,7 @@
             <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
             <avatar v-ref:avatar :user-name='user.name'></avatar>
             <image-upload v-ref:upload></image-upload>
+            <image-crop class='avatar-preview'></image-crop>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
@@ -24,6 +25,7 @@ import Email                from '../../components/form/Email'
 import Password             from '../../components/form/Password'
 import Name                 from '../../components/form/Name'
 import ImageUpload          from '../../components/ImageUpload'
+import ImageCrop            from '../../components/ImageCrop'
 import store                from '../../vuex/store'
 import * as auth            from '../../vuex/modules/auth'
 import { home }             from '../../router/routes-definitions'
@@ -40,7 +42,7 @@ export default {
         },
         errorMessage: ''
     }),
-    components: { Email, Password, Name, Avatar, ImageUpload },
+    components: { Email, Password, Name, Avatar, ImageUpload, ImageCrop },
     computed: {
         validation() {
             const email     = this.$refs.email    || { valid: false }
@@ -122,5 +124,9 @@ export default {
     .fluid--mobile {
         width: 100%;
     }
+}
+.avatar-preview {
+    border: solid 1px grey;
+    border-radius: 100%;
 }
 </style>

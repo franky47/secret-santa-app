@@ -1,16 +1,17 @@
+<!-- Credits to Jack Barham: https://jsfiddle.net/jackbarham/sxfept4t/1/ -->
+
 <template>
     <div v-if='!image'>
         <div class='dropzone-area'
-             drag-over='handleDragOver'
-             @dragenter='hover=true'
-             @dragleave='hover=false'
+             @dragenter='onDragEnter'
+             @dragleave='onDragLeave'
              :class='{hovered: hover}'
         >
             <div class='dropzone-text'>
                 <span class='dropzone-title'>Drop image here or click to select</span>
                 <span class='dropzone-info' v-if='help'>{{ help }}</span>
             </div>
-            <input type='file' @change='onFileChange'>
+            <input type='file' @change='onFileChange' accept='image/*'>
         </div>
     </div>
     <div class='dropzone-preview' v-if='image'>
@@ -27,7 +28,16 @@ export default {
         hover: false
     }),
     methods: {
+        onDragEnter(e) {
+            // todo: check for file type and hover only if allowed
+            console.log(e)
+            this.hover = true
+        },
+        onDragLeave(e) {
+            this.hover = false
+        },
         onFileChange(e) {
+            console.log(e)
             const files = e.target.files || e.dataTransfer.files
             if (!files.length) {
                 return
