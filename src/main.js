@@ -38,4 +38,10 @@ Promise.all([
     }, '#app')
 }).catch(error => {
     console.log('Error starting app:' + error.message)
+    // Display error on home page, for debugging on mobile devices.
+    const debugInfoDiv = document.getElementById('debug-info')
+    const debugInfoPre = document.createElement('pre')
+    const debugInfoTxt = document.createTextNode(error.toString())
+    debugInfoPre.appendChild(debugInfoTxt)
+    debugInfoDiv.appendChild(debugInfoPre)
 })
