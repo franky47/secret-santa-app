@@ -35,13 +35,26 @@ export default {
         size: {
             type: Number,
             default: 150
+        },
+        file: {
+            type: window.File,
+            default: () => null
         }
     },
     ready() {
         setupCanvas(this.$els.canvas, this.size)
-        this.loadImageFromURL('http://bramptondentalarts.com/wp-content/uploads/2013/08/FAMILY1.jpg')
+        if (this.file) {
+            this.loadImageFromFile(this.file)
+        }
     },
     methods: {
+        loadImageFromFile(file) {
+            const reader = new window.FileReader()
+            reader.onload = (event) => {
+                this.loadImageFromURL(event.target.result)
+            }
+            reader.readAsDataURL(file)
+        },
         loadImageFromURL(url) {
             this.image = new window.Image()
             this.image.onload = () => {
@@ -96,6 +109,7 @@ export default {
             const sh = ih * this.zoom
             const sx = (cw - sw) * 0.5 + this.pan.x * this.zoom
             const sy = (ch - sh) * 0.5 + this.pan.y * this.zoom
+            context.clearRect(0, 0, canvas.width, canvas.height)
             context.drawImage(this.image, sx, sy, sw, sh)
         },
         reset() {
@@ -116,8 +130,19 @@ export default {
                 this.zoom = 1.0
             }
         },
-        render() {
-
+        getImageAsFile() {
+            return Promise.race([
+                new Promise((resolve) => {
+                    this.$els.canvas.toBlob(file => {
+                        resolve(file)
+                    })
+                }),
+                new Promise((resolve, reject) => {
+                    window.setTimeout(() => {
+                        reject(new Error('Canvas rendering timed out'))
+                    }, 10000)
+                })
+            ])
         }
     },
     computed: {
@@ -167,5 +192,6 @@ export default {
 <style scoped>
 canvas {
     display: block;
+    border-radius: 100%;
 }
 </style>

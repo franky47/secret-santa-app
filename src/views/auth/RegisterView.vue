@@ -6,8 +6,6 @@
             <password :value.sync='user.password' :show-errors='showErrors' v-ref:password instructions required></password>
             <name :value.sync='user.name' :show-errors='showErrors' v-ref:name required></name>
             <avatar v-ref:avatar :user-name='user.name'></avatar>
-            <image-upload v-ref:upload></image-upload>
-            <image-crop class='avatar-preview'></image-crop>
             <div class='ui error message'>
                 <div class='header'>Error</div>
                 <p>{{errorMessage}}</p>
@@ -24,8 +22,6 @@ import Avatar               from '../../components/form/Avatar'
 import Email                from '../../components/form/Email'
 import Password             from '../../components/form/Password'
 import Name                 from '../../components/form/Name'
-import ImageUpload          from '../../components/ImageUpload'
-import ImageCrop            from '../../components/ImageCrop'
 import store                from '../../vuex/store'
 import * as auth            from '../../vuex/modules/auth'
 import { home }             from '../../router/routes-definitions'
@@ -42,7 +38,7 @@ export default {
         },
         errorMessage: ''
     }),
-    components: { Email, Password, Name, Avatar, ImageUpload, ImageCrop },
+    components: { Email, Password, Name, Avatar },
     computed: {
         validation() {
             const email     = this.$refs.email    || { valid: false }
@@ -69,11 +65,15 @@ export default {
                 return
             }
             this.loading = true
+            let userId = null
             this.registerWithEmail(this.user.email, this.user.password)
                 .then(user => {
-                    const uid = user.uid
-                    const blob = this.$refs.upload.blob
-                    return uploadUserAvatar(uid, blob)
+                    userId = user.uid // Save it for later
+                    // Render the cropped image to a virtual file
+                    return this.$refs.avatar.getImageAsFile()
+                })
+                .then(file => {
+                    return uploadUserAvatar(userId, file)
                 })
                 .then(uploadResult => {
                     const photoURL = uploadResult.downloadURL
@@ -124,9 +124,5 @@ export default {
     .fluid--mobile {
         width: 100%;
     }
-}
-.avatar-preview {
-    border: solid 1px grey;
-    border-radius: 100%;
 }
 </style>

@@ -1,43 +1,35 @@
 <template>
-    <div class='field'
-        style='user-select:none' unselectable='on'
-        onselectstart='return false'
-        onmousedown='return false'
-    >
-        <label>Avatar</label>
-        <generic-avatar :back-color='color' :text='letter' v-ref:avatar></generic-avatar>
-        <div class='avatar controls'>
-            <color-picker :value.sync='color' v-if='selectColor' class='color-picker'
-                v-on-clickaway='selectColor = false'
-                transition='popup'
-            ></color-picker>
-            <div class='ui list'>
-                <div class='item'><i class='icon paint brush'></i><div class='content'><a @click.stop='selectColor = true'>Change color</a></div></div>
-                <div class='item'><i class='icon close'></i><div class='content'><a @click='removeImage'>Remove image</a></div></div>
-            </div>
+    <div class='field'>
+        <label>Avatar
+            <span v-if='file' class='action' @click='removeImage'>
+                <i class='fitted remove icon'></i>
+            </span>
+        </label>
+        <div class='avatar-area'>
+            <image-selector v-if='!file' :file.sync='file' v-ref:select></image-selector>
+            <image-crop :size='150' v-if='file' :file='file' v-ref:crop></image-crop>
         </div>
-        <input id='avatarSelectFile' type='file' style='visibility:hidden'>
     </div>
 </template>
 
 <script>
-import { avatarColors } from '../../utility/material-colors'
-import GenericAvatar from '../GenericAvatar'
-import ColorPicker from '../ColorPicker'
-import { mixin as clickaway } from 'vue-clickaway'
+import ImageSelector    from '../ImageSelector'
+import ImageCrop        from '../ImageCrop'
 
 export default {
     data: () => ({
-        useGeneric: false,
-        selectColor: false,
-        color: ''
+        file: null
     }),
-    mixins: [ clickaway ],
-    components: { GenericAvatar, ColorPicker },
+    components: { ImageSelector, ImageCrop },
     props: {
         userName: {
             type: String,
             default: ''
+        },
+        photoURL: {
+            type: String,
+            default: null,
+            twoWay: true
         }
     },
     computed: {
@@ -45,29 +37,30 @@ export default {
             return this.userName[0] || ''
         }
     },
-    methods: {
-        changeColor() {
-            const pick = array => array[Math.floor(Math.random() * array.length)]
-            this.color = pick(avatarColors)
-        },
-        selectFile() {
-            const input = document.getElementById('avatarSelectFile')
-            input.click()
-        },
-        getURL() {
-            return this.$refs.avatar.convertToInlineImage()
-        },
-        removeImage() {
-            // todo: implement me.
+    watch: {
+        photoURL() {
+            if (this.photoURL) {
+                this.$refs.crop.loadImageFromURL(this.photoURL)
+                this.file = this.photoURL
+            }
         }
     },
-    attached() {
-        this.changeColor()
+    methods: {
+        getImageAsFile() {
+            return this.$refs.crop.getImageAsFile()
+        },
+        removeImage() {
+            this.file = null
+        }
     }
 }
 </script>
 
 <style scoped>
+.avatar-area {
+    width:  150px;
+    height: 150px;
+}
 .avatar.controls {
     margin-left: 10px;
     display: inline-block;
@@ -82,5 +75,11 @@ export default {
 }
 .popup-enter, .popup-leave {
     opacity: 0;
+}
+.action {
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 100;
+    color: #888;
 }
 </style>
