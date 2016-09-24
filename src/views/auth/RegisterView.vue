@@ -73,7 +73,10 @@ export default {
                     return this.$refs.avatar.getImageAsFile()
                 })
                 .then(file => {
-                    return uploadUserAvatar(userId, file)
+                    return uploadUserAvatar(userId, file).catch(error => {
+                        console.log(error)
+                        return Promise.resolve(null)
+                    })
                 })
                 .then(uploadResult => {
                     const profile = {
