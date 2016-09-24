@@ -5,22 +5,27 @@
                 <i class='fitted remove icon'></i>
             </span>
         </label>
-        <div class='avatar-area'>
+        <div :style='avatarArea'>
             <image-selector v-if='!file' :file.sync='file' v-ref:select></image-selector>
-            <image-crop :size='150' v-if='file' :file='file' v-ref:crop></image-crop>
+            <image-crop :size='size' v-if='file' :file='file' v-ref:crop></image-crop>
         </div>
+        <generic-avatar :size='size' :text='letter' style='display:none' v-ref:generic></generic-avatar>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import ImageSelector    from '../ImageSelector'
 import ImageCrop        from '../ImageCrop'
+import GenericAvatar    from '../GenericAvatar'
+import { avatarColors } from '../../utility/material-colors'
 
 export default {
     data: () => ({
-        file: null
+        file: null,
+        size: 150
     }),
-    components: { ImageSelector, ImageCrop },
+    components: { ImageSelector, ImageCrop, GenericAvatar },
     props: {
         userName: {
             type: String,
@@ -35,6 +40,12 @@ export default {
     computed: {
         letter() {
             return this.userName[0] || ''
+        },
+        avatarArea() {
+            return {
+                width:  `${this.size}px`,
+                height: `${this.size}px`
+            }
         }
     },
     watch: {
@@ -47,7 +58,23 @@ export default {
     },
     methods: {
         getImageAsFile() {
-            return this.$refs.crop.getImageAsFile()
+            if (this.file) {
+                return this.$refs.crop.getImageAsFile()
+            } else {
+                return this.generateGenericAvatar()
+            }
+        },
+        generateGenericAvatar() {
+            return new Promise((resolve, reject) => {
+                const pick = array => array[Math.floor(Math.random() * array.length)]
+                const color = pick(avatarColors)
+                this.$refs.generic.backColor = color
+                this.$refs.generic.textColor = 'rgba(255, 255, 255, 0.9)'
+                Vue.nextTick(() => {
+                    // Wait for component changes to be propagated
+                    resolve(this.$refs.generic.getAsFile())
+                })
+            })
         },
         removeImage() {
             this.file = null
@@ -57,10 +84,6 @@ export default {
 </script>
 
 <style scoped>
-.avatar-area {
-    width:  150px;
-    height: 150px;
-}
 .avatar.controls {
     margin-left: 10px;
     display: inline-block;
