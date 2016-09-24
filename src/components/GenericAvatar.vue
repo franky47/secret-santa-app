@@ -4,13 +4,12 @@
     >
         <rect x='0' y='0' :width='size' :height='size' :fill='backColor'/>
         <text
-            :x='size * .5'
-            :y='size * .475'
+            :x='x'
+            :y='y'
             alignment-baseline='central'
             text-anchor='middle'
             :fill='textColor'
-            :font-size='size * 0.8'
-            opacity='0.9'
+            :font-size='fontSize'
             font-weight='300'
             font-family='Roboto'
         >
@@ -20,8 +19,24 @@
 </template>
 
 <script>
-import 'blob-polyfill'
-import xmlSerializer from 'xmlserializer'
+// import 'blob-polyfill'
+// import xmlSerializer from 'xmlserializer'
+import { setupCanvas } from '../utility/canvas'
+
+// canvas.toBlob polyfill
+if (!window.HTMLCanvasElement.prototype.toBlob) {
+    Object.defineProperty(window.HTMLCanvasElement.prototype, 'toBlob', {
+        value(callback, type, quality) {
+            const str = window.atob(this.toDataURL(type, quality).split(',')[1])
+            const len = str.length
+            const arr = new window.Uint8Array(len)
+            for (let i = 0; i < len; ++i) {
+                arr[i] = str.charCodeAt(i)
+            }
+            callback(new window.Blob([arr], {type: type || 'image/png'}))
+        }
+    })
+}
 
 export default {
     props: {
@@ -39,18 +54,39 @@ export default {
         },
         textColor: {
             type: String,
-            default: () => '#fff'
+            default: () => 'rgba(255, 255, 255, 0.9)'
+        }
+    },
+    computed: {
+        x() {
+            return this.size * 0.5
+        },
+        y() {
+            return this.size * 0.475
+        },
+        fontSize() {
+            return this.size * 0.8
         }
     },
     methods: {
         getAsFile() {
-            const svg = xmlSerializer.serializeToString(this.$el)
-            const len = svg.length
-            const arr = new window.Uint8Array(len)
-            for (let i = 0; i < len; ++i) {
-                arr[i] = svg.charCodeAt(i)
-            }
-            return new window.Blob([arr], { type: 'image/svg+xml' })
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                setupCanvas(canvas, this.size)
+                ctx.save()
+                ctx.fillStyle = this.backColor
+                ctx.fillRect(0, 0, this.size, this.size)
+                ctx.restore()
+                ctx.font         = `${this.fontSize}px Roboto`
+                ctx.textAlign    = 'center'
+                ctx.textBaseline = 'middle'
+                ctx.fillStyle    = this.textColor
+                ctx.fillText(this.text, this.x, this.y)
+                canvas.toBlob(blob => {
+                    resolve(blob)
+                }, 'image/png')
+            })
         }
     }
 }

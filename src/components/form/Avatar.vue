@@ -71,9 +71,10 @@ export default {
                 this.$refs.generic.backColor = color
                 this.$refs.generic.textColor = 'rgba(255, 255, 255, 0.9)'
                 Vue.nextTick(() => {
-                    // Wait for component changes to be propagated
-                    resolve(this.$refs.generic.getAsFile())
+                    resolve() // Wait for component changes to be propagated
                 })
+            }).then(() => {
+                return this.$refs.generic.getAsFile()
             })
         },
         removeImage() {

@@ -5,8 +5,9 @@
         <button @click='render'>Render</button>
         <br>
         <generic-avatar :size='size' text='X' v-ref:avatar></generic-avatar>
+        <img :src='url' :width='size' :height='size'>
         <br>
-        <img :src='url'>
+
     </div>
 </template>
 
@@ -27,7 +28,6 @@ export default {
             const pick = array => array[Math.floor(Math.random() * array.length)]
             const color = pick(avatarColors)
             this.$refs.avatar.backColor = color
-            this.$refs.avatar.textColor = 'rgba(255, 255, 255, 0.9)'
         },
         render() {
             this.$refs.avatar.getAsFile().then(file => {
