@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import 'blob-polyfill'
 import xmlSerializer from 'xmlserializer'
 
 export default {
