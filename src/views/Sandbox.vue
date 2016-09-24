@@ -30,8 +30,8 @@ export default {
             this.$refs.avatar.textColor = 'rgba(255, 255, 255, 0.9)'
         },
         render() {
-            this.$refs.avatar.convertToImage().then(blob => {
-                this.readFromFile(blob)
+            this.$refs.avatar.getAsFile().then(file => {
+                this.readFromFile(file)
             })
         },
         readFromFile(file) {
