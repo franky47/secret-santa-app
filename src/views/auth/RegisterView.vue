@@ -76,10 +76,13 @@ export default {
                     return uploadUserAvatar(userId, file)
                 })
                 .then(uploadResult => {
-                    const photoURL = uploadResult.downloadURL
                     const profile = {
-                        displayName: this.user.name,
-                        photoURL
+                        // Provide fallback in case upload failed.
+                        photoURL:   'https://gravatar.com/avatar?d=mm&s=320',
+                        displayName: this.user.name
+                    }
+                    if (uploadResult) {
+                        profile.photoURL = uploadResult.downloadURL
                     }
                     return this.updateUserProfile(profile)
                 }).then(() => {
