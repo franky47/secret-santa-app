@@ -21,6 +21,7 @@
 
 <script>
 import xmlSerializer from 'xmlserializer'
+
 export default {
     props: {
         size: {
@@ -31,20 +32,24 @@ export default {
             type: String,
             default: () => ''
         },
-        'back-color': {
+        backColor: {
             type: String,
             default: () => '#000'
         },
-        'text-color': {
+        textColor: {
             type: String,
             default: () => '#fff'
         }
     },
     methods: {
-        convertToInlineImage() {
+        getAsFile() {
             const svg = xmlSerializer.serializeToString(this.$el)
-            const base64 = window.btoa(svg)
-            return `data:image/svg+xml;base64,${base64}`
+            const len = svg.length
+            const arr = new window.Uint8Array(len)
+            for (let i = 0; i < len; ++i) {
+                arr[i] = svg.charCodeAt(i)
+            }
+            return new window.Blob([arr], { type: 'image/svg+xml' })
         }
     }
 }
