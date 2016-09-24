@@ -15,6 +15,16 @@ import {
 import { initLocale } from './vuex/modules/i18n/actions'
 import './style.css'
 
+const logDebugInfo = (text) => {
+    console.log(text)
+    // Display error on home page, for debugging on mobile devices.
+    const debugInfoDiv = document.getElementById('debug-info')
+    const debugInfoPre = document.createElement('pre')
+    const debugInfoTxt = document.createTextNode(text.toString())
+    debugInfoPre.appendChild(debugInfoTxt)
+    debugInfoDiv.appendChild(debugInfoPre)
+}
+
 sync(store, router)
 
 firebase.use(FirebaseAuth, {
@@ -27,7 +37,11 @@ firebase.use(FirebaseDatabase, {})
 firebase.use(FirebaseStorage, {})
 
 Promise.all([
-    firebase.auth.getRedirectResult(),
+    firebase.auth.getRedirectResult().catch(error => {
+        if (error.code === 'auth/timeout') {
+            return Promise.resolve()
+        }
+    }),
     initLocale(store)
 ]).then(() => {
     // Start the router when everything is initialized,
@@ -38,10 +52,5 @@ Promise.all([
     }, '#app')
 }).catch(error => {
     console.log('Error starting app:' + error.message)
-    // Display error on home page, for debugging on mobile devices.
-    const debugInfoDiv = document.getElementById('debug-info')
-    const debugInfoPre = document.createElement('pre')
-    const debugInfoTxt = document.createTextNode(error.toString())
-    debugInfoPre.appendChild(debugInfoTxt)
-    debugInfoDiv.appendChild(debugInfoPre)
+    logDebugInfo(error.toString())
 })
