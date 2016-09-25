@@ -1,5 +1,5 @@
 # Secret Santa - Front-End
-Front-end code for Secret Santa.
+Front-end code for [secret-santa.io](https://secret-santa.io).
 
 [![Build Status](https://travis-ci.org/Franky47/secret-santa-app.svg?branch=master)](https://travis-ci.org/Franky47/secret-santa-app)
 [![dependencies Status](https://david-dm.org/franky47/secret-santa-app/status.svg)](https://david-dm.org/franky47/secret-santa-app)
@@ -33,12 +33,12 @@ $ npm install               # Will build Semantic UI from source
 $ npm start
 ```
 
-## Tech Stuff
+## Tech Stack
 
-This project uses Google's Firebase as a back-end for authentication (through email/password or Facebook)
+This project uses [Firebase](https://firebase.google.com) as a back-end for authentication (through email/password or Facebook)
 and real-time database (for storing user & game infos). Firebase is the single source of truth that
 the front-end state and the back-end engine consume and update.
 
-The front-end code runs on Vue.js and its pals (vue-router, vuex and a bunch of vue-* for convenience).
-The look and feel is handled by Semantic UI.
-Everything is bundled by webpack and deployed with Surge.
+The front-end code runs on [Vue.js](https://vuejs.org/) and its pals (vue-router & vuex).
+The look and feel is handled by [Semantic UI](http://semantic-ui.com).
+Everything is bundled by webpack and deployed with [Surge](https://surge.sh) for staging and Firebase Hosting for releases.
