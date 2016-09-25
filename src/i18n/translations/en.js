@@ -9,7 +9,7 @@ export default {
         createAccount:      'Create Account'
     },
     form: {
-        name: 'Nom',
+        name: 'Name',
         language: 'Language',
         validation: {
             isRequired:         'is required',
