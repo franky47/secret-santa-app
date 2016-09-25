@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 const ShellPlugin = require('webpack-shell-plugin')
 const Visualizer = require('webpack-visualizer-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/env.test')
   : config.build.env
@@ -36,6 +37,12 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     new StatsPlugin('stats.json', {
         chunkModules: true
+    }),
+    new FaviconsWebpackPlugin({
+        logo: path.join(rootDir, 'branding/gift-icon.svg'),
+        persistentCache: true,
+        inject: true,
+        title: 'Secret Santa'
     }),
     new Visualizer(),
     // http://vuejs.github.io/vue-loader/workflow/production.html
