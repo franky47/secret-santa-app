@@ -1,7 +1,7 @@
 <template>
     <div class='field' :class='{error: !valid && showErrors, required: required}'>
         <label>{{label}} <span v-if='!valid && showErrors'>{{ $t('form.validation.mustBeValid') }}</span></label>
-        <input v-model='value' type='email' :placeholder='placeholder'>
+        <input v-model='value' type='email' :placeholder='placeholder' class='large--mobile'>
     </div>
 </template>
 

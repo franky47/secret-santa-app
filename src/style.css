@@ -1,3 +1,12 @@
 html, body {
     background: #fafafa;
 }
+
+@media only screen and (max-width: 480px) {
+    .fluid--mobile {
+        width: 100%;
+    }
+    .large--mobile {
+        font-size: 1.14285714rem !important;
+    }
+}

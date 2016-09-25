@@ -1,7 +1,7 @@
 <template>
     <div class='field'>
         <label>{{ label }}</label>
-        <div class='ui fluid search dropdown selection' @click='this.menuVisible = !this.menuVisible' :class='dropDownClass'>
+        <div class='ui large--mobile fluid search dropdown selection' @click='this.menuVisible = !this.menuVisible' :class='dropDownClass'>
             <select class='ui compact dropdown'>
                 <option v-for='opt in optionKeys' :value='opt'>{{ options[opt] }}</option>
             </select>

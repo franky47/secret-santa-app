@@ -5,7 +5,7 @@
                 {{ $t('form.validation.passwordLength', { length: minSize }) }}
             </span>
         </label>
-        <input v-model='value' type='password' :placeholder='placeholder' :class='{matching: matching}'>
+        <input v-model='value' type='password' :placeholder='placeholder' :class='{matching: matching}' class='large--mobile'>
     </div>
 </template>
 
