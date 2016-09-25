@@ -1,27 +1,23 @@
 <template>
     <div class='ui top fixed borderless menu'>
         <div class='ui container'>
-            <a class='item' v-if='mobile' @click.stop='openNavDrawer'>
-                <i class='large content icon'></i>
-            </a>
-            <div class='item'>
-                <i class='large red gift icon' v-if='!mobile' @click.stop='openNavDrawer'></i>
+            <div class='header item' @click.stop.prevent='openNavDrawer'>
+                <i class='large red gift--desktop content--mobile icon'></i>
                 <span class='red title'>Secret Santa</span>
             </div>
-            <div class='ui secondary pointing menu' v-if='!mobile'>
+            <div class='ui secondary pointing menu hidden--mobile'>
                 <div class='item' v-for='item in menu' v-link='item.link'>
                     {{item.name}}
                 </div>
             </div>
-            <div class='right item' v-if='isSignedIn && userPhoto'>
-                <img class='ui circular avatar image' @click.stop='accountOpen = !accountOpen' :src='userPhoto'>
+            <div class='right item hidden--mobile' v-if='isSignedIn && userPhoto'>
+                <img class='ui circular avatar image'
+                     @click.stop='accountOpen = !accountOpen'
+                     :src='userPhoto'>
                 <account-popup v-if='accountOpen'
                     transition='popup'
                     :open.sync='accountOpen'>
                 </account-popup>
-            </div>
-            <div class='right item' v-if='!isSignedIn'>
-                <a v-link='signInLink'></a>
             </div>
         </div>
     </div>
@@ -30,7 +26,6 @@
 <script>
 import Vue from 'vue'
 import AccountPopup from './AccountPopup'
-import { onWindowResize } from 'vue-mixins'
 import * as routes from '../router/routes-definitions'
 import { getters as auth } from '../vuex/modules/auth'
 import { getters as user } from '../vuex/modules/user'
@@ -38,7 +33,6 @@ import { actions as ui } from '../vuex/modules/ui'
 
 export default {
     data: () => ({
-        mobile: false,
         accountOpen: false,
         links: [
             { name: 'home',             path: routes.home },
@@ -72,13 +66,6 @@ export default {
             return link
         }
     },
-    mixins: [ onWindowResize ],
-    created() {
-        this.mobile = window.innerWidth <= 768
-        this.onWindowResize(() => {
-            this.mobile = window.innerWidth <= 768
-        })
-    },
     vuex: {
         getters: {
             isSignedIn:     auth.isSignedIn,
@@ -93,48 +80,75 @@ export default {
 </script>
 
 <style scoped>
-.item .content.icon {
-  color: #f1abab;
+
+/* Fix layout issue #20 on iOS */
+.ui.menu>.container {
+    display: -webkit-flex;
+    -webkit-box-orient: horizontal;
+}
+span.title {
+    display: block;
+}
+
+/* -- */
+
+/* Variable Icon (gift on desktop, content on moble) */
+@media only screen and (min-width: 768px) {
+    .gift--desktop:before {
+        content: "\f06b";
+    }
+}
+@media only screen and (max-width: 767px) {
+    .content--mobile:before {
+        content: "\f0c9";
+    }
+    .hidden--mobile {
+        display: none !important;
+    }
 }
 
 .red {
-  color: #db2828;
+    color: #db2828;
 }
 
+.item .content.icon {
+    color: #f1abab;
+}
 .ui.container .item {
-  padding: 0;
+    padding: 0;
 }
 .ui.container .item .title {
-  font-size: 1.2em;
-  font-weight: 900;
+    font-size: 1.2em;
+    font-weight: 900;
 }
-@media only screen and (max-width: 768px) {
-  .ui.container .item:first-child {
-    padding-left: 1em;
-  }
+
+@media only screen and (max-width: 767px) {
+    .ui.container .item:first-child {
+        padding-left: 1em;
+    }
 }
-@media only screen and (max-width: 768px) {
-  .ui.container .right.item:last-child {
-    padding-right: 1em;
-  }
+@media only screen and (max-width: 767px) {
+    .ui.container .right.item:last-child {
+        padding-right: 1em;
+    }
 }
 .ui.container .secondary.menu {
-  margin-left: 20px;
-  border-bottom: none;
+    margin-left: 20px;
+    border-bottom: none;
 }
 .ui.container .secondary.menu .item:hover {
-  cursor: pointer;
-  border-bottom-color: #f5c1c1;
+    cursor: pointer;
+    border-bottom-color: #f5c1c1;
 }
 .ui.container .secondary.menu .active.item {
-  border-bottom-color: #db2828;
+    border-bottom-color: #db2828;
 }
 .ui.container .secondary.menu .active.item:hover {
-  border-bottom-color: #e66a6a;
+    border-bottom-color: #e66a6a;
 }
 
 .circle {
-  border-radius: 100%;
+    border-radius: 100%;
 }
 .popup-transition {
     transition: all .3s ease;
