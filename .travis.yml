@@ -7,3 +7,6 @@ script:
 
 notifications:
   email: false
+
+after_success:
+  - npm run deploy-surge
