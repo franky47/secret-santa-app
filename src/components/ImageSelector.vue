@@ -1,6 +1,13 @@
 <!-- Credits to Jack Barham: https://jsfiddle.net/jackbarham/sxfept4t/1/ -->
 
 <template>
+    <input type='file'
+           accept='image/*'
+           capture='camera'
+           @change='onFileChange'
+           v-el:input
+           style='display:none'
+    >
     <div class='area'
          @dragenter.stop.prevent='onDragEnter'
          @dragleave='onDragLeave'
@@ -11,6 +18,7 @@
     >
         <i class='ui fitted huge angle down icon'></i>
     </div>
+
 </template>
 
 <script>
@@ -36,16 +44,14 @@ export default {
             // Just here for preventDefault, to mark div as drop zone.
         },
         onDrop(event) {
+            console.log('onDrop', event)
             this.onFileChange(event)
         },
         onClick() {
-            const input = document.createElement('input')
-            input.type     = 'file'
-            input.accept   = 'image/*'
-            input.onchange = this.onFileChange
-            input.click()
+            this.$els.input.click()
         },
         onFileChange(event) {
+            console.log('onFileChange', event)
             const files = event.target.files || event.dataTransfer.files
             if (files.length > 0) {
                 const file = files[0]
