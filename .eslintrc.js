@@ -23,5 +23,8 @@ module.exports = {
     'indent': ['error', 4],
     'key-spacing': 0,
     'no-multi-spaces': 0
+  },
+  globals: {
+    "__git__": true
   }
 }

@@ -8,8 +8,8 @@
 <script>
 export default {
     data: () => ({
-        revision:   null,
-        message:    null
+        revision:   __git__.revision,
+        message:    __git__.message
     })
 }
 </script>

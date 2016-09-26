@@ -2,6 +2,13 @@ const path = require('path')
 const config = require('../config')
 const utils = require('./utils')
 const projectRoot = path.resolve(__dirname, '../')
+const webpack = require('webpack')
+const git = require('git-rev-sync')
+
+const gitInfo = {
+    revision:   git.short(),
+    message:    git.message()
+}
 
 module.exports = {
     entry: {
@@ -82,5 +89,10 @@ module.exports = {
     },
     vue: {
         loaders: utils.cssLoaders()
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            __git__: JSON.stringify(gitInfo)
+        })
+    ]
 }
