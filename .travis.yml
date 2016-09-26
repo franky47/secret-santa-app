@@ -12,3 +12,4 @@ deploy:
   provider: surge
   project: ./build/
   domain: secret-santa.surge.sh
+  skip_cleanup: true
