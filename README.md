@@ -24,8 +24,7 @@ The secret chat will be anonymous so that the receiver does not know the identit
 
 1. Install requirements
 ```
-$ npm install -g gulp       # For Semantic UI's initial build process
-$ npm install               # Will build Semantic UI from source
+$ npm install
 ```
 
 2. Run with Chrome Remote Debugging
