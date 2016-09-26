@@ -5,6 +5,7 @@ import { isSignedIn } from '../vuex/modules/auth/getters'
 
 // Import views
 import HomeView                     from '../views/HomeView'
+import AboutView                    from '../views/About'
 import Sandbox                      from '../views/Sandbox'
 import SettingsView                 from '../views/SettingsView'
 import   SettingsAccount            from '../views/settings/Account'
@@ -36,6 +37,7 @@ const router = new VueRouter({
 
 router.map({
     [routes.home]: { component: HomeView },
+    [routes.about]: { component: AboutView },
     [routes.sandbox]: { component: Sandbox },
     [routes.invalid]: { component: unimplementedComponent },
     [routes.auth.root]: {

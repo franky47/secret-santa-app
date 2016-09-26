@@ -5,11 +5,10 @@ const populateSubRoutes = obj => {
     return obj
 }
 
-export const home = '/'
-
-export const sandbox = '/sandbox'
-
-export const invalid = '/invalid'
+export const home       = '/'
+export const sandbox    = '/sandbox'
+export const about      = '/about'
+export const invalid    = '/invalid'
 
 export const auth = {
     root:               '/auth',
