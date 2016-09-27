@@ -25,7 +25,7 @@ const assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDire
 console.log(chalk.blue('Assets path: '), assetsPath)
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
-cp('-R', 'static/', assetsPath)
+cp('-R', 'static/*', assetsPath)
 console.log('Pre-build status:')
 console.log(ls('-lA', assetsPath))
 
