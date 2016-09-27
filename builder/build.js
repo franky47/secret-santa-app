@@ -2,6 +2,7 @@
 require('shelljs/global')
 env.NODE_ENV = 'production'
 
+const chalk = require('chalk')
 const path = require('path')
 const config = require('../config')
 const ora = require('ora')
@@ -21,9 +22,12 @@ const spinner = new ora({
 spinner.start()
 
 const assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+console.log(chalk.blue('Assets path: '), assetsPath)
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
 cp('-R', 'static/', assetsPath)
+console.log('Pre-build status:')
+console.log(ls('-lA', assetsPath))
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()
@@ -35,4 +39,6 @@ webpack(webpackConfig, function (err, stats) {
     chunks: false,
     chunkModules: false
   }) + '\n')
+  console.log('Post-build status:')
+  console.log(ls('-lA', assetsPath))
 })
