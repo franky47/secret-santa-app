@@ -105,7 +105,7 @@
     "stats-webpack-plugin": "^0.4.2",
     "surge": "^0.18.0",
     "url-loader": "^0.5.7",
-    "vue-hot-reload-api": "^2.0.6",
+    "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.5.2",
     "vue-style-loader": "^1.0.0",
