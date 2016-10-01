@@ -14,6 +14,7 @@ import RegisterView                 from '../views/auth/RegisterView'
 import SignInView                   from '../views/auth/SignInView'
 import PasswordResetRequestView     from '../views/auth/PasswordResetRequestView'
 import PasswordResetChallengeView   from '../views/auth/PasswordResetChallengeView'
+import CreateGameView               from '../views/game/CreateGameView'
 
 import * as routes from './routes-definitions'
 
@@ -86,6 +87,11 @@ router.map({
             [routes.settings.subRoutes.account]: { component: SettingsAccount },
             [routes.settings.subRoutes.profile]: { component: SettingsProfile }
         }
+    },
+
+    [routes.games.create]: {
+        component: CreateGameView,
+        auth: true
     }
 })
 

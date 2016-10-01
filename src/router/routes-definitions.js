@@ -29,3 +29,11 @@ export const settings = populateSubRoutes({
         profile: '/profile'
     }
 })
+
+export const games = populateSubRoutes({
+    root: '/games',
+    subRoutes: {
+        create: '/create',
+        id:     '/:id'
+    }
+})
