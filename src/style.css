@@ -1,5 +1,7 @@
 html, body {
     background: #fafafa;
+    height: initial !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
 }
 
 @media only screen and (max-width: 480px) {
