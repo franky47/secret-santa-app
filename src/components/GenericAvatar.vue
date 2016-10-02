@@ -1,6 +1,6 @@
 <template>
     <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
-        :width='size' :height='size' :viewBox='0, 0, size, size'
+        :width='size' :height='size' :viewBox='viewBox'
     >
         <rect x='0' y='0' :width='size' :height='size' :fill='backColor'/>
         <text
@@ -19,8 +19,7 @@
 </template>
 
 <script>
-// import 'blob-polyfill'
-// import xmlSerializer from 'xmlserializer'
+import 'blob-polyfill'
 import { setupCanvas } from '../utility/canvas'
 
 // canvas.toBlob polyfill
@@ -66,6 +65,9 @@ export default {
         },
         fontSize() {
             return this.size * 0.8
+        },
+        viewBox() {
+            return `0, 0, ${this.size}, ${this.size}`
         }
     },
     methods: {
@@ -90,6 +92,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style scoped>
