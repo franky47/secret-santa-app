@@ -1,24 +1,25 @@
 <!-- Credits to Jack Barham: https://jsfiddle.net/jackbarham/sxfept4t/1/ -->
 
 <template>
-    <input type='file'
-           accept='image/*'
-           capture='camera'
-           @change='onFileChange'
-           v-el:input
-           style='display:none'
-    >
-    <div class='area'
-         @dragenter.stop.prevent='onDragEnter'
-         @dragleave='onDragLeave'
-         @dragover.stop.prevent='onDragOver'
-         @drop.stop.prevent='onDrop'
-         @click.stop.prevent='onClick'
-         :class='{hovered: hover}'
-    >
-        <i class='ui fitted huge angle down icon'></i>
+    <div>
+        <input type='file'
+            accept='image/*'
+            capture='camera'
+            @change='onFileChange'
+            v-el:input
+            style='display:none'
+        >
+        <div class='area'
+            @dragenter.stop.prevent='onDragEnter'
+            @dragleave='onDragLeave'
+            @dragover.stop.prevent='onDragOver'
+            @drop.stop.prevent='onDrop'
+            @click.stop.prevent='onClick'
+            :class='{hovered: hover}'
+        >
+            <i class='ui fitted huge angle down icon'></i>
+        </div>
     </div>
-
 </template>
 
 <script>

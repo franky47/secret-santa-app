@@ -1,8 +1,10 @@
 <template>
-    <h2>Manage your account</h2>
-    <update-email></update-email>
-    <update-password></update-password>
-    <delete-account></delete-account>
+    <div>
+        <h2>Manage your account</h2>
+        <update-email></update-email>
+        <update-password></update-password>
+        <delete-account></delete-account>
+    </div>
 </template>
 
 <script>
