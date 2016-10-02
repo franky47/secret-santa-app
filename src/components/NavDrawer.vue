@@ -1,5 +1,5 @@
 <template>
-    <div class='ui sidebar vertical menu overlay' :class='{visible: open}'
+    <div class='ui sidebar vertical menu overlay visible' :class='{open: open}'
         v-on-clickaway='dismiss'>
         <div class='item' v-if='isSignedIn'>
             <img class='ui avatar image' :src='userPhoto'>
@@ -59,9 +59,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 .ui.sidebar.vertical.menu.overlay {
     width: 80%;
     max-width: 300px;
+    &.open {
+        transform: none;
+    }
+    &:not(.open) {
+        transform: translateX(-100%), ;
+    }
 }
 </style>
