@@ -24,9 +24,9 @@ module.exports = {
         extensions: ['', '.js', '.vue'],
         fallback: [path.join(__dirname, '../node_modules')],
         alias: {
-            'src': path.resolve(__dirname, '../src'),
-            'assets': path.resolve(__dirname, '../src/assets'),
-            'components': path.resolve(__dirname, '../src/components')
+            'src':          path.resolve(__dirname, '../src'),
+            'assets':       path.resolve(__dirname, '../src/assets'),
+            'components':   path.resolve(__dirname, '../src/components')
         }
     },
     resolveLoader: {
@@ -88,7 +88,12 @@ module.exports = {
         formatter: require('eslint-friendly-formatter')
     },
     vue: {
-        loaders: utils.cssLoaders()
+        loaders: utils.cssLoaders(),
+        postcss: [
+            require('autoprefixer')({
+                browsers: ['last 2 versions']
+            })
+        ]
     },
     plugins: [
         new webpack.DefinePlugin({
