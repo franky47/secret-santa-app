@@ -28,7 +28,7 @@ const subscriptions = {
             console.log(`Error while creating/updating user on ${userMutations.CHANGED}: ${error.message}`)
         })
     },
-    [authMutations.USER_CHANGED]: ({dispatch}, mutation) => {
+    [authMutations.USER_CHANGED]: ({commit}, mutation) => {
         const user = mutation.payload[0]
         if (user) {
             if (currentUserId !== null) {
@@ -45,7 +45,7 @@ const subscriptions = {
                         console.warn('Invalid data from database')
                     } else {
                         data.uid = user.uid // Append uid as it's not stored in db
-                        dispatch(userMutations.CHANGED, data)
+                        commit(userMutations.CHANGED, data)
                     }
                 })
             })
@@ -55,7 +55,7 @@ const subscriptions = {
             currentUserId = user.uid
             markUserAsOnline(user.uid)
         } else {
-            dispatch(userMutations.RESET)
+            commit(userMutations.RESET)
             // Don't mark user as offline here as the database is write-protected
         }
     }

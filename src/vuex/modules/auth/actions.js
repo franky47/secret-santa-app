@@ -4,8 +4,8 @@ import firebase from '../../../services/firebase'
 import { markUserAsOffline, deleteUserData } from '../../../api/db/user'
 import userMutations from '../user/mutations'
 
-const dispatchAndChain = dispatch => error => {
-    dispatch(mutations.ERROR, error)
+const commitAndChain = commit => error => {
+    commit(mutations.ERROR, error)
     return Promise.reject(error)
 }
 
@@ -15,9 +15,9 @@ const dispatchAndChain = dispatch => error => {
  * Creates a new account with the supplied email/password.
  * It will also sign in the newly created user, through the authChangedCallback.
  */
-export const registerWithEmail = ({dispatch}, email, password) => {
+export const registerWithEmail = ({commit}, email, password) => {
     return firebase.auth.registerWithEmail(email, password)
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -25,18 +25,18 @@ export const registerWithEmail = ({dispatch}, email, password) => {
  * After the app has restarted from redirection,
  * authChangedCallback will be called with the user information.
  */
-export const signInWithFacebook = ({dispatch}) => {
+export const signInWithFacebook = ({commit}) => {
     return firebase.auth.signInWithFacebook()
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
  * Sign the user in using email/password credentials.
  * This will asyncly call authChangedCallback with the user information.
  */
-export const signInWithEmail = ({dispatch}, email, password) => {
+export const signInWithEmail = ({commit}, email, password) => {
     return firebase.auth.signInWithEmail(email, password)
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -45,7 +45,7 @@ export const signInWithEmail = ({dispatch}, email, password) => {
  * update the database.
  * This will asyncly call authChangedCallback with null to mark sign out success.
  */
-export const signOut = ({dispatch}) => {
+export const signOut = ({commit}) => {
     return new Promise((resolve, reject) => {
         // Mark current user as offline first (as it requires auth)
         const user = firebase.auth.currentUser
@@ -58,7 +58,7 @@ export const signOut = ({dispatch}) => {
         }
     }).then(() => {
         return firebase.auth.signOut()
-    }).catch(dispatchAndChain(dispatch))
+    }).catch(commitAndChain(commit))
 }
 
 /**
@@ -68,14 +68,14 @@ export const signOut = ({dispatch}) => {
  * so in order to keep it as a single source of truth for user infomation (that
  * we will replicate to the database), we call it explicitly in case of success.
  */
-export const updateUserProfile = ({dispatch, state}, profile) => {
+export const updateUserProfile = ({commit, state}, profile) => {
     return firebase.auth.updateUserProfile(profile)
         .then(() => {
             const user = firebase.auth.currentUser
-            authChangedCallback({dispatch, state}, user)
+            authChangedCallback({commit, state}, user)
             return user
         })
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -89,12 +89,12 @@ export const updateUserProfile = ({dispatch, state}, profile) => {
  * email address the second time (rather than calling it manually a third time),
  * so we override the email address in the callback.
  */
-export const updateUserEmail = ({dispatch}, email, password) => {
+export const updateUserEmail = ({commit}, email, password) => {
     return firebase.auth.reauthenticate(password)
         .then(() => {
             return firebase.auth.updateUserEmail(email)
         })
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -106,12 +106,12 @@ export const updateUserEmail = ({dispatch}, email, password) => {
  * then with the updated info. As the password is not available in the received
  * information, only tokens should change in the payload.
  */
-export const updateUserPassword = ({dispatch}, oldPassword, newPassword) => {
+export const updateUserPassword = ({commit}, oldPassword, newPassword) => {
     return firebase.auth.reauthenticate(oldPassword)
         .then(() => {
             return firebase.auth.updateUserPassword(newPassword)
         })
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -119,9 +119,9 @@ export const updateUserPassword = ({dispatch}, oldPassword, newPassword) => {
  * This will send an email to the given address containing a link
  * to /auth/reset-password/challenge?oobCode=<code>
  */
-export const sendPasswordResetEmail = ({dispatch}, email) => {
+export const sendPasswordResetEmail = ({commit}, email) => {
     return firebase.auth.sendPasswordResetEmail(email)
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -130,7 +130,7 @@ export const sendPasswordResetEmail = ({dispatch}, email) => {
  * in the URL), then reset the password with the supplied password.
  * Note: it does not log the user in automatically.
  */
-export const resetUserPassword = ({dispatch}, code, newPassword) => {
+export const resetUserPassword = ({commit}, code, newPassword) => {
     let userEmail = null
     return firebase.auth.verifyPasswordResetCode(code)
         .then(email => {
@@ -138,7 +138,7 @@ export const resetUserPassword = ({dispatch}, code, newPassword) => {
             return firebase.auth.confirmPasswordReset(code, newPassword)
         })
         .then(() => userEmail) // Return the email address.
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 /**
@@ -149,14 +149,14 @@ export const resetUserPassword = ({dispatch}, code, newPassword) => {
  * - Delete the auth account, which will trigger a sign out.
  * todo: Check authChangedCallback workflow here.
  */
-export const deleteUserAccount = ({dispatch}, password) => {
+export const deleteUserAccount = ({commit}, password) => {
     const user = firebase.auth.currentUser
     return firebase.auth.reauthenticate(password)
         .then(() => {
             return markUserAsOffline(user.uid)
         })
         .then(() => {
-            dispatch(userMutations.RESET)
+            commit(userMutations.RESET)
             return Promise.resolve()
         })
         .then(() => {
@@ -165,7 +165,7 @@ export const deleteUserAccount = ({dispatch}, password) => {
         .then(() => {
             return firebase.auth.deleteUserAccount()
         })
-        .catch(dispatchAndChain(dispatch))
+        .catch(commitAndChain(commit))
 }
 
 // ---
@@ -177,24 +177,24 @@ export const deleteUserAccount = ({dispatch}, password) => {
  * or if there is no signed in user (when the app starts).
  * It is used as a the main endpoint for auth info.
  */
-export const authChangedCallback = ({dispatch, state}, user) => {
+export const authChangedCallback = ({commit, state}, user) => {
     console.log('Auth changed to', user)
 
     if (user && !isSignedIn(state)) {
-        dispatch(mutations.SIGNED_IN)
+        commit(mutations.SIGNED_IN)
     }
     if (!user && isSignedIn(state)) {
-        dispatch(mutations.SIGNED_OUT)
+        commit(mutations.SIGNED_OUT)
     }
-    dispatch(mutations.USER_CHANGED, user)
+    commit(mutations.USER_CHANGED, user)
 }
 
 /**
  * Callback for Firebase auth operation errors.
  * Called when ?
- * Also, might send mutations.ERROR twice, as most actions handle it with dispatchAndChain...
+ * Also, might send mutations.ERROR twice, as most actions handle it with commitAndChain...
  */
-export const authErrorCallback = ({dispatch}, error) => {
+export const authErrorCallback = ({commit}, error) => {
     console.log('Auth error:', error)
-    dispatch(mutations.ERROR, error)
+    commit(mutations.ERROR, error)
 }

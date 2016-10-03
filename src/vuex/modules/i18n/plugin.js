@@ -21,7 +21,7 @@ const subscriptions = {
             firebase.db.set(path, currentLocale)
         }
     },
-    [user.mutations.CHANGED]: ({dispatch, state}) => {
+    [user.mutations.CHANGED]: ({commit, state}) => {
         userId = user.getters.getCurrentUser.uid(state)
         if (userId === null) {
             console.warn('Use user/RESET to indicate logout or invalid user')
@@ -30,16 +30,16 @@ const subscriptions = {
             const path = paths.userPreferences.locale(userId)
             observers.userLocale.start(path, data => {
                 if (data) {
-                    setLocale({dispatch, state}, data)
+                    setLocale({commit, state}, data)
                 }
             })
         }
     },
-    [user.mutations.RESET]: ({dispatch, state}) => {
+    [user.mutations.RESET]: ({commit, state}) => {
         // Signed out: restore system native locale
         observers.userLocale.stop()
         const nativeLocale = getters.nativeLocale(state)
-        setLocale({dispatch, state}, nativeLocale)
+        setLocale({commit, state}, nativeLocale)
     }
 }
 
