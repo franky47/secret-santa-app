@@ -1,6 +1,6 @@
 const populateSubRoutes = obj => {
     for (const sub in obj.subRoutes) {
-        obj[sub] = obj.root + obj.subRoutes[sub]
+        obj[sub] = `${obj.root}/${obj.subRoutes[sub]}`
     }
     return obj
 }
@@ -25,15 +25,15 @@ export const auth = {
 export const settings = populateSubRoutes({
     root: '/settings',
     subRoutes: {
-        account: '/account',
-        profile: '/profile'
+        account: 'account',
+        profile: 'profile'
     }
 })
 
 export const games = populateSubRoutes({
     root: '/games',
     subRoutes: {
-        create: '/create',
-        id:     '/:id'
+        create: 'create',
+        id:     ':id'
     }
 })

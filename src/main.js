@@ -1,4 +1,4 @@
-// import './semantic'
+import Vue from 'vue'
 import App from './App'
 import './i18n/i18n'
 import store                from './vuex/store'
@@ -44,12 +44,13 @@ Promise.all([
     }),
     initLocale(store)
 ]).then(() => {
-    // Start the router when everything is initialized,
+    // Start the app when everything is initialized,
     // to avoid FOUC (Flashes Of Unauthorized Content).
-    router.start({
+    new Vue({
+        router,
         store,
         components: { App }
-    }, '#app')
+    }).$mount('#app')
 }).catch(error => {
     console.log('Error starting app:' + error.message)
     logDebugInfo(error.toString())

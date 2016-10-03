@@ -33,76 +33,73 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
     hashbang: false,
-    history: true
-})
-
-router.map({
-    [routes.home]: { component: HomeView },
-    [routes.about]: { component: AboutView },
-    [routes.sandbox]: { component: Sandbox },
-    [routes.invalid]: { component: unimplementedComponent },
-    [routes.auth.root]: {
-        component: {
-            template: '',
-            route: {
-                canActivate(transition) {
-                    const mode = transition.to.query.mode || null
-                    switch (mode) {
-                    case 'verifyEmail':
-                        transition.redirect(routes.auth.verifyEmail)
-                        break
-                    case 'resetPassword':
-                        transition.redirect(routes.auth.passwordReset.challenge)
-                        break
-                    case 'resetEmail':
-                        transition.redirect(routes.auth.resetEmail)
-                        break
-                    default:
-                        const context = {
-                            path:   transition.to.path,
-                            query:  JSON.stringify(transition.to.query)
+    history: true,
+    routes: [
+        { path: routes.home,    component: HomeView },
+        { path: routes.about,   component: AboutView },
+        { path: routes.sandbox, component: Sandbox },
+        { path: routes.invalid, component: unimplementedComponent },
+        {
+            path: routes.auth.root,
+            component: {
+                template: '',
+                route: {
+                    canActivate(transition) {
+                        const mode = transition.to.query.mode || null
+                        switch (mode) {
+                        case 'verifyEmail':
+                            transition.redirect(routes.auth.verifyEmail)
+                            break
+                        case 'resetPassword':
+                            transition.redirect(routes.auth.passwordReset.challenge)
+                            break
+                        case 'resetEmail':
+                            transition.redirect(routes.auth.resetEmail)
+                            break
+                        default:
+                            const context = {
+                                path:   transition.to.path,
+                                query:  JSON.stringify(transition.to.query)
+                            }
+                            transition.redirect({
+                                path:   routes.invalid,
+                                query:  context
+                            })
+                            break
                         }
-                        transition.redirect({
-                            path:   routes.invalid,
-                            query:  context
-                        })
-                        break
                     }
                 }
             }
-        }
-    },
-    [routes.auth.register]:                 { component: RegisterView },
-    [routes.auth.signIn]:                   { component: SignInView },
-    [routes.auth.verifyEmail]:              { component: unimplementedComponent },
-    [routes.auth.resetEmail]:               { component: unimplementedComponent },
-    [routes.auth.passwordReset.request]:    { component: PasswordResetRequestView },
-    [routes.auth.passwordReset.challenge]:  { component: PasswordResetChallengeView },
+        },
+        { path: routes.auth.register,                   component: RegisterView },
+        { path: routes.auth.signIn,                     component: SignInView },
+        { path: routes.auth.verifyEmail,                component: unimplementedComponent },
+        { path: routes.auth.resetEmail,                 component: unimplementedComponent },
+        { path: routes.auth.passwordReset.request,      component: PasswordResetRequestView },
+        { path: routes.auth.passwordReset.challenge,    component: PasswordResetChallengeView },
+        {
+            path: routes.settings.root,
+            component: SettingsView,
+            auth: true,
+            children: [
+                { path: routes.settings.subRoutes.account, component: SettingsAccount },
+                { path: routes.settings.subRoutes.profile, component: SettingsProfile }
+            ]
+        },
 
-    // Authenticated routes
-    [routes.settings.root]: {
-        component: SettingsView,
-        auth: true,
-        subRoutes: {
-            [routes.settings.subRoutes.account]: { component: SettingsAccount },
-            [routes.settings.subRoutes.profile]: { component: SettingsProfile }
-        }
-    },
+        {
+            path: routes.games.create,
+            component: CreateGameView,
+            auth: true
+        },
 
-    [routes.games.create]: {
-        component: CreateGameView,
-        auth: true
-    }
-})
-
-router.redirect({
-    '*': routes.home,    // Unmatched routes go to home
-
-    // Aliases & shortcuts
-    '/register':    routes.auth.register,
-    '/sign-up':     routes.auth.register,
-    '/sign-in':     routes.auth.signIn,
-    '/login':       routes.auth.signIn
+        // Catch-all redirects to home
+        { path: '*',            redirect: routes.home },
+        { path: '/register',    redirect: routes.auth.register },
+        { path: '/sign-up',     redirect: routes.auth.register },
+        { path: '/sign-in',     redirect: routes.auth.signIn },
+        { path: '/login',       redirect: routes.auth.signIn }
+    ]
 })
 
 router.beforeEach(transition => {
