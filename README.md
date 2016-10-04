@@ -41,3 +41,6 @@ the front-end state and the back-end engine consume and update.
 The front-end code runs on [Vue.js](https://vuejs.org/) and its pals (vue-router & vuex).
 The look and feel is handled by [Semantic UI](http://semantic-ui.com).
 Everything is bundled by webpack and deployed with [Surge](https://surge.sh) for staging and Firebase Hosting for releases.
+
+Testing is done with local Mocha unit tests and BrowserStack cross-device/browser rendering tests
+automated by Travis.
