@@ -9,6 +9,8 @@
 
 <script>
 import 'hammerjs'
+import exif             from 'exif-js'
+import exifOrient       from 'exif-orient'
 import Vue              from 'vue'
 import VueTouch         from 'vue-touch'
 import { setupCanvas }  from '../utility/canvas'
@@ -16,6 +18,27 @@ import { setupCanvas }  from '../utility/canvas'
 Vue.use(VueTouch)
 
 const clip = (value, bounds) => Math.min(Math.max(value, bounds.min), bounds.max)
+
+const fixImageOrientation = (image) => {
+    return new Promise((resolve, reject) => {
+        exif.getData(image, () => {
+            if (image.exifdata             === undefined ||
+                image.exifdata.Orientation === undefined) {
+                return resolve()
+            }
+            const orientation = image.exifdata.Orientation
+            exifOrient(image, orientation, (err, canvas) => {
+                if (err) {
+                    reject(err)
+                }
+                image.onload = () => {
+                    resolve()
+                }
+                image.src = canvas.toDataURL()
+            })
+        })
+    })
+}
 
 export default {
     data: () => ({
@@ -58,7 +81,12 @@ export default {
         loadImageFromURL(url) {
             this.image = new window.Image()
             this.image.onload = () => {
-                this.reset()
+                fixImageOrientation(this.image).then(() => {
+                    this.reset()
+                }).catch(error => {
+                    console.error('Error while reorienting image:', error)
+                    this.reset()
+                })
             }
             this.image.src = url
         },
