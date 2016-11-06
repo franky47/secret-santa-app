@@ -48,7 +48,7 @@
     "vue-i18n": "^4.4.0",
     "vue-resource": "^1.0.0",
     "vue-router": "^2.0.0",
-    "vue-touch": "vuejs/vue-touch#33b9d20",
+    "vue-touch": "github:vuejs/vue-touch#33b9d20",
     "vuex": "^2.0.0",
     "vuex-router-sync": "^2.1.0",
     "xmlserializer": "^0.4.0"
